@@ -6,7 +6,7 @@ data/
 traces/*.jsonl
 .ruff_cache/
 .pytest_cache/
-results/runs/
+results/runs/*.jsonl
 *.duckdb
 *.duckdb.wal
 results/logs/*.log

@@ -7,7 +7,7 @@ import time
 import httpx
 
 from analytics_agent.llm.base import LLMError, LLMResponse
-from analytics_agent.llm.cache import DiskCache, cache_key
+from analytics_agent.llm.cache import DiskCache, ReplayMiss, cache_key, strict_replay
 from analytics_agent.llm.ledger import Ledger
 
 
@@ -27,6 +27,8 @@ class OllamaClient:
         hit = self.cache.get(key)
         if hit is not None:
             return LLMResponse(**{**hit, "cached": True})
+        if strict_replay():
+            raise ReplayMiss(f"{self.model}: prompt not in cache (key {key[:12]}) under AA_STRICT_REPLAY")
         body = {
             "model": self.model, "stream": False,
             "messages": [{"role": "system", "content": system}, {"role": "user", "content": prompt}],

@@ -14,7 +14,7 @@ import time
 
 from analytics_agent.config import ROOT
 from analytics_agent.llm.base import LLMError, LLMResponse
-from analytics_agent.llm.cache import DiskCache, cache_key
+from analytics_agent.llm.cache import DiskCache, ReplayMiss, cache_key, strict_replay
 from analytics_agent.llm.ledger import Ledger
 
 SANDBOX = ROOT / ".llm_sandbox"  # neutral empty cwd: no CLAUDE.md / project settings get picked up
@@ -50,6 +50,8 @@ class ClaudeCLIClient:
         hit = self.cache.get(key)
         if hit is not None:
             return LLMResponse(**{**hit, "cached": True})
+        if strict_replay():
+            raise ReplayMiss(f"{self.model}: prompt not in cache (key {key[:12]}) under AA_STRICT_REPLAY")
         self.ledger.reserve(self.backend)
         SANDBOX.mkdir(exist_ok=True)
         last_err = ""

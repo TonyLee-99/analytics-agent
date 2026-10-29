@@ -341,13 +341,6 @@ class Agent:
         return ans
 
 
-def answer_confidence(signals: dict[str, Any]) -> float:
-    """Heuristic confidence used by the API when no calibrated model is loaded (see confidence.py)."""
-    c = signals.get("sc_agreement", 0.0) if signals.get("n_samples", 1) > 1 else (0.7 if signals.get("final_ok") else 0.0)
-    c -= 0.1 * signals.get("corrections", 0)
-    return max(0.0, min(1.0, c))
-
-
 def vote_counter(rows_list: list[list[tuple]]) -> Counter:
     return Counter(result_signature(r) for r in rows_list)
 

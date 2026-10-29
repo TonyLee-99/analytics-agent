@@ -1,0 +1,93 @@
+{
+  "release": "Mini-Dev 1024",
+  "rows_per_dialect": 500,
+  "question_id_range": [
+    0,
+    499
+  ],
+  "non_sql_fields_identical_across_dialects": true,
+  "annotations_modified": true,
+  "source_final_manifest_sha256": "4a27d6ad840c86080c24d7c61a541eb368d1f42c0a5f3eb1ec3d46007af3c9af",
+  "owner_approved_cross_dialect_exception_ids": [
+    132,
+    172,
+    175,
+    177,
+    184,
+    185,
+    216
+  ],
+  "files": {
+    "sqlite": {
+      "path": "data/mini_dev_sqlite.jsonl",
+      "sha256": "926af2a0d1b47e5d0d15a7aa8a34d4721007f4550a881555b6a89496b54a2606",
+      "rows": 500
+    },
+    "mysql": {
+      "path": "data/mini_dev_mysql.jsonl",
+      "sha256": "4012f6afbcbe12733e64ac563192ff80d87a2664d55f41fe55a3bc71e15cfdc6",
+      "rows": 500
+    },
+    "postgresql": {
+      "path": "data/mini_dev_postgresql.jsonl",
+      "sha256": "ff8b561724d8e643bc906434e9e612cc43a782a385764f1c288ffe82c73cbc2c",
+      "rows": 500
+    }
+  },
+  "revision": "colleague_review_fixes_20261025",
+  "owner_authorized_corrected_ids": [
+    57,
+    62,
+    86,
+    101,
+    235,
+    258,
+    259,
+    260,
+    332,
+    383,
+    385,
+    389
+  ],
+  "execution_at_current_hashes": {
+    "queries": 1500,
+    "errors": 0,
+    "nonempty": 1500
+  },
+  "cross_dialect_comparison": {
+    "current_source_sha256": {
+      "sqlite": "926af2a0d1b47e5d0d15a7aa8a34d4721007f4550a881555b6a89496b54a2606",
+      "mysql": "4012f6afbcbe12733e64ac563192ff80d87a2664d55f41fe55a3bc71e15cfdc6",
+      "postgresql": "ff8b561724d8e643bc906434e9e612cc43a782a385764f1c288ffe82c73cbc2c"
+    },
+    "queries_executed": 1500,
+    "execution_errors": 0,
+    "nonempty": 1500,
+    "all_three_pairs_checked": true,
+    "absolute_float_error_strictly_less_than": "0.001",
+    "within_tolerance": 493,
+    "owner_approved_exception_ids": [
+      132,
+      172,
+      175,
+      177,
+      184,
+      185,
+      216
+    ],
+    "new_unapproved_differences": [],
+    "strict_ex_unchanged": true,
+    "scoring_regressions_expected_outputs": {
+      "62": {
+        "sqlite": "7",
+        "mysql": "7",
+        "postgresql": "7"
+      },
+      "383": {
+        "sqlite": "4",
+        "mysql": "4",
+        "postgresql": "4"
+      }
+    }
+  }
+}

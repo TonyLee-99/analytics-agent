@@ -68,3 +68,25 @@ def test_mcp_tools_in_process(mock_env, toy_duck):
     payload = json.loads(res.content[0].text)
     assert payload["status"] == "answered" and payload["rows"] == [[3]]
     assert {t["table"] for t in json.loads(listed.content[0].text)} == {"orders", "customers"}
+
+
+def test_split_vote_is_routed_to_review(monkeypatch, toy_duck):
+    """The API exposes the evaluated confidence: unanimous samples -> answered, a split vote -> needs_review."""
+    from analytics_agent.llm import mock as mock_mod
+    from analytics_agent.serving import service
+
+    def responder(system, prompt, sample):
+        return "```sql\nSELECT count(*) AS n FROM orders\n```" if sample < 3 else "```sql\nSELECT 7 AS n\n```"
+
+    monkeypatch.setattr(service, "make_client", lambda name: mock_mod.MockLLM(responder))
+    service.get_agent.cache_clear()
+    split = service.ask("How many orders?", "toy", n_samples=5)
+    assert split["confidence"] == 0.6 and split["route"] == "needs_review" and split["needs_review"]
+    assert split["rows"] == [[3]]
+    monkeypatch.setattr(service, "make_client", lambda name: mock_mod.MockLLM("```sql\nSELECT 3 AS n\n```"))
+    service.get_agent.cache_clear()
+    ok = service.ask("How many orders?", "toy", n_samples=5)
+    assert ok["confidence"] == 1.0 and ok["route"] == "answered" and not ok["needs_review"]
+    single = service.ask("How many orders?", "toy", n_samples=1)
+    assert single["confidence"] is None and single["needs_review"]
+    service.get_agent.cache_clear()

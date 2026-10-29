@@ -26,7 +26,9 @@ from analytics_agent.eval.configs import get_config
 from analytics_agent.eval.datasets import load_jsonl, load_olist_golden
 from analytics_agent.eval.metrics import business_ex
 from analytics_agent.executor import execute_all
+from analytics_agent.eval.report import MissingRunError, load_stem
 from analytics_agent.llm import make_client
+from analytics_agent.llm.cache import strict_replay
 
 ARMS = ["olist_raw", "olist_glossary", "olist_semantic", "olist_hybrid"]
 
@@ -46,8 +48,14 @@ def semantic(model: str) -> dict:
     report: dict = {"model": model, "arms": {}}
     per_q: dict = defaultdict(dict)
     for arm in ARMS:
-        R.main(["--suite", "olist", "--config", arm, "--model", model, "--workers", "2"])
-        recs = [json.loads(x) for x in open(R.run_path("olist", arm, model, None))]
+        stem = R.run_path("olist", arm, model, None).stem
+        try:
+            recs = list(load_stem(stem).values())
+        except MissingRunError:
+            if strict_replay():
+                raise
+            R.main(["--suite", "olist", "--config", arm, "--model", model, "--workers", "2"])
+            recs = list(load_stem(stem).values())
         metric_recs = [r for r in recs if tasks[r["id"]].meta.get("uses_metric")]
         other = [r for r in recs if not tasks[r["id"]].meta.get("uses_metric")]
         drift, drift_labels = 0, defaultdict(int)

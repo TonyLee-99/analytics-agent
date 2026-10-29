@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import gzip
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -41,4 +42,27 @@ def summarize_run(recs: list[dict]) -> dict:
 
 
 def load_run(path: str | Path) -> list[dict]:
-    return [json.loads(line) for line in open(path) if line.strip()]
+    path = Path(path)
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt") as f:
+        return [json.loads(line) for line in f if line.strip()]
+
+
+class MissingRunError(FileNotFoundError):
+    pass
+
+
+def run_file(stem: str) -> Path:
+    """Path of a recorded run (`.jsonl`, or the committed `.jsonl.gz`). Raises instead of letting an
+    analysis silently write empty tables on a fresh clone."""
+    from analytics_agent.config import RUNS
+
+    for p in (RUNS / f"{stem}.jsonl", RUNS / f"{stem}.jsonl.gz"):
+        if p.exists():
+            return p
+    raise MissingRunError(f"run file results/runs/{stem}.jsonl(.gz) not found; on a fresh clone run `make unpack` "
+                          "(restores the recorded runs and LLM cache), or re-run the eval")
+
+
+def load_stem(stem: str) -> dict[str, dict]:
+    return {r["id"]: r for r in load_run(run_file(stem))}

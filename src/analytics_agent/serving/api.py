@@ -23,6 +23,7 @@ STATIC = Path(__file__).parent / "static"
 class AskRequest(BaseModel):
     question: str = Field(min_length=3, max_length=2000)
     db_id: str = "olist"
+    n_samples: int | None = Field(default=None, ge=1, le=8, description="self-consistency samples (default 5)")
 
 
 @app.get("/health")
@@ -33,7 +34,7 @@ def health() -> dict:
 @app.post("/ask")
 def ask(req: AskRequest) -> dict:
     try:
-        return service.ask(req.question, req.db_id)
+        return service.ask(req.question, req.db_id, req.n_samples)
     except FileNotFoundError as e:
         raise HTTPException(404, f"database not available: {e}") from e
 

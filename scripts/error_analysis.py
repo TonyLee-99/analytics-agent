@@ -11,15 +11,13 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from analytics_agent.config import EVAL_SETS, RESULTS, RUNS  # noqa: E402
+from analytics_agent.config import EVAL_SETS, RESULTS  # noqa: E402
+from analytics_agent.eval.report import load_stem  # noqa: E402
 
 labels = [json.loads(x) for x in open(EVAL_SETS / "bird_failure_labels.jsonl")]
 STEPS = [("b", "bird__b_retrieval__haiku"), ("c", "bird__c_fewshot__haiku"), ("d", "bird__d_selfcorrect__haiku"),
          ("sonnet_d", "bird__d_selfcorrect__sonnet__sub200"), ("haiku_sc5", "bird__e_sc5__haiku__sub200")]
-runs = {}
-for k, stem in STEPS:
-    p = RUNS / f"{stem}.jsonl"
-    runs[k] = {json.loads(x)["id"]: json.loads(x)["ex"] for x in open(p)} if p.exists() else {}
+runs = {k: {i: r["ex"] for i, r in load_stem(stem).items()} for k, stem in STEPS}
 
 n = len(labels)
 prim = Counter(r["primary"] for r in labels)

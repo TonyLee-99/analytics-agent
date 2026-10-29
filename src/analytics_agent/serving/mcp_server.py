@@ -22,10 +22,11 @@ server = MCPServer(
 
 
 @server.tool()
-def ask_warehouse(question: str, db_id: str = "olist") -> str:
-    """Answer a natural-language data question. Returns JSON with status, sql, columns, rows (max 200),
-    summary, confidence and, when the question is ambiguous, a clarification question."""
-    return json.dumps(service.ask(question, db_id), default=str)
+def ask_warehouse(question: str, db_id: str = "olist", n_samples: int = 5) -> str:
+    """Answer a natural-language data question. Returns JSON with status, route (answered | needs_review |
+    escalated | clarify | failed), sql, columns, rows (max 200), summary, confidence (agreement of
+    n_samples SQLs on their results) and, when the question is ambiguous, a clarification question."""
+    return json.dumps(service.ask(question, db_id, n_samples), default=str)
 
 
 @server.tool()

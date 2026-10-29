@@ -23,7 +23,7 @@ from analytics_agent.config import RESULTS, ROOT, RUNS
 from analytics_agent.eval.configs import get_config
 from analytics_agent.eval.datasets import load_bird, subset_ids
 from analytics_agent.eval.metrics import mcnemar_exact, percentile, score, wilson
-from analytics_agent.eval.report import load_run
+from analytics_agent.eval.report import load_stem
 from analytics_agent.eval.run import bird_examples
 from analytics_agent.llm import make_client
 from analytics_agent.router import Router
@@ -49,9 +49,9 @@ SUB = [  # everything comparable on the frozen 200-question subset
 ]
 
 
-def _load(stem: str) -> dict[str, dict] | None:
-    p = RUNS / f"{stem}.jsonl"
-    return {r["id"]: r for r in load_run(p)} if p.exists() else None
+def _load(stem: str) -> dict[str, dict]:
+    """Every analysis input is required: a missing run raises (see report.run_file)."""
+    return load_stem(stem)
 
 
 def _stats(recs: list[dict]) -> dict:
@@ -211,7 +211,6 @@ def abstention() -> dict:
     out = {}
     for name, stem, title in [
         ("bird_sub200", "bird__e_sc5__haiku__sub200", "BIRD sub200, Haiku, 5 samples"),
-        ("olist_golden", "olist__olist_semantic_n5__haiku", "Olist golden set, Haiku semantic arm, 5 samples"),
         ("olist_golden_raw", "olist__olist_raw_n5__haiku", "Olist golden set, Haiku raw-SQL arm, 5 samples"),
     ]:
         runs = _load(stem)

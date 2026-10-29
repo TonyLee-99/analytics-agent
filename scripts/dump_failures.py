@@ -10,13 +10,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from analytics_agent.config import RESULTS, RUNS  # noqa: E402
+from analytics_agent.config import RESULTS  # noqa: E402
+from analytics_agent.eval.report import load_stem  # noqa: E402
 from analytics_agent.eval.datasets import load_bird  # noqa: E402
 from analytics_agent.executor import execute  # noqa: E402
 
 stem, n = sys.argv[1], int(sys.argv[2])
 tasks = {t.id: t for t in load_bird()}
-recs = [json.loads(x) for x in open(RUNS / f"{stem}.jsonl")]
+recs = list(load_stem(stem).values())
 fails = sorted([r for r in recs if not r["ex"]], key=lambda r: r["id"])
 random.Random(2026).shuffle(fails)
 out = RESULTS / "error_analysis" / f"{stem}__sample.jsonl"

@@ -3,11 +3,23 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
+.PHONY: unpack pack reproduce-results setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
         abstention routing frontier redteam traces report test lint gate record-regression all reproduce clean-runs
 
 setup:            ## create the py3.12 venv with pinned deps (uv.lock)
 	$(UV) sync --extra embed
+
+unpack:           ## fresh clone: restore recorded run files and the LLM response cache (no model calls needed)
+	for f in results/runs/*.jsonl.gz; do gunzip -kf "$$f"; done
+	shasum -a 256 -c cache/llm_cache.tar.gz.sha256 && tar -xzf cache/llm_cache.tar.gz
+
+pack:             ## after new runs: refresh the committed, compressed copies
+	for f in results/runs/*.jsonl; do gzip -9 -c "$$f" > "$$f.gz"; done
+	tar -czf cache/llm_cache.tar.gz .llm_cache && shasum -a 256 cache/llm_cache.tar.gz > cache/llm_cache.tar.gz.sha256
+
+reproduce-results: unpack ## regenerate every results/* file and chart from recorded runs; fails on any cache miss
+	AA_STRICT_REPLAY=1 AA_MAX_CLAUDE_CALLS=0 $(PY) scripts/reproduce_results.py
+	git diff --stat -- results docs/img
 
 data: bird olist  ## download + build all data (BIRD Mini-Dev SQLite DBs, Olist DuckDB warehouse)
 
