@@ -1,0 +1,729 @@
+{
+  "sql_layer": {
+    "attacks": 53,
+    "blocked": 53,
+    "block_rate": 1.0,
+    "not_blocked": [],
+    "benign_tricky": 8,
+    "benign_tricky_allowed": 8,
+    "benign_tricky_rejected": [],
+    "gold_queries_checked": 550,
+    "gold_false_positives": 0,
+    "gold_fp_examples": [],
+    "detail": [
+      {
+        "id": "drop",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DROP); forbidden operation in query: DROP"
+      },
+      {
+        "id": "drop_case",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DROP); forbidden operation in query: DROP"
+      },
+      {
+        "id": "drop_comment",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DROP); forbidden operation in query: DROP"
+      },
+      {
+        "id": "delete",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DELETE); forbidden operation in query: DELETE"
+      },
+      {
+        "id": "update",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got UPDATE); forbidden operation in query: UPDATE"
+      },
+      {
+        "id": "insert",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got INSERT); forbidden operation in query: INSERT"
+      },
+      {
+        "id": "insert_select",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got INSERT); forbidden operation in query: INSERT"
+      },
+      {
+        "id": "create_table",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got CREATE); forbidden operation in query: CREATE; unknown table: t"
+      },
+      {
+        "id": "create_view",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got CREATE); forbidden operation in query: CREATE; unknown table: v"
+      },
+      {
+        "id": "alter",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got ALTER); forbidden operation in query: ALTER"
+      },
+      {
+        "id": "truncate",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got TRUNCATETABLE); forbidden operation in query: TRUNCATETABLE"
+      },
+      {
+        "id": "merge",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got MERGE); forbidden operation in query: MERGE"
+      },
+      {
+        "id": "stacked",
+        "category": "stacked",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "exactly one statement allowed, got 2"
+      },
+      {
+        "id": "stacked2",
+        "category": "stacked",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "exactly one statement allowed, got 2"
+      },
+      {
+        "id": "cte_delete",
+        "category": "dml",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "forbidden operation in query: DELETE"
+      },
+      {
+        "id": "txn",
+        "category": "stacked",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "exactly one statement allowed, got 3"
+      },
+      {
+        "id": "attach",
+        "category": "attach",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got ATTACH); forbidden operation in query: ATTACH"
+      },
+      {
+        "id": "detach",
+        "category": "attach",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DETACH); forbidden operation in query: DETACH"
+      },
+      {
+        "id": "copy_out",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COPY); forbidden operation in query: COPY"
+      },
+      {
+        "id": "export",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "parse error: Invalid expression / Unexpected token. Line 1, Col: 27."
+      },
+      {
+        "id": "install",
+        "category": "extension",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got INSTALL); forbidden operation in query: INSTALL"
+      },
+      {
+        "id": "load",
+        "category": "extension",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COMMAND); forbidden operation in query: COMMAND"
+      },
+      {
+        "id": "set",
+        "category": "config",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got SET); forbidden operation in query: SET"
+      },
+      {
+        "id": "pragma",
+        "category": "config",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got PRAGMA); forbidden operation in query: PRAGMA"
+      },
+      {
+        "id": "call",
+        "category": "config",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COMMAND); forbidden operation in query: COMMAND"
+      },
+      {
+        "id": "checkpoint",
+        "category": "config",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COLUMN)"
+      },
+      {
+        "id": "read_csv",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: read_csv; table functions are not allowed: READ_CSV('/etc/passwd')"
+      },
+      {
+        "id": "read_text",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: read_text; table functions are not allowed: READ_TEXT('/etc/hosts')"
+      },
+      {
+        "id": "glob",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: glob; table functions are not allowed: GLOB('/*')"
+      },
+      {
+        "id": "parquet_s3",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: read_parquet; table functions are not allowed: READ_PARQUET('s3://bucket/x.parquet')"
+      },
+      {
+        "id": "replacement_scan",
+        "category": "file",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "unknown table: /etc/passwd"
+      },
+      {
+        "id": "getenv",
+        "category": "host",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: getenv"
+      },
+      {
+        "id": "settings",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: duckdb_settings; table functions are not allowed: DUCKDB_SETTINGS()"
+      },
+      {
+        "id": "query_fn",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "function not allowed: query; table functions are not allowed: QUERY('DROP TABLE orders')"
+      },
+      {
+        "id": "raw_schema",
+        "category": "pii_bypass",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "schema not allowed: raw.customers"
+      },
+      {
+        "id": "raw_union",
+        "category": "pii_bypass",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "schema not allowed: raw.customers"
+      },
+      {
+        "id": "raw_subquery",
+        "category": "pii_bypass",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "schema not allowed: raw.customers"
+      },
+      {
+        "id": "info_schema",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "system table not allowed: information_schema.tables"
+      },
+      {
+        "id": "describe",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DESCRIBE); forbidden operation in query: DESCRIBE"
+      },
+      {
+        "id": "show",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got SHOW)"
+      },
+      {
+        "id": "summarize",
+        "category": "system",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got SUMMARIZE)"
+      },
+      {
+        "id": "grant",
+        "category": "ddl",
+        "dialect": "duckdb",
+        "blocked": true,
+        "reason": "only read queries are allowed (got GRANT); forbidden operation in query: GRANT"
+      },
+      {
+        "id": "sqlite_drop",
+        "category": "ddl",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DROP); forbidden operation in query: DROP"
+      },
+      {
+        "id": "sqlite_delete",
+        "category": "dml",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got DELETE); forbidden operation in query: DELETE"
+      },
+      {
+        "id": "sqlite_replace",
+        "category": "dml",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COMMAND); forbidden operation in query: COMMAND"
+      },
+      {
+        "id": "sqlite_attach",
+        "category": "attach",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got ATTACH); forbidden operation in query: ATTACH"
+      },
+      {
+        "id": "sqlite_pragma",
+        "category": "config",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got PRAGMA); forbidden operation in query: PRAGMA"
+      },
+      {
+        "id": "sqlite_vacuum",
+        "category": "file",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "only read queries are allowed (got COMMAND); forbidden operation in query: COMMAND"
+      },
+      {
+        "id": "sqlite_load_ext",
+        "category": "extension",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "function not allowed: load_extension"
+      },
+      {
+        "id": "sqlite_readfile",
+        "category": "file",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "function not allowed: readfile"
+      },
+      {
+        "id": "sqlite_master",
+        "category": "system",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "system table not allowed: sqlite_master"
+      },
+      {
+        "id": "sqlite_stacked",
+        "category": "stacked",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "exactly one statement allowed, got 2"
+      },
+      {
+        "id": "sqlite_create_trigger",
+        "category": "ddl",
+        "dialect": "sqlite",
+        "blocked": true,
+        "reason": "exactly one statement allowed, got 2"
+      }
+    ]
+  },
+  "bypass_layer": {
+    "db_unchanged": true,
+    "stray_files_created": [],
+    "write_like_statements_that_executed": [
+      {
+        "id": "create_view",
+        "category": "ddl",
+        "executed_ok": true,
+        "error": ""
+      }
+    ],
+    "read_like_statements_that_executed": [
+      "call",
+      "checkpoint",
+      "settings",
+      "info_schema",
+      "describe",
+      "show",
+      "summarize",
+      "sqlite_master"
+    ],
+    "detail": [
+      {
+        "id": "drop",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DROP\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "drop_case",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DROP\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "drop_comment",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DROP\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "delete",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DELETE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "update",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"UPDATE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "insert",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"INSERT\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "insert_select",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"INSERT\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "create_table",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"CREATE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "create_view",
+        "category": "ddl",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "alter",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"ALTER\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "truncate",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DELETE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "merge",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"MERGE_INTO\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "stacked",
+        "category": "stacked",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DROP\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "stacked2",
+        "category": "stacked",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DELETE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "cte_delete",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"SELECT\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "txn",
+        "category": "stacked",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot execute statement of type \"DELETE\" on database \"olist_copy\" which is attached in read-only mode!"
+      },
+      {
+        "id": "attach",
+        "category": "attach",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/private/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpxoygxcqb/evil.duckdb\" - file system opera"
+      },
+      {
+        "id": "detach",
+        "category": "attach",
+        "executed_ok": false,
+        "error": "BinderException: Binder Error: Failed to detach database with name \"evil\": database not found"
+      },
+      {
+        "id": "copy_out",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpxoygxcqb/orders.csv\" - file system operations are"
+      },
+      {
+        "id": "export",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpxoygxcqb/dump/customers.csv\" - file system operat"
+      },
+      {
+        "id": "install",
+        "category": "extension",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access directory \"~/.duckdb/extensions/v2.0.0/osx_arm64\" - file system operations are disabled by "
+      },
+      {
+        "id": "load",
+        "category": "extension",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Loading external extensions is disabled through configuration"
+      },
+      {
+        "id": "set",
+        "category": "config",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot change configuration option \"\"enable_external_access\"\" - the configuration has been locked"
+      },
+      {
+        "id": "pragma",
+        "category": "config",
+        "executed_ok": false,
+        "error": "InvalidInputException: Invalid Input Error: Cannot change configuration option \"\"enable_profiling\"\" - the configuration has been locked"
+      },
+      {
+        "id": "call",
+        "category": "config",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "checkpoint",
+        "category": "config",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "read_csv",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/etc/passwd\" - file system operations are disabled by configuration\n\nLINE 1: SELECT * FROM read_csv('"
+      },
+      {
+        "id": "read_text",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/etc/hosts\" - file system operations are disabled by configuration\n\nLINE 1: SELECT * FROM read_text('"
+      },
+      {
+        "id": "glob",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"/*\" - file system operations are disabled by configuration\n\nLINE 1: SELECT * FROM glob('/*')\n        "
+      },
+      {
+        "id": "parquet_s3",
+        "category": "file",
+        "executed_ok": false,
+        "error": "PermissionException: Permission Error: Cannot access file \"s3://bucket/x.parquet\" - file system operations are disabled by configuration\n\nLINE 1: SELECT * FROM "
+      },
+      {
+        "id": "replacement_scan",
+        "category": "file",
+        "executed_ok": false,
+        "error": "CatalogException: Catalog Error: Table with name /etc/passwd does not exist!\nDid you mean \"pg_class\"?\n\nLINE 1: SELECT * FROM '/etc/passwd'\n                     "
+      },
+      {
+        "id": "getenv",
+        "category": "host",
+        "executed_ok": false,
+        "error": "CatalogException: Catalog Error: Scalar Function with name getenv does not exist!\nDid you mean \"get_current_time\"?\n\nLINE 1: SELECT getenv('HOME')\n              "
+      },
+      {
+        "id": "settings",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "query_fn",
+        "category": "system",
+        "executed_ok": false,
+        "error": "ParserException: Parser Error: Expected a single SELECT statement\n\nLINE 1: SELECT * FROM query('DROP TABLE orders')\n                      ^^^^^^^^^^^^^^^^^^^^^^"
+      },
+      {
+        "id": "raw_schema",
+        "category": "pii_bypass",
+        "executed_ok": false,
+        "error": "CatalogException: Catalog Error: Table with name \"raw.customers\" does not exist because schema \"raw\" does not exist.\n\nLINE 1: SELECT customer_zip_code_prefix FR"
+      },
+      {
+        "id": "raw_union",
+        "category": "pii_bypass",
+        "executed_ok": false,
+        "error": "CatalogException: Catalog Error: Table with name \"raw.customers\" does not exist because schema \"raw\" does not exist.\n\nLINE 1: ... FROM customers UNION ALL SELEC"
+      },
+      {
+        "id": "raw_subquery",
+        "category": "pii_bypass",
+        "executed_ok": false,
+        "error": "CatalogException: Catalog Error: Table with name \"raw.customers\" does not exist because schema \"raw\" does not exist.\n\nLINE 1: SELECT (SELECT customer_zip_code_p"
+      },
+      {
+        "id": "info_schema",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "describe",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "show",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "summarize",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "grant",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "ParserException: Parser Error: syntax error at or near \"GRANT\"\n\nLINE 1: GRANT SELECT ON orders TO public\n        ^^^^^"
+      },
+      {
+        "id": "sqlite_drop",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      },
+      {
+        "id": "sqlite_delete",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      },
+      {
+        "id": "sqlite_replace",
+        "category": "dml",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      },
+      {
+        "id": "sqlite_attach",
+        "category": "attach",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      },
+      {
+        "id": "sqlite_pragma",
+        "category": "config",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      },
+      {
+        "id": "sqlite_vacuum",
+        "category": "file",
+        "executed_ok": false,
+        "error": "DatabaseError: authorization denied"
+      },
+      {
+        "id": "sqlite_load_ext",
+        "category": "extension",
+        "executed_ok": false,
+        "error": "OperationalError: not authorized to use function: load_extension"
+      },
+      {
+        "id": "sqlite_readfile",
+        "category": "file",
+        "executed_ok": false,
+        "error": "OperationalError: no such function: readfile"
+      },
+      {
+        "id": "sqlite_master",
+        "category": "system",
+        "executed_ok": true,
+        "error": ""
+      },
+      {
+        "id": "sqlite_stacked",
+        "category": "stacked",
+        "executed_ok": false,
+        "error": "ProgrammingError: You can only execute one statement at a time."
+      },
+      {
+        "id": "sqlite_create_trigger",
+        "category": "ddl",
+        "executed_ok": false,
+        "error": "DatabaseError: not authorized"
+      }
+    ]
+  }
+}

@@ -32,11 +32,12 @@ def within_db(tasks, methods=("bm25", "embed", "hybrid"), ks=(1, 2, 3, 4, 5, 6, 
                 gold = set(t.gold_tables)
                 for k in ks:
                     top = [n for n, _ in ranked[:k]]
-                    chosen = top + (r._bridge(top) if expand else [])
+                    chosen = top + (r.expand(top) if expand else [])
                     sizes[k].append(len(chosen))
                     if gold <= {c.lower() for c in chosen}:
                         hits[k] += 1
-            out[key] = {f"recall@{k}": round(hits[k] / len(tasks), 4) for k in ks} | {
+            out[key] = {"total_tables_mean": round(statistics.mean(len(get_catalog(t.db_id).tables) for t in tasks), 2)} | {
+                f"recall@{k}": round(hits[k] / len(tasks), 4) for k in ks} | {
                 f"avg_tables@{k}": round(statistics.mean(sizes[k]), 2) for k in ks}
     return out
 

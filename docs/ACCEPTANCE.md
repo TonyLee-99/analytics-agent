@@ -47,7 +47,7 @@ column is filled in at the end (see "Results").
 | ID | Criterion | Verify |
 |----|-----------|--------|
 | F1 | EX vs $/question and EX vs p95 latency are plotted for ≥ 5 configurations (qwen, haiku variants, sonnet, self-consistency, routed) | `make frontier` → `docs/img/frontier_*.png` |
-| F2 | Routed system (Haiku first, escalate to Sonnet on low confidence), measured by actually running the router on sub200: EX ≥ Sonnet-only EX − 2 pp, at ≤ 60 % of Sonnet-only cost per question | `results/routing.json` |
+| F2 | Routed system (Haiku first, escalate to Sonnet on low confidence), measured by actually running the router on sub200: EX ≥ Sonnet-only EX − 2 pp, at ≤ 60 % of Sonnet-only cost per question. Pre-registered threshold (fixed before any self-consistency result existed): escalate when fewer than 4 of 5 Haiku samples agree (agreement < 0.8) | `results/routing.json` |
 
 ## G. Safety
 | ID | Criterion | Verify |

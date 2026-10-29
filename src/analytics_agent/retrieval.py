@@ -138,10 +138,29 @@ class SchemaRetriever:
                     dq.append(y)
         return None
 
+    def _lookups(self, chosen: list[str], max_cols: int = 4) -> list[str]:
+        """Small lookup/dimension tables referenced by FK from a chosen table (e.g. colour, gender):
+        nearly free in tokens and a frequent cause of schema-linking misses."""
+        chosen_l = {c.lower() for c in chosen}
+        out = []
+        for t in self.catalog.tables:
+            if t.name.lower() not in chosen_l:
+                continue
+            for _c, rt, _rc in t.fks:
+                ref = self.catalog.table(rt)
+                if ref and ref.name.lower() not in chosen_l and len(ref.columns) <= max_cols and ref.name not in out:
+                    out.append(ref.name)
+        return out
+
+    def expand(self, top: list[str]) -> list[str]:
+        added = self._bridge(top)
+        added += [x for x in self._lookups(top + added) if x not in added]
+        return added
+
     def retrieve(self, query: str, k: int = 5, expand_fk: bool = True) -> RetrievalResult:
         ranked = self.rank(query)
         top = [n for n, _ in ranked[:k]]
-        added = self._bridge(top) if expand_fk else []
+        added = self.expand(top) if expand_fk else []
         return RetrievalResult(top + added, ranked, added)
 
 

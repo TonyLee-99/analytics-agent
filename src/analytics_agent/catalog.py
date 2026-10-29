@@ -18,7 +18,7 @@ from pathlib import Path
 import duckdb
 import yaml
 
-from analytics_agent.config import BIRD_DB_ROOT, CATALOG_DOCS, DATA, OLIST_DB
+from analytics_agent.config import BIRD_DB_ROOT, CATALOG_DOCS, DATA, OLIST_DB, REDTEAM_DB
 
 CACHE = DATA / "catalog_cache"
 
@@ -161,7 +161,7 @@ def build_bird_catalog(db_id: str, root: Path = BIRD_DB_ROOT) -> DatabaseCatalog
 
 
 # ---------------- Olist (DuckDB) ----------------
-def build_olist_catalog(path: Path = OLIST_DB) -> DatabaseCatalog:
+def build_olist_catalog(path: Path = OLIST_DB, db_id: str = "olist") -> DatabaseCatalog:
     docs = yaml.safe_load(open(CATALOG_DOCS / "olist.yaml"))["tables"]
     con = duckdb.connect(str(path), read_only=True)
     tables = []
@@ -194,11 +194,39 @@ def build_olist_catalog(path: Path = OLIST_DB) -> DatabaseCatalog:
                                cname in pk_map.get(tname, []), cname.lower() in pii))
         tables.append(Table(tname, cols, d.get("description", ""), fk_map.get(tname, [])))
     con.close()
-    return DatabaseCatalog("olist", "duckdb", str(path), tables)
+    return DatabaseCatalog(db_id, "duckdb", str(path), tables)
+
+
+_REGISTRY: dict[str, DatabaseCatalog] = {}
+
+
+def register_catalog(cat: DatabaseCatalog) -> None:
+    """Make an in-memory catalog available under its db_id (tests, ad-hoc databases)."""
+    _REGISTRY[cat.db_id] = cat
+
+
+def get_catalog(db_id: str) -> DatabaseCatalog:
+    if db_id in _REGISTRY:
+        return _REGISTRY[db_id]
+    return _get_catalog_cached(db_id)
+
+
+def build_duckdb_catalog(path: str, db_id: str) -> DatabaseCatalog:
+    """Generic catalog for any DuckDB file (no human docs): used by tests and ad-hoc databases."""
+    con = duckdb.connect(path, read_only=True)
+    tables = []
+    for (tname,) in con.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='main' "
+                                "ORDER BY table_name").fetchall():
+        cols = [Column(c, t) for c, t in con.execute(
+            "SELECT column_name, data_type FROM information_schema.columns WHERE table_schema='main' AND table_name=? "
+            "ORDER BY ordinal_position", [tname]).fetchall()]
+        tables.append(Table(tname, cols))
+    con.close()
+    return DatabaseCatalog(db_id, "duckdb", path, tables)
 
 
 @lru_cache(maxsize=32)
-def get_catalog(db_id: str) -> DatabaseCatalog:
+def _get_catalog_cached(db_id: str) -> DatabaseCatalog:
     """Cached catalog (JSON on disk, so sample-value scans run once)."""
     CACHE.mkdir(parents=True, exist_ok=True)
     cpath = CACHE / f"{db_id}.json"
@@ -207,6 +235,11 @@ def get_catalog(db_id: str) -> DatabaseCatalog:
         tables = [Table(t["name"], [Column(**c) for c in t["columns"]], t["description"],
                         [tuple(x) for x in t["fks"]]) for t in raw["tables"]]
         return DatabaseCatalog(raw["db_id"], raw["dialect"], raw["path"], tables)
-    cat = build_olist_catalog() if db_id == "olist" else build_bird_catalog(db_id)
+    if db_id == "olist":
+        cat = build_olist_catalog()
+    elif db_id == "olist_redteam":
+        cat = build_olist_catalog(REDTEAM_DB, "olist_redteam")
+    else:
+        cat = build_bird_catalog(db_id)
     cpath.write_text(json.dumps(asdict(cat), ensure_ascii=False))
     return cat

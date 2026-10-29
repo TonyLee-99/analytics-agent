@@ -13,6 +13,8 @@ dependencies = [
     "httpx",
     "mcp",
     "pyyaml",
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
 ]
 
 [project.optional-dependencies]
@@ -38,3 +40,4 @@ ignore = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]

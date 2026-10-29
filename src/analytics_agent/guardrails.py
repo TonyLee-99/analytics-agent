@@ -13,11 +13,14 @@ Then the executor adds: read-only connection, statement timeout, and a hard fetc
 
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass, field
 
 import sqlglot
 from sqlglot import exp
 from sqlglot.errors import ParseError
+
+logging.getLogger("sqlglot").setLevel(logging.ERROR)  # unsupported syntax becomes exp.Command -> blocked
 
 READ_ROOTS = (exp.Select, exp.Union, exp.Intersect, exp.Except, exp.Subquery)
 

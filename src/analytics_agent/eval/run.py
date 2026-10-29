@@ -88,6 +88,7 @@ def main(argv: list[str] | None = None) -> dict:
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--n-samples", type=int, default=None)
+    ap.add_argument("--shuffle", action="store_true", help="random task order (fixed seed) so a partial run is a random subsample")
     args = ap.parse_args(argv)
 
     overrides = {}
@@ -105,6 +106,10 @@ def main(argv: list[str] | None = None) -> dict:
     if out.exists():
         done = {json.loads(line)["id"] for line in open(out) if line.strip()}
     todo = [t for t in tasks if t.id not in done]
+    if args.shuffle:
+        import random
+
+        random.Random(7).shuffle(todo)
     print(f"[{out.name}] {len(tasks)} tasks, {len(done)} done, {len(todo)} to run")
     failures = 0
     with ThreadPoolExecutor(max_workers=args.workers) as pool:

@@ -48,13 +48,36 @@ def _fmt(v: Any) -> str:
     return s if len(s) <= 60 else s[:57] + "..."
 
 
+_SQLITE_ALLOWED = {sqlite3.SQLITE_SELECT, sqlite3.SQLITE_READ, sqlite3.SQLITE_FUNCTION,
+                   getattr(sqlite3, "SQLITE_RECURSIVE", 33)}
+_SQLITE_DENY_FUNCS = {"load_extension", "readfile", "writefile", "edit", "fts3_tokenizer"}
+
+
+def _sqlite_authorizer(action, arg1, arg2, _db, _trigger):
+    """Statement-level allowlist inside SQLite itself: only reads and (non-dangerous) functions.
+    Blocks ATTACH (which would otherwise create files even on a read-only connection), PRAGMA, VACUUM INTO..."""
+    if action not in _SQLITE_ALLOWED:
+        return sqlite3.SQLITE_DENY
+    if action == sqlite3.SQLITE_FUNCTION and (arg2 or "").lower() in _SQLITE_DENY_FUNCS:
+        return sqlite3.SQLITE_DENY
+    return sqlite3.SQLITE_OK
+
+
 def connect_readonly(dialect: str, path: str):
     if dialect == "sqlite":
         con = sqlite3.connect(f"file:{path}?mode=ro", uri=True, check_same_thread=False)
         con.execute("PRAGMA query_only = ON")
+        con.set_authorizer(_sqlite_authorizer)
         return con
     if dialect == "duckdb":
-        con = duckdb.connect(path, read_only=True, config={"enable_external_access": False})
+        con = duckdb.connect(path, read_only=True, config={"enable_external_access": False,
+                                                           "autoload_known_extensions": False,
+                                                           "autoinstall_known_extensions": False})
+        try:  # no SET/PRAGMA can loosen the above afterwards
+            con.execute("SET lock_configuration = true")
+        except duckdb.Error as e:  # DuckDB shares one instance per file inside a process: already locked
+            if "locked" not in str(e):
+                raise
         return con
     raise ValueError(f"unsupported dialect {dialect}")
 

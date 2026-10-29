@@ -27,6 +27,7 @@ from analytics_agent.llm.base import LLMClient, LLMResponse
 from analytics_agent.retrieval import ExampleStore, SchemaRetriever
 from analytics_agent.semantic.compiler import SemanticError, compile_query, load_layer
 from analytics_agent.tracing import Trace
+from analytics_agent.value_hints import value_hints
 
 ENGINE = {"sqlite": "SQLite", "duckdb": "DuckDB"}
 
@@ -47,6 +48,8 @@ class AgentConfig:
     timeout_s: float = 30.0
     huge_result_rows: int = 1000  # result this large (truncated) is "suspicious"
     sample_workers: int = 4
+    describe_columns: bool = True  # column descriptions + sample values in the schema text
+    use_hints: bool = True  # pass the benchmark's evidence/hint text
 
 
 @dataclass
@@ -89,8 +92,8 @@ def extract_sql(text: str) -> str:
     blocks = _SQL_BLOCK.findall(text or "")
     if blocks:
         sql = blocks[-1].strip()
-    else:  # no fence: take from the last SELECT/WITH
-        m = list(re.finditer(r"(?is)\b(with|select)\b.*", text or ""))
+    else:  # no fence: take from the last line that starts with SELECT/WITH
+        m = list(re.finditer(r"(?ims)^\s*(with|select)\b.*", text or ""))
         sql = m[-1].group(0).strip() if m else ""
     lines = [ln for ln in sql.splitlines() if not ln.strip().startswith("--")]
     return "\n".join(lines).strip().rstrip(";").strip()
@@ -151,8 +154,10 @@ class Agent:
                       official_prompt: str | None) -> tuple[str, str]:
         if self.cfg.schema_mode == "official" and official_prompt:
             return P.SYSTEM_BASELINE, official_prompt
-        schema = cat.render(tables)
+        schema = cat.render(tables, descriptions=self.cfg.describe_columns, samples=self.cfg.describe_columns)
         note = "" if tables is None else " (tables retrieved as relevant to the question)"
+        if not self.cfg.use_hints:
+            evidence = ""
         ex_txt = ""
         if self.cfg.few_shot and self.examples is not None:
             exs = self.examples.search(question + " " + evidence, cat.db_id, self.cfg.few_shot)
@@ -231,9 +236,11 @@ class Agent:
                 break
             cand.problems.append(problem)
             cand.corrections += 1
-            extra = ""
-            if re.search(r"no such (column|table)|does not exist|not found|unknown table|Binder Error", problem, re.I):
-                extra = "Full schema (the earlier one may have been missing tables):\n" + cat.render() + "\n"
+            # the corrector always sees the FULL schema (the retrieved subset may have missed a table,
+            # as LinkedIn's correction agent can fetch more tables) plus real column values on empty results
+            extra = "Full schema:\n" + cat.render() + "\n"
+            if sql and "0 rows" in problem:
+                extra += value_hints(sql, cat)
             cprompt = P.CORRECT.format(question=question, evidence=f"Hint: {evidence}\n" if evidence else "",
                                        sql=sql or "(none)", problem=problem, extra_schema=extra)
             rr = self._llm(trace, f"correct{round_ + 1}", self._system(cat.dialect), cprompt, sample)
