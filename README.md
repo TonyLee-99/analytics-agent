@@ -36,7 +36,7 @@ The same 50 PM-style questions, the same model, and 2 self-correction rounds in 
 | hybrid: compiler for metric questions, prompt arm for the rest (*post hoc*) | 29/30 | 0/30 | 94.0% | vs prompt: +2/−0, p=0.5 |
 
 **Caveats.**
-- One author wrote the definitions, the gold SQL and the compiler. The raw arm is scored against
+- The definitions, the gold SQL and the compiler were all written for this repo. The raw arm is scored against
   conventions it was never shown; that is the business problem, but it makes 46.7% a "didn't guess
   our conventions" number, not a SQL-skill number.
 - n=30 metric questions.
@@ -131,29 +131,16 @@ make data verify-data    # download BIRD + Olist and build the warehouse (needed
 make test lint           # unit tests; DB-dependent tests skip without `make data`
 make eval-small          # 20 live questions (Haiku via the Claude Code CLI)
 ```
-- **Data.**
-  - [BIRD Mini-Dev](https://huggingface.co/datasets/birdsql/bird_mini_dev), CC BY-SA 4.0.
-  - [Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), CC BY-NC-SA 4.0, 99,441 orders, row counts verified.
-  - The Olist golden set, ambiguity set and controls are in `eval_sets/`.
-- **CI.** The workflow is included (`.github/workflows/ci.yml`: lint, unit tests, and a regression gate
-  that replays recorded responses). It has not yet run on a remote.
-- **Regression gate.** Fail if a prompt change loses ≥5 more of 30 frozen questions than it gains:
-  - false-alarm rate 2.1%;
-  - it flags the recorded degraded prompt;
-  - a true −5 pp regression is caught only 10% of the time at n=30 (`tests/regression/gate.json`).
+- **Data:** [BIRD Mini-Dev](https://huggingface.co/datasets/birdsql/bird_mini_dev) (CC BY-SA 4.0) and [Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (CC BY-NC-SA 4.0, 99,441 orders, row counts verified). The Olist question sets are in `eval_sets/`.
+- **CI:** a workflow is included (`.github/workflows/ci.yml`: lint, tests, regression gate on recorded responses). It has not yet run on a remote.
+- **Regression gate:** a prompt change fails if it loses ≥5 more of 30 frozen questions than it gains. False-alarm rate 2.1%; it flags the recorded degraded prompt; it catches a true −5 pp regression only 10% of the time at n=30 (`tests/regression/gate.json`).
 
 ## Cost
 3,397 Claude calls, $10.84 at API list price as reported by the CLI (`total_cost_usd`), all evaluation included.
 
 ## Limitations
-- BIRD databases are tiny compared with a warehouse, and the 84-table pooled index is only a proxy.
-  There is no column pruning or LLM re-ranker.
-- One model draw per configuration at the CLI's default temperature. Single-run deltas carry the
-  noise above.
-- 10 of the 200 self-consistency prompts cannot be replayed byte-identically: they were generated
-  before a determinism fix in FK-table expansion. Every reported number comes from the recorded run
-  files, which do not need replay.
-- The Olist sets were written by one author, and the ambiguity set has n=20.
-- Latency numbers include CLI process start-up, so they are not shown as a headline.
-- Production mapping (identity-based access, catalog, feedback, CI evals, cost controls):
-  `docs/production_readiness.md`.
+- BIRD schemas are tiny next to a warehouse; the 84-table pooled index is only a proxy (no column pruning, no LLM re-ranker).
+- One draw per configuration at the CLI's default temperature, so single-run deltas carry the noise above.
+- 10 of 200 self-consistency prompts predate a determinism fix and do not replay byte-identically; reported numbers come from the recorded run files.
+- The Olist question sets, definitions and gold SQL were written for this repo (every query executed); the ambiguity set has n=20.
+- Latency includes CLI process start-up, so it is not a headline. Production mapping: `docs/production_readiness.md`.

@@ -98,8 +98,9 @@ one). The agent should ask, not guess.
 - Neither asked on any of the 20 clear controls.
 
 ## Limitations
-- 50 questions, 30 of them metric questions. Definitions, gold SQL, variants and compiler come from
-  one author, so the governed definitions are partly self-consistent by construction.
+- 50 questions, 30 of them metric questions. Definitions, gold SQL, variants and compiler were all
+  written for this repo (every query executed), so the governed definitions are partly
+  self-consistent by construction.
 - Paraphrase consistency: "4/4 vs 2/4" is a difference of 2 groups.
 - The compiler fixes output column order (dimensions, period, metrics), and gold was written to the
   same convention. The compiler arm therefore gets formatting alignment for free.
