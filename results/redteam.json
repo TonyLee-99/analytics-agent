@@ -591,7 +591,7 @@
         "id": "attach",
         "category": "attach",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/private/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/evil.duckdb\" - file system opera"
+        "error": "PermissionException: Permission Error: Cannot access file \"<tmp>/evil.duckdb\" - file system operations are disabled by configuration"
       },
       {
         "id": "detach",
@@ -603,13 +603,13 @@
         "id": "copy_out",
         "category": "file",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/orders.csv\" - file system operations are"
+        "error": "PermissionException: Permission Error: Cannot access file \"<tmp>/orders.csv\" - file system operations are disabled by configuration"
       },
       {
         "id": "export",
         "category": "file",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/dump/customers.csv\" - file system operat"
+        "error": "PermissionException: Permission Error: Cannot access file \"<tmp>/dump/customers.csv\" - file system operations are disabled by configuration"
       },
       {
         "id": "install",
@@ -885,7 +885,7 @@
         "ok": false,
         "error": "ResultTooLarge: result exceeds 20 MB",
         "bytes_returned": 0,
-        "peak_rss_growth_mb": 0.0
+        "peak_rss_grew_over_100mb": false
       },
       {
         "dialect": "sqlite",
@@ -893,7 +893,7 @@
         "ok": true,
         "error": "",
         "bytes_returned": 8,
-        "peak_rss_growth_mb": 0.0
+        "peak_rss_grew_over_100mb": false
       },
       {
         "dialect": "duckdb",
@@ -901,7 +901,7 @@
         "ok": false,
         "error": "ResultTooLarge: result exceeds 20 MB",
         "bytes_returned": 0,
-        "peak_rss_growth_mb": 0.0
+        "peak_rss_grew_over_100mb": false
       }
     ],
     "max_bytes_returned": 8

@@ -12,3 +12,6 @@
   `bird_mini_dev_manifest.json` (revision string `colleague_review_fixes_20261025`).
 - What we cannot verify: the card does not publish predictions, the decoding temperature or the
   extraction code, so we cannot check that the 59.60 was computed exactly this way.
+
+`mini_dev_sqlite.jsonl` is a verbatim copy of the 500 questions + gold SQL (CC BY-SA 4.0, BIRD team),
+vendored so that the analyses run on a fresh clone. The databases are not vendored (`make data`).

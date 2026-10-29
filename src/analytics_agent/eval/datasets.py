@@ -40,6 +40,8 @@ def bird_db_path(db_id: str) -> str:
 @lru_cache(maxsize=1)
 def _baseline_prompts() -> dict[int, str]:
     out = {}
+    if not BIRD_BASELINE_PROMPTS.exists():  # fresh clone without `make data`: prompts only needed for live runs
+        return out
     with open(BIRD_BASELINE_PROMPTS) as f:
         for line in f:
             r = json.loads(line)
@@ -49,7 +51,9 @@ def _baseline_prompts() -> dict[int, str]:
 
 def load_bird(ids: list[int] | None = None) -> list[Task]:
     tasks = []
-    with open(BIRD_QUESTIONS) as f:
+    # the 2026 question file is vendored (CC BY-SA 4.0) so analyses run on a fresh clone without `make data`
+    qpath = BIRD_QUESTIONS if BIRD_QUESTIONS.exists() else EVAL_SETS / "provenance" / "mini_dev_sqlite.jsonl"
+    with open(qpath) as f:
         for line in f:
             r = json.loads(line)
             if ids is not None and r["question_id"] not in ids:
