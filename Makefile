@@ -31,8 +31,9 @@ retrieval:        ## table-retrieval recall (no LLM)
 eval-small:       ## 20-question smoke eval (Haiku, full pipeline)
 	$(PY) scripts/run_evals.py --plan small
 
-eval-full:        ## all BIRD runs in the README (Haiku chain on 500, Sonnet/SC on sub200)
+eval-full:        ## all BIRD runs in the README (Haiku chain on 500, then Sonnet/a2/SC on sub200)
 	$(PY) scripts/run_evals.py --plan full
+	$(PY) scripts/run_evals.py --plan sub
 
 eval-qwen:        ## local qwen2.5:7b via Ollama (slow: ~1 min/question)
 	$(PY) scripts/run_evals.py --plan qwen
@@ -43,10 +44,10 @@ semantic:         ## Olist: raw SQL vs glossary vs governed semantic layer
 ambiguity:        ## Olist: clarification on ambiguous questions vs clear controls
 	$(PY) -m analytics_agent.eval.olist_experiments ambiguity
 
-abstention:
-	$(PY) -m analytics_agent.eval.run --suite olist --config olist_semantic --n-samples 5 --workers 1
+abstention:       ## risk-coverage curves (BIRD sub200 SC x5 from eval-full; Olist raw arm SC x5) + noise floor
 	$(PY) -m analytics_agent.eval.run --suite olist --config olist_raw --n-samples 5 --workers 1
 	$(PY) -m analytics_agent.eval.analysis abstention
+	$(PY) scripts/noise_floor.py
 
 routing:
 	$(PY) -m analytics_agent.eval.analysis routing
@@ -62,6 +63,8 @@ traces:
 
 report:
 	$(PY) -m analytics_agent.eval.analysis ablations
+	$(PY) scripts/error_analysis.py
+	$(PY) scripts/compare_sister_metrics.py
 	$(PY) -m analytics_agent.llm.ledger
 
 gate:             ## CI regression gate (replay only, no network)

@@ -1,0 +1,454 @@
+{
+  "full500": [
+    {
+      "n": 500,
+      "ex": 62.6,
+      "ci95": [
+        58.3,
+        66.7
+      ],
+      "by_difficulty": {
+        "simple": [
+          62.5,
+          8
+        ],
+        "moderate": [
+          71.9,
+          32
+        ],
+        "challenging": [
+          62.0,
+          460
+        ]
+      },
+      "cost_per_q": 0.00158,
+      "p50_s": 9.1,
+      "p95_s": 15.3,
+      "in_tok": 4647,
+      "out_tok": 1297,
+      "calls_per_q": 1.0,
+      "ex_excl_dev20": 63.12,
+      "label": "(a) zero-shot, official BIRD prompt, full schema"
+    },
+    {
+      "n": 500,
+      "ex": 69.8,
+      "ci95": [
+        65.6,
+        73.7
+      ],
+      "by_difficulty": {
+        "simple": [
+          75.0,
+          8
+        ],
+        "moderate": [
+          43.8,
+          32
+        ],
+        "challenging": [
+          71.5,
+          460
+        ]
+      },
+      "cost_per_q": 0.00171,
+      "p50_s": 10.6,
+      "p95_s": 17.3,
+      "in_tok": 5673,
+      "out_tok": 1153,
+      "calls_per_q": 1.0,
+      "ex_excl_dev20": 69.79,
+      "vs_previous": {
+        "only_a": 57,
+        "only_b": 93,
+        "p_value": 0.00411
+      },
+      "label": "(b) + our prompt, schema retrieval (BM25 top-6 + FK)"
+    },
+    {
+      "n": 500,
+      "ex": 71.6,
+      "ci95": [
+        67.5,
+        75.4
+      ],
+      "by_difficulty": {
+        "simple": [
+          62.5,
+          8
+        ],
+        "moderate": [
+          65.6,
+          32
+        ],
+        "challenging": [
+          72.2,
+          460
+        ]
+      },
+      "cost_per_q": 0.00176,
+      "p50_s": 9.6,
+      "p95_s": 16.4,
+      "in_tok": 6196,
+      "out_tok": 1072,
+      "calls_per_q": 1.0,
+      "ex_excl_dev20": 71.46,
+      "vs_previous": {
+        "only_a": 38,
+        "only_b": 47,
+        "p_value": 0.38567
+      },
+      "label": "(c) + 3 retrieved verified examples"
+    },
+    {
+      "n": 500,
+      "ex": 73.2,
+      "ci95": [
+        69.2,
+        76.9
+      ],
+      "by_difficulty": {
+        "simple": [
+          62.5,
+          8
+        ],
+        "moderate": [
+          62.5,
+          32
+        ],
+        "challenging": [
+          74.1,
+          460
+        ]
+      },
+      "cost_per_q": 0.00183,
+      "p50_s": 9.5,
+      "p95_s": 18.5,
+      "in_tok": 6418,
+      "out_tok": 1119,
+      "calls_per_q": 1.03,
+      "ex_excl_dev20": 72.92,
+      "vs_previous": {
+        "only_a": 7,
+        "only_b": 15,
+        "p_value": 0.1338
+      },
+      "label": "(d) + self-correction (<=2 rounds, value hints)"
+    }
+  ],
+  "sub200": [
+    {
+      "label": "qwen2.5:7b local, (a) official prompt",
+      "missing": true,
+      "n": 113
+    },
+    {
+      "n": 200,
+      "ex": 13.5,
+      "ci95": [
+        9.4,
+        18.9
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          46.2,
+          13
+        ],
+        "challenging": [
+          9.4,
+          181
+        ]
+      },
+      "cost_per_q": 0.0,
+      "p50_s": 25.8,
+      "p95_s": 154.1,
+      "in_tok": 6359,
+      "out_tok": 353,
+      "calls_per_q": 1.62,
+      "label": "qwen2.5:7b local, (d) full pipeline",
+      "model": "qwen",
+      "stem": "bird__d_selfcorrect__qwen__sub200"
+    },
+    {
+      "n": 200,
+      "ex": 69.5,
+      "ci95": [
+        62.8,
+        75.5
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          76.9,
+          13
+        ],
+        "challenging": [
+          69.1,
+          181
+        ]
+      },
+      "cost_per_q": 0.00158,
+      "p50_s": 9.1,
+      "p95_s": 14.6,
+      "in_tok": 4572,
+      "out_tok": 1339,
+      "calls_per_q": 1.0,
+      "label": "haiku (a) official prompt",
+      "model": "haiku",
+      "stem": "bird__a_zeroshot_official__haiku",
+      "vs_haiku_a": {
+        "only_a": 0,
+        "only_b": 0,
+        "p_value": 1.0
+      }
+    },
+    {
+      "n": 200,
+      "ex": 76.5,
+      "ci95": [
+        70.2,
+        81.8
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          61.5,
+          13
+        ],
+        "challenging": [
+          77.9,
+          181
+        ]
+      },
+      "cost_per_q": 0.00173,
+      "p50_s": 10.0,
+      "p95_s": 15.3,
+      "in_tok": 5872,
+      "out_tok": 1123,
+      "calls_per_q": 1.0,
+      "label": "haiku (a2) our prompt, full schema",
+      "model": "haiku",
+      "stem": "bird__a2_ourprompt_full__haiku__sub200",
+      "vs_haiku_a": {
+        "only_a": 21,
+        "only_b": 35,
+        "p_value": 0.08143
+      }
+    },
+    {
+      "n": 200,
+      "ex": 72.0,
+      "ci95": [
+        65.4,
+        77.8
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          53.8,
+          13
+        ],
+        "challenging": [
+          73.5,
+          181
+        ]
+      },
+      "cost_per_q": 0.00168,
+      "p50_s": 10.6,
+      "p95_s": 18.5,
+      "in_tok": 5551,
+      "out_tok": 1135,
+      "calls_per_q": 1.0,
+      "label": "haiku (b) retrieval",
+      "model": "haiku",
+      "stem": "bird__b_retrieval__haiku",
+      "vs_haiku_a": {
+        "only_a": 29,
+        "only_b": 34,
+        "p_value": 0.61466
+      }
+    },
+    {
+      "n": 200,
+      "ex": 74.0,
+      "ci95": [
+        67.5,
+        79.6
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          76.9,
+          13
+        ],
+        "challenging": [
+          74.0,
+          181
+        ]
+      },
+      "cost_per_q": 0.00172,
+      "p50_s": 9.4,
+      "p95_s": 16.8,
+      "in_tok": 6081,
+      "out_tok": 1041,
+      "calls_per_q": 1.0,
+      "label": "haiku (c) few-shot",
+      "model": "haiku",
+      "stem": "bird__c_fewshot__haiku",
+      "vs_haiku_a": {
+        "only_a": 25,
+        "only_b": 34,
+        "p_value": 0.2976
+      }
+    },
+    {
+      "n": 200,
+      "ex": 74.5,
+      "ci95": [
+        68.0,
+        80.0
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          69.2,
+          13
+        ],
+        "challenging": [
+          75.1,
+          181
+        ]
+      },
+      "cost_per_q": 0.00177,
+      "p50_s": 9.3,
+      "p95_s": 18.0,
+      "in_tok": 6208,
+      "out_tok": 1094,
+      "calls_per_q": 1.02,
+      "label": "haiku (d) self-correction",
+      "model": "haiku",
+      "stem": "bird__d_selfcorrect__haiku",
+      "vs_haiku_a": {
+        "only_a": 25,
+        "only_b": 35,
+        "p_value": 0.24506
+      }
+    },
+    {
+      "label": "haiku (e) self-consistency x5 (vote)",
+      "missing": true,
+      "n": 78
+    },
+    {
+      "n": 200,
+      "ex": 86.0,
+      "ci95": [
+        80.5,
+        90.1
+      ],
+      "by_difficulty": {
+        "simple": [
+          83.3,
+          6
+        ],
+        "moderate": [
+          92.3,
+          13
+        ],
+        "challenging": [
+          85.6,
+          181
+        ]
+      },
+      "cost_per_q": 0.03022,
+      "p50_s": 10.9,
+      "p95_s": 18.8,
+      "in_tok": 6267,
+      "out_tok": 515,
+      "calls_per_q": 1.03,
+      "label": "sonnet (d) full pipeline",
+      "model": "sonnet",
+      "stem": "bird__d_selfcorrect__sonnet__sub200",
+      "vs_haiku_a": {
+        "only_a": 17,
+        "only_b": 50,
+        "p_value": 7e-05
+      }
+    }
+  ],
+  "pairs_sub200": [
+    {
+      "comparison": "retrieval vs full schema (same prompt)",
+      "n": 200,
+      "ex_a": 76.5,
+      "ex_b": 72.0,
+      "only_a": 18,
+      "only_b": 9,
+      "p_value": 0.12208
+    },
+    {
+      "comparison": "our prompt vs official prompt (full schema)",
+      "n": 200,
+      "ex_a": 69.5,
+      "ex_b": 76.5,
+      "only_a": 21,
+      "only_b": 35,
+      "p_value": 0.08143
+    },
+    {
+      "comparison": "few-shot vs none",
+      "n": 200,
+      "ex_a": 72.0,
+      "ex_b": 74.0,
+      "only_a": 15,
+      "only_b": 19,
+      "p_value": 0.60759
+    },
+    {
+      "comparison": "self-correction vs none",
+      "n": 200,
+      "ex_a": 74.0,
+      "ex_b": 74.5,
+      "only_a": 2,
+      "only_b": 3,
+      "p_value": 1.0
+    },
+    {
+      "comparison": "sonnet vs haiku (both full pipeline)",
+      "n": 200,
+      "ex_a": 74.5,
+      "ex_b": 86.0,
+      "only_a": 13,
+      "only_b": 36,
+      "p_value": 0.0014
+    },
+    {
+      "comparison": "haiku vs qwen2.5:7b (both full pipeline)",
+      "n": 200,
+      "ex_a": 13.5,
+      "ex_b": 74.5,
+      "only_a": 3,
+      "only_b": 125,
+      "p_value": 0.0
+    }
+  ]
+}

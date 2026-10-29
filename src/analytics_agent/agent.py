@@ -288,6 +288,7 @@ class Agent:
             "final_ok": chosen.ok, "n_rows": chosen.result.n_rows if chosen.result else 0,
             "retrieval_top_score": retr_score, "used_semantic": chosen.used_semantic,
             "metric_query": chosen.metric_query,
+            "sample_sqls": [c.sql for c in cands] if len(cands) > 1 else None,
         }
         res = chosen.result
         status = "answered" if (res is not None and res.ok) else "failed"

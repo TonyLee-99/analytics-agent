@@ -25,10 +25,7 @@ PLANS = {
         ("bird", "b_retrieval", "haiku", None, 4, None),
         ("bird", "c_fewshot", "haiku", None, 4, None),
         ("bird", "d_selfcorrect", "haiku", None, 4, None),
-        ("bird", "a2_ourprompt_full", "haiku", "sub200", 4, None),
-        ("bird", "d_selfcorrect", "sonnet", "sub200", 4, None),
-        ("bird", "e_sc5", "haiku", "sub200", 1, None),
-    ],
+    ],  # then run --plan sub (Sonnet, a2, self-consistency on the frozen subset)
     "sub": [  # budget-limited runs on the frozen subset (can run in parallel with "full")
         ("bird", "d_selfcorrect", "sonnet", "sub200", 4, None),
         ("bird", "a2_ourprompt_full", "haiku", "sub200", 4, None),

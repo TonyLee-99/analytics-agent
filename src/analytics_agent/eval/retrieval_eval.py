@@ -3,7 +3,7 @@
 recall@k = share of questions for which *every* gold table is in the retrieved set (strict: one
 missing table usually means a wrong query). Reported per method, k, and with/without FK bridging,
 both inside each database and at "warehouse scale" (all 11 BIRD DBs + Olist pooled into one index
-of 85 tables, the setting Pinterest/LinkedIn face).
+of 84 tables, the setting Pinterest/LinkedIn face).
 Run: uv run python -m analytics_agent.eval.retrieval_eval
 """
 

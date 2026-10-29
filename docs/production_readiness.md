@@ -38,7 +38,7 @@ something measured in this repo, the number is cited with the file that produces
 - **What this repo measured.**
   - Inside one BIRD database, BM25 plus FK expansion reaches strict all-gold-tables recall of 0.986
     at k=6. These databases have only 3–13 tables, so retrieval barely prunes there.
-  - At "warehouse scale", with all 11 BIRD databases plus Olist pooled into one index of 85 tables,
+  - At "warehouse scale", with all 11 BIRD databases plus Olist pooled into one index of 84 tables,
     strict recall@10 falls to 0.904 (BM25) and 0.946 (hybrid BM25 + bge-small with RRF), and top-1
     database routing is 0.97–0.99.
   - That gap is where production effort goes: re-ranking, workspaces, and certified-table boosts.
