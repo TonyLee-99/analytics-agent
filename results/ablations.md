@@ -16,14 +16,14 @@ EX = BIRD execution accuracy (set equality of result rows). 95% Wilson CI. p = e
 
 | system | EX % | 95% CI | Δ vs haiku (a) (p) | $/q | p50 s | p95 s | calls/q |
 |---|---|---|---|---|---|---|---|
-| qwen2.5:7b local, (a) official prompt | (incomplete: 113) |||||||
+| qwen2.5:7b local, (a) official prompt | **7.5** | 4.6–12.0 | – | 0.0000 | 35.2 | 66.3 | 1.0 |
 | qwen2.5:7b local, (d) full pipeline | **13.5** | 9.4–18.9 | – | 0.0000 | 25.8 | 154.1 | 1.62 |
 | haiku (a) official prompt | **69.5** | 62.8–75.5 | +0/-0 (p=1.0) | 0.0016 | 9.1 | 14.6 | 1.0 |
 | haiku (a2) our prompt, full schema | **76.5** | 70.2–81.8 | +35/-21 (p=0.08143) | 0.0017 | 10.0 | 15.3 | 1.0 |
 | haiku (b) retrieval | **72.0** | 65.4–77.8 | +34/-29 (p=0.61466) | 0.0017 | 10.6 | 18.5 | 1.0 |
 | haiku (c) few-shot | **74.0** | 67.5–79.6 | +34/-25 (p=0.2976) | 0.0017 | 9.4 | 16.8 | 1.0 |
 | haiku (d) self-correction | **74.5** | 68.0–80.0 | +35/-25 (p=0.24506) | 0.0018 | 9.3 | 18.0 | 1.02 |
-| haiku (e) self-consistency x5 (vote) | (incomplete: 78) |||||||
+| haiku (e) self-consistency x5 (vote) | **76.5** (sample-0: 75.5) | 70.2–81.8 | +36/-22 (p=0.08695) | 0.0063 | 10.9 | 21.1 | 5.02 |
 | sonnet (d) full pipeline | **86.0** | 80.5–90.1 | +50/-17 (p=7e-05) | 0.0302 | 10.9 | 18.8 | 1.03 |
 
 ## Paired comparisons on sub200 (one change at a time; exact McNemar)
@@ -34,5 +34,6 @@ EX = BIRD execution accuracy (set equality of result rows). 95% Wilson CI. p = e
 | our prompt vs official prompt (full schema) | 200 | 69.5 | 76.5 | 35 | 21 | 0.08143 |
 | few-shot vs none | 200 | 72.0 | 74.0 | 19 | 15 | 0.60759 |
 | self-correction vs none | 200 | 74.0 | 74.5 | 3 | 2 | 1.0 |
+| self-consistency x5 vote vs single | 200 | 74.5 | 76.5 | 10 | 6 | 0.4545 |
 | sonnet vs haiku (both full pipeline) | 200 | 74.5 | 86.0 | 36 | 13 | 0.0014 |
 | haiku vs qwen2.5:7b (both full pipeline) | 200 | 13.5 | 74.5 | 125 | 3 | 0.0 |

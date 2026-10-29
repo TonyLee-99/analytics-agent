@@ -1,0 +1,17 @@
+{
+  "n_questions": 190,
+  "skipped_not_in_cache": 10,
+  "uncached_calls_during_replay": 0,
+  "ex_per_draw": [
+    70.0,
+    74.2,
+    74.2,
+    73.2
+  ],
+  "ex_mean": 72.89,
+  "ex_std": 1.99,
+  "max_abs_diff_between_two_draws_pp": 4.2,
+  "share_of_questions_flipping_between_two_draws": 0.135,
+  "min_pairwise_mcnemar_p": 0.1338,
+  "oracle_any_of_5_correct": 87.4
+}

@@ -1,0 +1,52 @@
+{
+  "haiku_sc5_then_sonnet": {
+    "threshold": 0.8,
+    "n": 200,
+    "ex": 81.5,
+    "escalation_rate": 0.165,
+    "cost_per_q": 0.01216,
+    "p50_s": 11.1,
+    "p95_s": 31.9
+  },
+  "haiku_single_then_sonnet": {
+    "threshold": "escalate on any problem/correction",
+    "n": 200,
+    "ex": 75.5,
+    "escalation_rate": 0.015,
+    "cost_per_q": 0.00253,
+    "p50_s": 9.3,
+    "p95_s": 16.8
+  },
+  "threshold_sweep": [
+    {
+      "threshold": 0.2,
+      "ex": 76.5,
+      "cost_per_q": 0.00632
+    },
+    {
+      "threshold": 0.4,
+      "ex": 76.0,
+      "cost_per_q": 0.00722
+    },
+    {
+      "threshold": 0.6,
+      "ex": 77.0,
+      "cost_per_q": 0.00816
+    },
+    {
+      "threshold": 0.8,
+      "ex": 82.0,
+      "cost_per_q": 0.01217
+    },
+    {
+      "threshold": 1.0,
+      "ex": 84.5,
+      "cost_per_q": 0.01633
+    },
+    {
+      "threshold": 1.01,
+      "ex": 86.0,
+      "cost_per_q": 0.03653
+    }
+  ]
+}

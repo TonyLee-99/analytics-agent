@@ -53,3 +53,17 @@ def test_clarify_short_circuits(toy_duck):
     llm = MockLLM("CLARIFY: Do you want revenue including freight or item price only?")
     ans = Agent(llm, AgentConfig(schema_mode="full", allow_clarify=True)).ask("What was revenue?", "toy")
     assert ans.status == "clarify" and "freight" in ans.clarification and ans.sql == ""
+
+
+def test_fk_bridging_is_deterministic():
+    """Tied shortest FK paths must resolve the same way in every process (set order is hash-randomized),
+    otherwise prompts -- and therefore cache keys and recorded regression responses -- drift between runs."""
+    from analytics_agent.catalog import Column, DatabaseCatalog, Table
+    from analytics_agent.retrieval import SchemaRetriever
+
+    def t(name, fks=()):
+        return Table(name, [Column("id", "INT")], fks=list(fks))
+    cat = DatabaseCatalog("tie", "sqlite", "", [
+        t("alpha"), t("gamma", [("id", "alpha", "id"), ("id", "delta", "id")]),
+        t("beta", [("id", "alpha", "id"), ("id", "delta", "id")]), t("delta")])
+    assert SchemaRetriever(cat)._bridge(["alpha", "delta"]) == ["beta"]

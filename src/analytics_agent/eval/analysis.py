@@ -305,24 +305,44 @@ def frontier() -> dict:
         if k != "threshold_sweep":
             pts.append((f"routed: {k}", v["ex"], v["cost_per_q"], v["p95_s"], "routed"))
     colors = {"qwen": "#3a9e5c", "haiku": "#2a6fdb", "sonnet": "#e07b39", "routed": "#8e5bd8"}
-    for xkey, xlabel, fname in [(2, "mean $ per question (log scale; local qwen plotted at $0.00001)", "frontier_cost"),
-                                (3, "p95 end-to-end latency per question (s)", "frontier_latency")]:
-        fig, ax = plt.subplots(figsize=(7.2, 4.6), dpi=130)
+    short = {"qwen2.5:7b local, (a) official prompt": "Q-a", "qwen2.5:7b local, (d) full pipeline": "Q-d",
+             "haiku (a) official prompt": "H-a", "haiku (a2) our prompt, full schema": "H-a2", "haiku (b) retrieval": "H-b",
+             "haiku (c) few-shot": "H-c", "haiku (d) self-correction": "H-d", "haiku (e) self-consistency x5 (vote)": "H-SC5",
+             "sonnet (d) full pipeline": "S-d", "routed: haiku_sc5_then_sonnet": "R: H-SC5 → S",
+             "routed: haiku_single_then_sonnet": "R: H-d → S"}
+    for xkey, xlabel, fname in [(2, "mean USD per question (log scale; local qwen drawn at 1e-5 = $0 marginal)", "frontier_cost"),
+                                (3, "p95 end-to-end latency per question (s, log scale)", "frontier_latency")]:
+        fig, ax = plt.subplots(figsize=(7.4, 4.8), dpi=130)
+        placed: list[tuple[float, float]] = []
         for label, ex, cost, p95, model in pts:
             x = max(cost, 1e-5) if xkey == 2 else p95
             ax.scatter(x, ex, color=colors[model], s=46, zorder=3)
-            ax.annotate(label.replace("haiku ", "H ").replace("sonnet ", "S ").replace("qwen2.5:7b local, ", "Q "),
-                        (x, ex), fontsize=6.5, xytext=(4, 3), textcoords="offset points")
-        if xkey == 2:
-            ax.set_xscale("log")
-        ax.set_xlabel(xlabel)
+            code = short.get(label, label)
+            # hand-placed label offsets (points) so the dense Haiku cluster stays readable
+            if xkey == 2:
+                off = {"H-a": (-58, -14), "H-b": (-58, -4), "H-c": (-58, 6), "H-d": (-58, 16), "H-a2": (-58, 26),
+                       "R: H-d → S": (6, -14)}.get(code, (6, -3))
+            else:
+                off = {"H-a": (40, -40), "H-b": (40, -28), "H-c": (40, -16), "H-d": (-40, 22), "H-a2": (-40, 34),
+                       "R: H-d → S": (40, -52)}.get(code, (6, -3))
+            placed.append((x, ex))
+            ax.annotate(code, (x, ex), fontsize=7.5, xytext=off, textcoords="offset points",
+                        arrowprops={"arrowstyle": "-", "color": "#999999", "lw": 0.6} if abs(off[0]) > 6 else None)
+        ax.set_xscale("log")
+        if xkey == 3:
+            ax.set_xlim(8, 250)
+        ax.set_xlabel(xlabel.replace("$", r"\$"))
         ax.set_ylabel("BIRD EX on frozen sub200 (%)")
         ax.grid(alpha=0.25)
         for m, c in colors.items():
             ax.scatter([], [], color=c, label=m)
-        ax.legend(fontsize=8, frameon=False, loc="lower right")
-        ax.set_title("Cost-quality frontier (each point = one configuration, same 200 questions)", fontsize=10)
-        fig.tight_layout()
+        ax.legend(fontsize=8, frameon=False, loc="center right")
+        ax.set_title(("Cost" if xkey == 2 else "Latency") + "-quality frontier (each point = one configuration, "
+                     "same 200 questions)", fontsize=10)
+        fig.text(0.01, 0.005, "H=Haiku 5.5  S=Sonnet 5.5  Q=qwen2.5:7b | a=official prompt  a2=our prompt  b=+retrieval  "
+                 "c=+few-shot\nd=+self-correction  SC5=5-sample vote  R=routed (cheap first, escalate on low confidence)",
+                 fontsize=6.5, color="#555555")
+        fig.tight_layout(rect=(0, 0.05, 1, 1))
         IMG.mkdir(parents=True, exist_ok=True)
         fig.savefig(IMG / f"{fname}.png")
         plt.close(fig)

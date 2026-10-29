@@ -132,7 +132,7 @@ class SchemaRetriever:
                 while prev[path[-1]] is not None:
                     path.append(prev[path[-1]])
                 return path[::-1]
-            for y in self.graph.get(x, ()):
+            for y in sorted(self.graph.get(x, ())):  # sorted: set order is hash-randomized per process
                 if y not in prev:
                     prev[y] = x
                     dq.append(y)

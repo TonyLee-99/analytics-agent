@@ -9,3 +9,4 @@ traces/*.jsonl
 results/runs/
 *.duckdb
 *.duckdb.wal
+results/logs/*.log

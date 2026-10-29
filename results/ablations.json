@@ -138,9 +138,35 @@
   ],
   "sub200": [
     {
+      "n": 200,
+      "ex": 7.5,
+      "ci95": [
+        4.6,
+        12.0
+      ],
+      "by_difficulty": {
+        "simple": [
+          33.3,
+          6
+        ],
+        "moderate": [
+          15.4,
+          13
+        ],
+        "challenging": [
+          6.1,
+          181
+        ]
+      },
+      "cost_per_q": 0.0,
+      "p50_s": 35.2,
+      "p95_s": 66.3,
+      "in_tok": 2580,
+      "out_tok": 448,
+      "calls_per_q": 1.0,
       "label": "qwen2.5:7b local, (a) official prompt",
-      "missing": true,
-      "n": 113
+      "model": "qwen",
+      "stem": "bird__a_zeroshot_official__qwen__sub200"
     },
     {
       "n": 200,
@@ -354,9 +380,41 @@
       }
     },
     {
+      "n": 200,
+      "ex": 76.5,
+      "ci95": [
+        70.2,
+        81.8
+      ],
+      "by_difficulty": {
+        "simple": [
+          66.7,
+          6
+        ],
+        "moderate": [
+          84.6,
+          13
+        ],
+        "challenging": [
+          76.2,
+          181
+        ]
+      },
+      "cost_per_q": 0.00632,
+      "p50_s": 10.9,
+      "p95_s": 21.1,
+      "in_tok": 30620,
+      "out_tok": 5371,
+      "calls_per_q": 5.02,
       "label": "haiku (e) self-consistency x5 (vote)",
-      "missing": true,
-      "n": 78
+      "model": "haiku",
+      "stem": "bird__e_sc5__haiku__sub200",
+      "ex_sample0": 75.5,
+      "vs_haiku_a": {
+        "only_a": 22,
+        "only_b": 36,
+        "p_value": 0.08695
+      }
     },
     {
       "n": 200,
@@ -431,6 +489,15 @@
       "only_a": 2,
       "only_b": 3,
       "p_value": 1.0
+    },
+    {
+      "comparison": "self-consistency x5 vote vs single",
+      "n": 200,
+      "ex_a": 74.5,
+      "ex_b": 76.5,
+      "only_a": 6,
+      "only_b": 10,
+      "p_value": 0.4545
     },
     {
       "comparison": "sonnet vs haiku (both full pipeline)",

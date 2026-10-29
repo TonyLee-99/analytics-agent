@@ -1,4 +1,50 @@
 {
+  "bird_sub200": {
+    "agreement": {
+      "n": 200,
+      "ex_at_100": 76.5,
+      "ex_at_90": 78.89,
+      "ex_at_80": 82.5,
+      "ex_at_70": 85.71,
+      "ex_at_50": 84.0,
+      "aurc": 0.1871,
+      "auroc": 0.6923,
+      "ece": 0.148,
+      "brier": 0.1828
+    },
+    "logreg_oof": {
+      "n": 200,
+      "ex_at_100": 76.5,
+      "ex_at_90": 78.33,
+      "ex_at_80": 81.88,
+      "ex_at_70": 85.0,
+      "ex_at_50": 85.0,
+      "aurc": 0.1995,
+      "auroc": 0.6533,
+      "ece": 0.0755,
+      "brier": 0.1789
+    },
+    "single_sample_signals_only": {
+      "n": 200,
+      "ex_at_100": 76.5,
+      "ex_at_90": 76.11,
+      "ex_at_80": 75.0,
+      "ex_at_70": 75.71,
+      "ex_at_50": 74.0,
+      "aurc": 0.2733,
+      "auroc": 0.5181,
+      "ece": 0.225,
+      "brier": 0.2301
+    },
+    "features": [
+      "sc_agreement",
+      "main_in_majority",
+      "corrections",
+      "had_problem",
+      "retrieval_top",
+      "n_rows_log"
+    ]
+  },
   "olist_golden_raw": {
     "agreement": {
       "n": 50,
@@ -44,5 +90,22 @@
       "retrieval_top",
       "n_rows_log"
     ]
+  },
+  "olist_raw_agreement_by_outcome": {
+    "correct": {
+      "n": 32,
+      "mean_agreement": 0.806,
+      "share_with_agreement_ge_0.8": 0.688
+    },
+    "definition_drift": {
+      "n": 8,
+      "mean_agreement": 0.75,
+      "share_with_agreement_ge_0.8": 0.625
+    },
+    "other_wrong": {
+      "n": 10,
+      "mean_agreement": 0.72,
+      "share_with_agreement_ge_0.8": 0.5
+    }
   }
 }
