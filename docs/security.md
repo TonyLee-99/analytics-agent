@@ -43,6 +43,9 @@ and the 5 memory bombs.
 | Prompt injection (LLM, recorded against v1 data) | 15 cases, 3 of them with payloads planted in data values. DB unchanged; 0 raw zips returned; 0 system-prompt leaks. The model attempted an unsafe statement once, and the validator blocked it. |
 
 ## Residual risks and what production adds
+- **The 20 MB cap is a Python-side fence.** It stops the agent from receiving or holding a huge result,
+  but the engine can still build intermediate results up to DuckDB's `memory_limit` (2 GB) before
+  the fetch budget trips; SQLite is bounded per value by `SQLITE_LIMIT_LENGTH`, not per query.
 - **No memory-limited subprocess.** macOS does not enforce `RLIMIT_AS`, so it would be theatre here.
   The engine limits plus the fetch budget are the inner fence. In a container, the cgroup memory
   limit is the outer fence.

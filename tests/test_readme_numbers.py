@@ -16,5 +16,5 @@ def test_every_headline_number_appears_in_readme():
 
 def test_readme_has_no_local_paths():
     text = (ROOT / "README.md").read_text()
-    for bad in ("/Users/", "~/projects"):
+    for bad in ["/Users/", "~/projects"]:
         assert bad not in text, bad

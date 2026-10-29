@@ -1,5 +1,5 @@
 {
-  "validator_version": "db30f5f",
+  "validator_version": "v1 (scripts/legacy/guardrails_v1.py)",
   "attacks": 64,
   "allowed_by_v1": [
     {
