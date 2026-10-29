@@ -1,0 +1,375 @@
+{
+  "dev20": {
+    "a_zeroshot_official": {
+      "all500": 62.6,
+      "excl_dev20_n480": 63.12
+    },
+    "b_retrieval": {
+      "all500": 69.8,
+      "excl_dev20_n480": 69.79
+    },
+    "c_fewshot": {
+      "all500": 71.6,
+      "excl_dev20_n480": 71.46
+    },
+    "d_selfcorrect": {
+      "all500": 73.2,
+      "excl_dev20_n480": 72.92
+    },
+    "a_to_d_excl_dev20": {
+      "only_a": 52,
+      "only_b": 99,
+      "p_value": 0.00016
+    },
+    "note": "dev20 is disjoint from sub200, so every sub200 number is unaffected"
+  },
+  "noise": {
+    "flip_rate": 0.135,
+    "n_flip_estimate": 190,
+    "half_width_95_pp_of_a_run_vs_run_delta": {
+      "30": 13.1,
+      "50": 10.2,
+      "190": 5.2,
+      "200": 5.1,
+      "500": 3.2
+    },
+    "explanation": "two draws of the same system disagree on a share f of questions; the EX difference between them has SD ~ sqrt(f/n), so |delta| below 1.96*sqrt(f/n) is indistinguishable from redrawing. Draws had no self-correction: this is generation noise.",
+    "draw_ex_range": [
+      70.0,
+      74.2
+    ]
+  },
+  "subset": {
+    "a_zeroshot_official": {
+      "sub200": 69.5,
+      "other300": 58.0,
+      "z": 2.66
+    },
+    "d_selfcorrect": {
+      "sub200": 74.5,
+      "other300": 72.33,
+      "z": 0.54
+    }
+  },
+  "abstention": {
+    "n": 200,
+    "ex_all": 76.5,
+    "by_agreement_level": [
+      {
+        "agreement": 1.0,
+        "n": 139,
+        "ex": 86.33
+      },
+      {
+        "agreement": 0.8,
+        "n": 28,
+        "ex": 57.14
+      },
+      {
+        "agreement": 0.6,
+        "n": 26,
+        "ex": 50.0
+      },
+      {
+        "agreement": 0.4,
+        "n": 5,
+        "ex": 40.0
+      },
+      {
+        "agreement": 0.2,
+        "n": 2,
+        "ex": 100.0
+      }
+    ],
+    "operating_points": [
+      {
+        "answer_if_agreement_at_least": 1.0,
+        "coverage": 69.5,
+        "ex_answered": 86.33,
+        "gain_vs_answer_all_pp": 9.83,
+        "gain_ci95_pp": [
+          5.246,
+          14.625
+        ]
+      },
+      {
+        "answer_if_agreement_at_least": 0.8,
+        "coverage": 83.5,
+        "ex_answered": 81.44,
+        "gain_vs_answer_all_pp": 4.94,
+        "gain_ci95_pp": [
+          1.778,
+          8.44
+        ]
+      },
+      {
+        "answer_if_agreement_at_least": 0.6,
+        "coverage": 96.5,
+        "ex_answered": 77.2,
+        "gain_vs_answer_all_pp": 0.7,
+        "gain_ci95_pp": [
+          -0.513,
+          2.166
+        ]
+      }
+    ],
+    "ex_at_exactly_80pct_coverage_over_tie_seeds": {
+      "min": 80.6,
+      "mean": 82.51,
+      "max": 84.4
+    },
+    "auroc": 0.6923,
+    "auroc_ci95": [
+      0.614,
+      0.773
+    ],
+    "share_of_pos_neg_pairs_tied": 0.368,
+    "oracle_any_of_5_correct": 87.4
+  },
+  "fewshot": {
+    "<0.5": {
+      "n": 391,
+      "ex_without_examples": 70.84,
+      "ex_with_examples": 70.33,
+      "only_a": 35,
+      "only_b": 33,
+      "p_value": 0.9036
+    },
+    "0.5-0.6": {
+      "n": 74,
+      "ex_without_examples": 60.81,
+      "ex_with_examples": 71.62,
+      "only_a": 2,
+      "only_b": 10,
+      "p_value": 0.03857
+    },
+    "0.6-0.7": {
+      "n": 35,
+      "ex_without_examples": 77.14,
+      "ex_with_examples": 85.71,
+      "only_a": 1,
+      "only_b": 4,
+      "p_value": 0.375
+    },
+    "definition": "max token-Jaccard between any of the 3 retrieved example SQLs and the test question's gold SQL"
+  },
+  "vote": {
+    "vote_ex": 76.5,
+    "own_sample0_ex": 75.5,
+    "vote_gain_pp": 1.0,
+    "vote_vs_sample0": {
+      "only_a": 5,
+      "only_b": 7,
+      "p_value": 0.77441
+    },
+    "d_first_drafts_regenerated_not_replayed": 60,
+    "selfcorrection_within_run": {
+      "fired": 14,
+      "fixed": 9,
+      "gain_ci95_pp": [
+        0.9,
+        3.4
+      ]
+    }
+  },
+  "cost": {
+    "price_sheet_per_mtok": {
+      "claude-haiku-5-5": {
+        "in": 0.1,
+        "write": 0.2,
+        "read": 0.01,
+        "out": 0.5
+      },
+      "claude-sonnet-5-5": {
+        "in": 2.0,
+        "write": 4.0,
+        "read": 0.2,
+        "out": 10.0
+      }
+    },
+    "scenarios": {
+      "recorded": {
+        "sonnet_only_cost_per_q": 0.03022,
+        "haiku_single_cost_per_q": 0.00177,
+        "routed": [
+          {
+            "threshold": 0.8,
+            "ex": 82.0,
+            "cost_per_q": 0.01217,
+            "share_of_sonnet_cost": 0.403
+          },
+          {
+            "threshold": 1.0,
+            "ex": 84.5,
+            "cost_per_q": 0.01633,
+            "share_of_sonnet_cost": 0.54
+          }
+        ]
+      },
+      "none": {
+        "sonnet_only_cost_per_q": 0.01769,
+        "haiku_single_cost_per_q": 0.00117,
+        "routed": [
+          {
+            "threshold": 0.8,
+            "ex": 82.0,
+            "cost_per_q": 0.00935,
+            "share_of_sonnet_cost": 0.529
+          },
+          {
+            "threshold": 1.0,
+            "ex": 84.5,
+            "cost_per_q": 0.0118,
+            "share_of_sonnet_cost": 0.667
+          }
+        ]
+      }
+    },
+    "oracle_router_ex": 91.5,
+    "oracle_escalation_rate": 0.235,
+    "note": "token counts and recorded costs come from the CLI usage fields; Sonnet calls ran in one burst and never got prompt-cache reads, Haiku calls got 21.8% reads, so 'none' is the like-for-like view"
+  },
+  "semantic": {
+    "pairs": [
+      {
+        "a": "raw",
+        "b": "glossary",
+        "questions": "metric",
+        "n": 30,
+        "correct_a": 14,
+        "correct_b": 27,
+        "only_a": 1,
+        "only_b": 14,
+        "p_value": 0.00098
+      },
+      {
+        "a": "glossary",
+        "b": "semantic",
+        "questions": "metric",
+        "n": 30,
+        "correct_a": 27,
+        "correct_b": 29,
+        "only_a": 0,
+        "only_b": 2,
+        "p_value": 0.5
+      },
+      {
+        "a": "raw",
+        "b": "semantic",
+        "questions": "metric",
+        "n": 30,
+        "correct_a": 14,
+        "correct_b": 29,
+        "only_a": 0,
+        "only_b": 15,
+        "p_value": 6e-05
+      },
+      {
+        "a": "glossary",
+        "b": "hybrid",
+        "questions": "all",
+        "n": 50,
+        "correct_a": 45,
+        "correct_b": 47,
+        "only_a": 0,
+        "only_b": 2,
+        "p_value": 0.5
+      },
+      {
+        "a": "semantic",
+        "b": "hybrid",
+        "questions": "all",
+        "n": 50,
+        "correct_a": 40,
+        "correct_b": 47,
+        "only_a": 0,
+        "only_b": 7,
+        "p_value": 0.01562
+      },
+      {
+        "a": "raw",
+        "b": "glossary",
+        "questions": "all",
+        "n": 50,
+        "correct_a": 32,
+        "correct_b": 45,
+        "only_a": 2,
+        "only_b": 15,
+        "p_value": 0.00235
+      }
+    ],
+    "raw_arm_agreement": {
+      "correct": {
+        "n": 32,
+        "agreement_values": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.6,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          0.8,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "pass_gate_at_0.8": 22,
+        "pass_gate_unanimous": 16
+      },
+      "definition_drift": {
+        "n": 8,
+        "agreement_values": [
+          0.4,
+          0.6,
+          0.6,
+          0.8,
+          0.8,
+          0.8,
+          1.0,
+          1.0
+        ],
+        "pass_gate_at_0.8": 5,
+        "pass_gate_unanimous": 2
+      },
+      "other_wrong": {
+        "n": 10,
+        "agreement_values": [
+          0.4,
+          0.4,
+          0.4,
+          0.6,
+          0.6,
+          0.8,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "pass_gate_at_0.8": 5,
+        "pass_gate_unanimous": 4
+      }
+    }
+  }
+}

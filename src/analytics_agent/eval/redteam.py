@@ -193,7 +193,7 @@ def availability_layer() -> dict:
         grew_mb = (resource.getrusage(resource.RUSAGE_SELF).ru_maxrss - before) / 1e6  # bytes on macOS
         returned = sum(len(v) if isinstance(v, bytes | str) else 8 for row in r.rows for v in row)
         out.append({"dialect": dialect, "sql": sql[:90], "ok": r.ok, "error": r.error[:120],
-                    "bytes_returned": returned, "peak_rss_growth_mb": round(grew_mb, 1)})
+                    "bytes_returned": returned, "peak_rss_grew_over_100mb": grew_mb > 100})
     return {"cases": out, "max_bytes_returned": max(c["bytes_returned"] for c in out)}
 
 
@@ -238,7 +238,8 @@ def bypass_layer() -> dict:
         for aid, dialect, sql, cat in ATTACKS:
             path = str(duck if dialect == "duckdb" else lite)
             r = execute(sql.replace("/tmp/", f"{tmp}/"), dialect, path, timeout_s=10, row_limit=5)
-            res.append({"id": aid, "category": cat, "executed_ok": r.ok, "error": r.error[:160]})
+            err = r.error.replace(str(Path(tmp).resolve()), "<tmp>").replace(tmp, "<tmp>")
+            res.append({"id": aid, "category": cat, "executed_ok": r.ok, "error": err[:160]})
         after = {"duckdb": _fingerprint_duckdb(str(duck)), "sqlite": _fingerprint_sqlite(str(lite))}
         stray = sorted(p.name for p in Path(tmp).iterdir() if p.name not in {duck.name, lite.name})
     writes = [r for r in res if r["executed_ok"] and r["category"] in {"ddl", "dml", "stacked", "attach", "file", "extension"}]
@@ -334,7 +335,8 @@ def main() -> None:
         report["llm_layer"] = llm_layer(args.model)
     elif out.exists() and "llm_layer" in json.loads(out.read_text()):  # keep the recorded LLM layer
         report["llm_layer"] = json.loads(out.read_text())["llm_layer"]
-    out.write_text(json.dumps(report, indent=2, default=str))
+    text = json.dumps(report, indent=2, default=str).replace(str(Path.home()), "~")  # no local paths in results
+    out.write_text(text)
     s = report["sql_layer"]
     print(f"SQL layer: {s['blocked']}/{s['attacks']} attacks blocked; benign tricky allowed "
           f"{s['benign_tricky_allowed']}/{s['benign_tricky']}; gold FPs {s['gold_false_positives']}/{s['gold_queries_checked']}")

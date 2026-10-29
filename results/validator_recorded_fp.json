@@ -4,121 +4,121 @@
   "rejected_now_that_were_correct": 0,
   "examples": [
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_452",
       "ex": 0,
       "error": "parse error: Expecting ). Line 25, Col: 28."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_470",
       "ex": 0,
       "error": "unknown table: element"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_084",
       "ex": 0,
       "error": "exactly one statement allowed, got 2"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_388",
       "ex": 0,
       "error": "exactly one statement allowed, got 2"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_063",
       "ex": 0,
       "error": "unknown table: printings"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_143",
       "ex": 0,
       "error": "unknown table: voteTypes"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_418",
       "ex": 0,
       "error": "parse error: Invalid expression / Unexpected token. Line 4, Col: 18."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_243",
       "ex": 0,
       "error": "parse error: Expecting ). Line 6, Col: 8."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_303",
       "ex": 0,
       "error": "unknown table: department"
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_047",
       "ex": 0,
       "error": "parse error: Invalid expression / Unexpected token. Line 13, Col: 21."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_041",
       "ex": 0,
       "error": "parse error: Expecting ). Line 9, Col: 46."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_067",
       "ex": 0,
       "error": "parse error: Invalid expression / Unexpected token. Line 4, Col: 25."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_029",
       "ex": 0,
       "error": "parse error: Expecting ). Line 5, Col: 20."
     },
     {
-      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl",
+      "run": "bird__a_zeroshot_official__qwen__sub200.jsonl.gz",
       "id": "bird_341",
       "ex": 0,
       "error": "parse error: TokenError: Error tokenizing '= 'Female' AND p.publisher_name = 'Marvel Comics'"
     },
     {
-      "run": "bird__b_retrieval__haiku.jsonl",
+      "run": "bird__b_retrieval__haiku.jsonl.gz",
       "id": "bird_217",
       "ex": 0,
       "error": "parse error: Required keyword: 'expression' missing for <class 'sqlglot.expressions.string.Replace'>"
     },
     {
-      "run": "bird__b_retrieval__haiku.jsonl",
+      "run": "bird__b_retrieval__haiku.jsonl.gz",
       "id": "bird_235",
       "ex": 0,
       "error": "exactly one statement allowed, got 2"
     },
     {
-      "run": "bird__c_fewshot__haiku.jsonl",
+      "run": "bird__c_fewshot__haiku.jsonl.gz",
       "id": "bird_214",
       "ex": 0,
       "error": "parse error: Required keyword: 'this' missing for <class 'sqlglot.expressions.core.LT'>. Line 12, Co"
     },
     {
-      "run": "bird__d_selfcorrect__qwen__sub200.jsonl",
+      "run": "bird__d_selfcorrect__qwen__sub200.jsonl.gz",
       "id": "bird_029",
       "ex": 0,
       "error": "parse error: Invalid expression / Unexpected token. Line 2, Col: 24."
     },
     {
-      "run": "bird__d_selfcorrect__qwen__sub200.jsonl",
+      "run": "bird__d_selfcorrect__qwen__sub200.jsonl.gz",
       "id": "bird_015",
       "ex": 0,
       "error": "parse error: Expecting ). Line 4, Col: 25."
     },
     {
-      "run": "bird__d_selfcorrect__qwen__sub200.jsonl",
+      "run": "bird__d_selfcorrect__qwen__sub200.jsonl.gz",
       "id": "bird_418",
       "ex": 0,
       "error": "parse error: Invalid expression / Unexpected token. Line 4, Col: 19."

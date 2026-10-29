@@ -13,7 +13,7 @@ Semantic Layer/MetricFlow, Airbnb Minerva, LookML, and Uber QueryGPT's curated "
     2017?"), without the definition.
   - 20 do not (lookups, multi-joins, windows, cohorts).
 - Business truth = the governed definitions in `src/analytics_agent/semantic/metrics.yaml`. Each
-  definition has hand-written, executed gold SQL and executed "plausible variant" definitions, such
+  definition has gold SQL written for this repo (every query executed and sanity-checked) and executed "plausible variant" definitions, such
   as GMV with freight, payment-based revenue, including canceled orders, or `customer_id` instead of
   `customer_unique_id`.
 - EX = result-set equality, with floats compared at 4 significant digits.
@@ -32,10 +32,10 @@ runs; hybrid reuses the cached responses of the other arms.
 
 | Arm | EX all | EX metric Qs (n=30) | EX non-metric (n=20) | Definition drift on metric Qs | Paraphrase groups consistent | $/question | p95 s |
 |---|---|---|---|---|---|---|---|
-| raw | 64.0% | 46.7% | 90.0% | **26.7%** (8/30) | 2/4 | 0.00164 | 11.4 |
-| glossary | 90.0% | 90.0% | 90.0% | 3.3% (1/30) | 4/4 | 0.00193 | 10.6 |
-| semantic | 80.0% | **96.7%** | 55.0% | **0%** | 4/4 | 0.00188 | 10.9 |
-| hybrid | **94.0%** | **96.7%** | 90.0% | **0%** | 4/4 | 0.00272 | 20.9 |
+| raw | 64.0% | 46.7% | 90.0% | 26.7% (8/30) | 2/4 | 0.00164 | 11.4 |
+| glossary | **90.0%** | 90.0% | 90.0% | 3.3% (1/30) | 4/4 | 0.00193 | 10.6 |
+| semantic | 80.0% | 96.7% | 55.0% | 0% | 4/4 | 0.00188 | 10.9 |
+| hybrid (*post hoc*) | 94.0% | 96.7% | 90.0% | 0% | 4/4 | 0.00272 | 20.9 |
 
 **Definition drift** is the share of metric questions whose answer *exactly equals a known
 non-governed definition*. This is not random error: it is a plausible, different number. In the raw
@@ -54,52 +54,54 @@ for orders placed between January 1 and December 31, 2017" gave GMV *including f
 An executive who asks twice gets two numbers. That is the failure mode semantic layers exist to
 remove.
 
+## Paired tests (`results/stats.json` → `semantic`)
+| comparison | questions | correct A → B | B-only / A-only | exact McNemar p |
+|---|---|---|---|---|
+| raw → glossary | metric (30) | 14 → 27 | 14 / 1 | 0.001 |
+| glossary → semantic | metric (30) | 27 → 29 | 2 / 0 | 0.5 |
+| raw → semantic | metric (30) | 14 → 29 | 15 / 0 | 6e-5 |
+| glossary → hybrid | all (50) | 45 → 47 | 2 / 0 | 0.5 |
+| semantic → hybrid | all (50) | 40 → 47 | 7 / 0 | 0.016 |
+
 ## What we learned
-1. **Most of the raw-SQL error on business questions is definitional, not SQL skill.**
-   - Raw was 90% on non-metric questions but 46.7% on metric questions.
-   - Telling the model the definitions (glossary) recovers most of the gap, from 46.7% to 90.0%.
-2. **Compiling through governed metrics removes the remaining drift.**
-   - Metric EX was 96.7%, with 0 drift and all paraphrases consistent, because the model never
-     writes metric math. It picks `gmv` and the compiler supplies the one definition.
-   - Glossary still let one definition slip: it compared timestamps instead of dates for lateness.
+1. **The fair comparison is glossary vs compiler, and it is not significant here.**
+   - *Telling* the model the governed definitions fixes most of the problem: 14 → 27 of 30,
+     p = 0.001.
+   - *Compiling* them adds 2 questions (p = 0.5), removes the last drift case, and makes paraphrase
+     consistency structural rather than a matter of the model listening.
+   - Raw vs compiler (46.7% → 96.7%) mostly measures "the raw arm was never told our conventions".
+     That is the real business problem, but it is not evidence that the compiler beats documentation.
+2. **The sharp result: definition errors pass the confidence gate.**
+   - The raw arm's 8 wrong-definition answers were produced consistently: 5 of the 8 had at least
+     4 of 5 samples agreeing on the result, against 22 of 32 correct answers.
+   - A confidence gate tuned on SQL errors cannot see them. On BIRD, where errors are SQL errors, the
+     same gate does separate right from wrong (89% of correct answers pass vs 66% of wrong ones).
+   - Governed definitions are the only measured control for this error class, whether in the prompt
+     or compiled.
 3. **The semantic prompt's raw-SQL fallback was worse on non-metric questions (55% vs 90%).**
-   - Reading the failures showed two causes. Its "use governed definitions for any business term"
-     instruction made it add the valid-order filter to questions that said "any status". It also
-     lacked the "return exactly the requested columns" rule and added helper columns.
-   - That is why the **hybrid** routes non-metric questions to the documented raw agent: 94% overall,
-     0 drift.
-   - *Caveat:* the hybrid was designed after seeing these failures, on the same 50 questions. Treat
-     94% as optimistic until it is confirmed on new questions.
-   - The cost is ~1.4× per question, because non-metric questions make two calls. Latency is
-     also higher; a cheap intent classifier in front would remove most of both.
-4. **Governance must be centralized, not just written down.**
-   - A sister project (`a sister project metrics file`) independently wrote
-     "governed" definitions for the same 12 metric names on the same data. Re-implemented on our
-     warehouse (`scripts/compare_sister_metrics.py`), they give:
-
-     | metric | ours | sister repo | difference |
-     |---|---|---|---|
-     | cancellation_rate | 0.63% (canceled only) | 1.24% (canceled + unavailable) | **+97%** |
-     | nps_style_score | 34.8 (%5★ − %1–3★, all review rows) | 44.5 (%5★ − %1–2★, latest review per order) | **+28%** |
-     | avg_review_score | 4.086 | 4.116 (latest review per order) | +0.7% |
-     | orders | 98,207 | 98,199 (orders with ≥1 item) | −0.01% |
-
-   - Two careful teams produced two "official" NPS numbers 28% apart. The lesson is that a semantic
-     layer only helps if there is exactly one of it. Our experiment's conclusions do not depend on
-     which definition is chosen, only on there being one designated definition.
+   - Its "use governed definitions for any business term" instruction made it add the valid-order
+     filter to questions that said "any status".
+   - It also lacked the "return exactly the requested columns" rule.
+   - So the semantic arm differs from the others in more than one factor: its prompt differs too.
+   - The hybrid routes non-metric questions to the glossary agent. It was designed after reading
+     these failures on the same 50 questions, so its 94% is post hoc, and vs glossary it is +2/−0
+     (p = 0.5).
 
 ## Ambiguity: when the definition is not settled at all
-See `results/ambiguity__haiku.json` and the README section "Knowing when not to answer". Some
-questions really are ambiguous, for example "What was revenue last quarter?": freight in or out,
-purchase or delivery date, last *complete* quarter or the partial one. There the agent should ask,
-not guess. The governed layer resolves 2 of the 20 curated ambiguous questions (AOV and
-cancellation rate) by definition. The other 18 need a clarifying question.
+See `results/ambiguity__haiku.json`. Some questions are genuinely ambiguous: "What was revenue last
+quarter?" (freight in or out, purchase or delivery date, last *complete* quarter or the partial
+one). The agent should ask, not guess.
+- The raw arm asked on 60% of the 20 curated ambiguous questions.
+- The semantic arm asked on only 35%: it answered with the governed default instead (for example,
+  top category by GMV). For a governed company that can be right, but the answer should then say
+  which definition it used.
+- Neither asked on any of the 20 clear controls.
 
 ## Limitations
-- 50 questions from a single author (the golden set was written for this repo). EX differences of
-  one or two questions are within noise; the drift and consistency effects are large.
+- 50 questions, 30 of them metric questions. Definitions, gold SQL, variants and compiler come from
+  one author, so the governed definitions are partly self-consistent by construction.
+- Paraphrase consistency: "4/4 vs 2/4" is a difference of 2 groups.
+- The compiler fixes output column order (dimensions, period, metrics), and gold was written to the
+  same convention. The compiler arm therefore gets formatting alignment for free.
 - Haiku only. Stronger models might drift less in the raw arm, but definitions are company-specific
   knowledge no model can guess.
-- Our compiler supports sum/avg/count-distinct/ratio metrics over four governed models, with
-  dimensions, filters, time grains and windows. Growth rates and segment comparisons fall back to
-  SQL. That is the usual frontier of real semantic layers as well.

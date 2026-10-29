@@ -591,7 +591,7 @@
         "id": "attach",
         "category": "attach",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/private/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpdz2vo8n1/evil.duckdb\" - file system opera"
+        "error": "PermissionException: Permission Error: Cannot access file \"/private/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/evil.duckdb\" - file system opera"
       },
       {
         "id": "detach",
@@ -603,13 +603,13 @@
         "id": "copy_out",
         "category": "file",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpdz2vo8n1/orders.csv\" - file system operations are"
+        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/orders.csv\" - file system operations are"
       },
       {
         "id": "export",
         "category": "file",
         "executed_ok": false,
-        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpdz2vo8n1/dump/customers.csv\" - file system operat"
+        "error": "PermissionException: Permission Error: Cannot access file \"/var/folders/9p/tms6p6850fz09g8sbpxphgvr0000gn/T/tmpc6o5hus5/dump/customers.csv\" - file system operat"
       },
       {
         "id": "install",

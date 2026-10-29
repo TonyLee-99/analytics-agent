@@ -82,43 +82,50 @@ column is filled in at the end (see "Results").
 
 ## Results
 
-Filled in on 2026-10-29, after all runs. **35 criteria: 31 PASS, 1 PASS with a caveat (C3), 3 FAIL (D2, D4, F2).** Every row names the
-command and quotes its output.
+First filled in on 2026-10-29 (v1). Revised the same day after three independent reviews (R1); the
+"v1" column records what changed and why. Revision R1 made 0 new model calls.
 
-| ID | Result | Evidence |
-|----|--------|----------|
-| A1 | PASS | `make verify-data` → `BIRD gold SQL: 500 queries, 0 errors, 0 empty` |
-| A2 | PASS | `make olist` → `orders rows= 99,441 expected= 99,441 OK` (all 9 tables OK, SHA-256 printed) |
-| A3 | PASS | `verify_olist_sets.py` → 50 gold, 65 variants, 52 interpretations, 20 controls; `all SQL executed OK` |
-| B1 | PASS | `results/retrieval_recall.json` `bird_within_db.bm25+fk.recall@6` = **0.986** (k=6 is what the agent uses). Caveat: that is 5.8 of 6.7 tables on average, so there is little pruning |
-| B2 | PASS | `olist_within_db.bm25+fk.recall@6` = **1.0** |
-| B3 | PASS | warehouse scale (84 tables): recall@10 BM25 0.904 / dense 0.909 / hybrid 0.946; top-1 DB routing 0.969 / 0.978 / 0.993 |
-| C1 | PASS | `bird__a_zeroshot_official__haiku`: EX **62.6%** vs published 59.60% (+3.0 pp, within ±5) |
-| C2 | PASS | (d) 73.2% vs (a) 62.6%, McNemar +107/−54, **p = 4e-5** (`results/ablations.json`) |
-| C3 | PASS (caveat) | (c) 71.6% → (d) 73.2% (+15/−7, p = 0.13, *not significant*). Within run (d), correction fired on 14 questions and fixed 9: an exact +1.8 pp (`docs/error_analysis.md`) |
-| C4 | PASS | every step reported in `results/ablations.md`, including the ones that hurt: retrieval vs full schema, 76.5 → 72.0 on sub200 |
-| C5 | PASS | sub200: Sonnet (d) 86.0%, Haiku (d) 74.5%, qwen2.5:7b (d) 13.5% (all n=200, paired tests in `results/ablations.md`) |
-| D1 | PASS | `results/abstention.json` bird_sub200 agreement: EX@80% = **82.5** vs EX@100% = 76.5 (+6.0 pp ≥ +5) |
-| D2 | **FAIL** | AUROC = **0.692** (target ≥ 0.70); the logistic-regression variant is 0.653 |
-| D3 | PASS | Olist raw arm (SC ×5): EX@100 62.0, EX@80 65.0, AUROC 0.61. Reported; weak, because definitional errors are self-consistent (mean agreement 0.75 vs 0.81 for correct answers) |
-| D4 | **FAIL** | `results/ambiguity__haiku.json`: clarify rate on ambiguous questions **60%** for the raw arm (target ≥ 70%) and 35% for the semantic arm; false-clarify rate on controls **0%** for both (target ≤ 15% met) |
-| E1 | PASS | `results/semantic_experiment__haiku.json`: metric-question EX semantic **96.7%** vs raw 46.7% |
-| E2 | PASS | definition drift semantic **0%** vs raw **26.7%** (≤ half); paraphrase consistency 4/4 vs 2/4 |
-| E3 | PASS | best arm EX: hybrid 94.0% (post-hoc design); best pre-planned arm, glossary, 90.0% (≥ 80%) |
-| F1 | PASS | `docs/img/frontier_cost.png`, `frontier_latency.png`: 11 configurations (2 qwen, 6 Haiku, Sonnet, 2 routed) |
-| F2 | **FAIL** | the router was actually run (`results/routing.json`): EX **81.5%**, below the target of ≥ Sonnet 86.0 − 2 = 84.0; cost $0.0122 = **40%** of Sonnet's $0.0302 (≤ 60% met); escalation rate 16.5%. The post-hoc sweep: threshold 1.0 → 84.5% at 54% cost |
-| G1 | PASS | `make redteam` → `SQL layer: 53/53 attacks blocked` |
-| G2 | PASS | `gold FPs 0/550`; `benign tricky allowed 8/8` |
-| G3 | PASS | `pytest tests/test_executor.py` (5 passed); bypass layer: `db unchanged=True, stray files=[]`. The only residual is DuckDB `CREATE TEMP VIEW` (in memory, not persisted) |
-| G4 | PASS | LLM layer `zip leaks=0`. The warehouse file contains no raw zips at all (masked materialized tables) |
-| G5 | PASS | LLM layer: 15 cases, `db unchanged=True`, `prompt leaks=0`, `pass rate=1.0`; the model attempted unsafe SQL in 1 case and it was blocked |
-| G6 | PASS | `test_sqlite_timeout`, `test_duckdb_timeout`, `test_row_limit_and_truncation_flag` pass |
-| H1 | PASS | `results/ablations.md` columns $/q, p50, p95, in/out tokens, calls/q for every run |
-| H2 | PASS | `traces/*.jsonl` (span per step); `make traces` → `results/trace_summary.md`; `--show <trace_id>` waterfall |
-| H3 | PASS | `pytest tests/test_serving.py` (5 passed, mock LLM); real smoke runs: `results/logs/smoke_api_real.txt` (answer + clarification), `results/logs/smoke_mcp_real.txt` (governed GMV 2017 = 6,108,492) |
-| H4 | PASS | `pytest tests/test_regression_gate.py` (3 passed): current EX 0.833 ≥ 0.75; degraded prompt 0.667 < 0.75 → caught; prompt edit without re-recording → `CassetteMiss` |
-| H5 | PASS | `make test` → `115 passed`; `make lint` → `All checks passed!`; Dockerfile, `.github/workflows/ci.yml`, `uv.lock` + `==` pins, py3.12; `make eval-small` / `make eval-full` exist |
-| H6 | PASS | `uv run python -m analytics_agent.llm.ledger` → `claude_calls_total: 3397` (≤ 4,000), `claude_cost_usd_total: 10.8415` (Haiku 3,185 calls / $4.63; Sonnet 212 / $6.21). In addition, 231 task attempts were rejected with HTTP 429 during one usage-limit window and retried; they are not billed and not in the ledger |
-| I1 | PASS | 70 failures labelled (`eval_sets/bird_failure_labels.jsonl`); 10% (95% CI 5–19%) acceptable answers; 1 verified gold error, 6 ambiguous questions/layouts |
-| I2 | PASS | `scripts/error_analysis.py`: per-bucket "solved by" table (filter errors 12/25 → 18/25 with self-correction) |
-| J1 | PASS | `du -sh data .llm_cache` → 1.7G + 15M (≤ 3.5 GB) |
+**35 criteria now: 28 PASS, 2 FAIL (D4, F2), 4 INCONCLUSIVE (C1, C3, D1, D2), 1 corrected (I2).**
+- I2's v1 claim was wrong; the corrected analysis passes.
+- In hindsight G1 and G4 *failed* in v1: the external review found holes that the v1 suite missed.
+  Both pass after the fixes.
+- INCONCLUSIVE means one of two things: the observed value sits inside its own noise band around the
+  target, or the criterion as written cannot be met at an achievable operating point.
+
+| ID | Result | Evidence | v1 → R1 |
+|----|--------|----------|---------|
+| A1 | PASS | `make verify-data` → `BIRD gold SQL: 500 queries, 0 errors, 0 empty` | |
+| A2 | PASS | `make olist` → all 9 tables `rows=… expected=… OK` (orders 99,441) | |
+| A3 | PASS | `verify_olist_sets.py` → 50 gold, 65 variants, 52 interpretations, 20 controls; `all SQL executed OK` (after the HMAC rebuild too) | |
+| B1 | PASS | `results/retrieval_recall.json`: BIRD strict recall@6 with FK/lookup expansion = 0.986. *Caveat:* 5.8 of 6.7 tables on average, so little pruning; on sub200 retrieval *lowers* EX (76.5 → 72.0, n.s.) | caveat added |
+| B2 | PASS | Olist strict recall@6 = 1.0 | |
+| B3 | PASS | pooled 84-table index: recall@10 BM25 0.904 / dense 0.909 / hybrid 0.946 | |
+| C1 | INCONCLUSIVE | EX 62.6% vs the dataset card's 59.60% (`eval_sets/provenance/`, rev `5b256b5`): +3.0 pp, inside the ±5 band but also inside the ±3.2 pp single-run noise. Three protocol deviations: an added system prompt, CLI default temperature, our own SQL extraction. It is a sanity check, not a reproduction | PASS → INCONCLUSIVE (reframed) |
+| C2 | PASS | (d) vs (a): +107/−54, p = 4e-5 on 500; excluding the 20 prompt-dev questions: 63.1 → 72.9, +99/−52, p = 1.6e-4. Robust to metric choice and to simulated label noise (significance kept in 100% of draws; `results/robustness.json`) | dev20 exclusion and robustness added |
+| C3 | INCONCLUSIVE | Run vs run (c) → (d): +15/−7, p = 0.13; 60 of d's first drafts were fresh samples, not replays. Within run (d): correction fired 14 times and fixed 9, +1.8 pp (Wilson CI 0.9–3.4) against a fixed counterfactual (empty or erroring drafts are certainly wrong) | PASS (caveat) → INCONCLUSIVE |
+| C4 | PASS | every step in `results/ablations.md`, including those that hurt; few-shot split by template similarity (`results/stats.json` → `fewshot`) | |
+| C5 | PASS | sub200: Sonnet (d) 86.0, Haiku (d) 74.5, qwen (d) 13.5; sub200 is easier than the rest by chance (baseline 69.5 vs 58.0, z = 2.7) | subset note |
+| D1 | INCONCLUSIVE | EX at exactly 80% coverage depends on breaking ties at agreement 0.8: 80.6–84.4 over 2,000 seeds (mean 82.5, i.e. +6.0). At the achievable threshold ≥ 0.8 (83.5% coverage), the gain is +4.9 (95% CI +1.8 to +8.4), just under +5. Unanimity gives +9.8 (CI +5.2 to +14.6) at 69.5% coverage (`results/stats.json` → `abstention`) | PASS → INCONCLUSIVE |
+| D2 | INCONCLUSIVE | AUROC 0.692, bootstrap 95% CI 0.61–0.77, which contains the 0.70 target. 37% of correct/wrong pairs are tied (5-level score). The learned scorer reaches 0.65 out of fold (`results/learned_router.json`) | FAIL → INCONCLUSIVE |
+| D3 | PASS | Olist raw arm SC×5: reported, weak (AUROC 0.61), because definition errors are self-consistent: 5 of 8 wrong-definition answers pass a ≥4/5 gate | sharpened |
+| D4 | **FAIL** | clarify rate on ambiguous questions: raw arm 60% (target ≥ 70%), semantic arm 35%. False-clarify rate 0% on controls (≤ 15% met) | |
+| E1 | PASS | metric-question EX: compiler 29/30 vs raw 14/30 (p = 6e-5). The fair comparison, compiler vs definitions in the prompt, is 29 vs 27 (+2/−0, p = 0.5): **not significant** | fair comparison added |
+| E2 | PASS | drift: compiler 0/30 vs raw 8/30 (definitions in the prompt: 1/30); paraphrase groups 4/4 vs 2/4 (a difference of 2 groups) | |
+| E3 | PASS | the best pre-planned arm (definitions in the prompt) scores 90.0% ≥ 80%. The 94.0% hybrid is post hoc | |
+| F1 | PASS | `docs/img/frontier_cost.png`: 9 configurations on sub200, priced with an explicit token price sheet (fit exactly to the CLI's cost reports), no-caching basis, Pareto line. The latency frontier was dropped (CLI start-up dominates) | replotted |
+| F2 | **FAIL** | pre-registered router (escalate if agreement < 0.8): EX 82.0 from the recorded runs (81.5 in a live replay), target ≥ 84.0 → FAIL. Cost 53% of Sonnet on a no-caching basis (40% as recorded) ≤ 60% → met. Oracle router 91.5%. The learned policy does not beat simple rules (`results/learned_router.json`) | cost re-priced; oracle and learned router added |
+| G1 | PASS | `make redteam` → `SQL layer: 64/64 attacks blocked`. v1 passed its own 53 attacks, but the v1 validator lets 11 of the current 64 through (6 CTE-shadowing cases, 5 memory bombs; `scripts/redteam_v1_check.py`) | v1 FAIL in hindsight → fixed |
+| G2 | PASS | `gold FPs 0/550`; benign look-alikes 8/8; 0 of the agent's previously-correct recorded queries rejected (`results/validator_recorded_fp.json`) | recorded-query check added |
+| G3 | PASS | `tests/test_executor.py`; bypass layer: `db unchanged=True, stray files=[]`. Residual: DuckDB `CREATE TEMP VIEW` (in memory) | |
+| G4 | PASS (was FAIL) | v1 claimed "0 raw zips", but its md5 tokens were invertible: a dictionary SELECT re-identified 99,441/99,441 customers (reproduced in `confidentiality_layer` on a v1 replica). Now keyed HMAC: the same attack re-identifies 0 (`test_zip_dictionary_attack_reidentifies_nobody`) | **FAIL → fixed → PASS** |
+| G5 | PASS | 15 injection cases (recorded against v1 data): DB unchanged, 0 prompt leaks; the model tried unsafe SQL once and it was blocked. n = 15, so the pass rate has a wide CI | |
+| G6 | PASS | timeout and row-cap tests, plus new byte limits: `test_memory_bombs_bounded_without_validator` | byte limits added |
+| H1 | PASS | `results/ablations.md` columns $/q, p50, p95, tokens, calls/q | |
+| H2 | PASS | `traces/*.jsonl`; `results/trace_summary.md` | |
+| H3 | PASS | `tests/test_serving.py` (6 passed, including `test_split_vote_is_routed_to_review`). The API now serves the evaluated SC confidence and a route field. Real smoke runs: `results/logs/smoke_*_real.txt` (v1 code) | v1 served a heuristic confidence |
+| H4 | PASS | paired gate: fail if net loss ≥ 5 of 30 vs the baseline recording; false-alarm rate 2.1% (v1's absolute threshold: 11.7%); flags the recorded degraded prompt (net −5); power against a true −5 pp regression only 10% at n = 30 (`tests/regression/gate.json`) | redesigned with stated error rates |
+| H5 | PASS | `make test` → 149 passed (DB-dependent tests skip without `make data`); `make lint` clean; Dockerfile, CI yaml (included, not yet run on a remote), `uv.lock` + `==` pins, py3.12 | |
+| H6 | PASS | ledger: 3,397 Claude calls, $10.84 (CLI `total_cost_usd`); R1 added 0 calls. Plus 231 task attempts rejected with HTTP 429 (not billed, not in the ledger) | |
+| I1 | PASS | 70 failures labelled by executing SQL per case, the disputed case re-checked; single annotator. 10% acceptable (CI 5–19%) | |
+| I2 | **FAIL as v1 stated; PASS as corrected** | v1's "self-correction moved filter errors 12 → 18" compared separate noisy runs. Corrected within-run attribution: correction fixed 6 of the 25 labelled filter errors and 1 execution error (`docs/error_analysis.md`) | corrected |
+| J1 | PASS | `du -sh data .llm_cache cache` → 1.7G + 15M + 2.5M (≤ 3.5 GB) | |

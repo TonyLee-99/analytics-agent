@@ -76,7 +76,6 @@ traces:
 report:
 	$(PY) -m analytics_agent.eval.analysis ablations
 	$(PY) scripts/error_analysis.py
-	$(PY) scripts/compare_sister_metrics.py
 	$(PY) -m analytics_agent.llm.ledger
 
 gate:             ## CI regression gate (replay only, no network)

@@ -2,10 +2,10 @@
 #
 # Why this file exists: the experiment in docs/semantic_layer_experiment.md compares an agent that
 # writes raw SQL against one that can only *select* governed metrics + dimensions and lets a
-# deterministic compiler (semantic/compiler.py) write the SQL. Definitions mirror the 12 metrics
-# required by a sister project acceptance file (section C1). That repo's YAML
-# did not exist yet when this was written (2026-10-29), so the exact filters below are our own
-# documented choices; see `caveats` on each metric.
+# deterministic compiler (semantic/compiler.py) write the SQL. The 12 metric names are the standard
+# marketplace KPIs (GMV, AOV, orders, active customers, repeat rate, on-time rate, delivery days, review
+# score, NPS-style score, seller concentration, freight ratio, cancellation rate). The exact filters
+# are this repo's documented choices; see `caveats` on each metric.
 #
 # Conventions
 # - "valid order" = order_status NOT IN ('canceled', 'unavailable')
@@ -13,7 +13,7 @@
 # - Time dimension of every order-level metric is the purchase timestamp.
 
 version: 1
-owner: marketplace analytics (Olist)
+owner: marketplace analytics team (Olist)
 
 models:
   order_items_enriched:

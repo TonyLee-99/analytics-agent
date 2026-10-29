@@ -28,7 +28,7 @@ from analytics_agent.llm import make_client  # noqa: E402
 
 tasks = load_bird(subset_ids("sub200"))
 agent = Agent(make_client("haiku"), get_config("e_sc5"), bird_examples())
-rows, skipped = [], 0
+rows, skipped, kept_ids = [], 0, []
 for t in tasks:
     try:
         ans = agent.ask(t.question, t.db_id, t.evidence, task_id=t.id)
@@ -36,6 +36,7 @@ for t in tasks:
         skipped += 1
         continue
     rows.append([score(t, sql)[0] if sql else 0 for sql in ans.signals["sample_sqls"]])
+    kept_ids.append(t.id)
 M = np.array(rows, dtype=int)
 uncached = 0
 n = len(M)
@@ -51,4 +52,7 @@ out = {"n_questions": n, "skipped_not_in_cache": skipped, "uncached_calls_during
        "min_pairwise_mcnemar_p": round(min(p["p_value"] for p in pairs), 4),
        "oracle_any_of_5_correct": round(100 * float(M.max(1).mean()), 1)}
 (RESULTS / "noise_floor.json").write_text(json.dumps(out, indent=2))
+# per-question x per-draw outcomes (draw 0 = self-corrected sample 0; draws 1-4 = independent, no correction),
+# used to size the regression gate (eval/regression.py)
+(RESULTS / "noise_floor_matrix.json").write_text(json.dumps({"ids": kept_ids, "ex": M.tolist()}))
 print(json.dumps(out, indent=2))

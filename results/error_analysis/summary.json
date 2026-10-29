@@ -29,8 +29,8 @@
       "d_fixed": 18,
       "sonnet_d_n": 5,
       "sonnet_d_fixed": 5,
-      "haiku_sc5_n": 3,
-      "haiku_sc5_fixed": 3
+      "haiku_sc5_n": 5,
+      "haiku_sc5_fixed": 5
     },
     "aggregation_error": {
       "n": 7,
@@ -42,7 +42,7 @@
       "d_fixed": 5,
       "sonnet_d_n": 3,
       "sonnet_d_fixed": 1,
-      "haiku_sc5_n": 1,
+      "haiku_sc5_n": 3,
       "haiku_sc5_fixed": 0
     },
     "computation_error": {
@@ -55,8 +55,8 @@
       "d_fixed": 6,
       "sonnet_d_n": 2,
       "sonnet_d_fixed": 1,
-      "haiku_sc5_n": 1,
-      "haiku_sc5_fixed": 0
+      "haiku_sc5_n": 2,
+      "haiku_sc5_fixed": 1
     },
     "question_ambiguity": {
       "n": 3,
@@ -76,7 +76,9 @@
       "d_n": 8,
       "d_fixed": 3,
       "sonnet_d_n": 2,
-      "sonnet_d_fixed": 2
+      "sonnet_d_fixed": 2,
+      "haiku_sc5_n": 2,
+      "haiku_sc5_fixed": 1
     },
     "join_error": {
       "n": 7,
@@ -87,7 +89,9 @@
       "d_n": 7,
       "d_fixed": 3,
       "sonnet_d_n": 1,
-      "sonnet_d_fixed": 1
+      "sonnet_d_fixed": 1,
+      "haiku_sc5_n": 1,
+      "haiku_sc5_fixed": 0
     },
     "gold_error": {
       "n": 1,
@@ -120,7 +124,9 @@
       "d_n": 3,
       "d_fixed": 3,
       "sonnet_d_n": 1,
-      "sonnet_d_fixed": 1
+      "sonnet_d_fixed": 1,
+      "haiku_sc5_n": 1,
+      "haiku_sc5_fixed": 1
     },
     "execution_error": {
       "n": 2,

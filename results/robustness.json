@@ -1,0 +1,394 @@
+{
+  "metric_sensitivity": {
+    "ex": {
+      "a_zeroshot_official": {
+        "set": 62.6,
+        "multiset": 62.4,
+        "ordered": 60.2,
+        "float_tol": 62.8
+      },
+      "b_retrieval": {
+        "set": 69.8,
+        "multiset": 69.6,
+        "ordered": 67.6,
+        "float_tol": 70.0
+      },
+      "c_fewshot": {
+        "set": 71.6,
+        "multiset": 71.2,
+        "ordered": 69.0,
+        "float_tol": 71.6
+      },
+      "d_selfcorrect": {
+        "set": 73.2,
+        "multiset": 72.8,
+        "ordered": 70.4,
+        "float_tol": 73.2
+      },
+      "haiku_a2": {
+        "set": 76.5,
+        "multiset": 76.0,
+        "ordered": 74.0,
+        "float_tol": 76.5
+      },
+      "haiku_b": {
+        "set": 72.0,
+        "multiset": 71.5,
+        "ordered": 69.5,
+        "float_tol": 72.0
+      },
+      "haiku_d": {
+        "set": 74.5,
+        "multiset": 73.5,
+        "ordered": 70.5,
+        "float_tol": 74.5
+      },
+      "haiku_sc5": {
+        "set": 76.5,
+        "multiset": 76.0,
+        "ordered": 73.0,
+        "float_tol": 76.5
+      },
+      "sonnet_d": {
+        "set": 86.0,
+        "multiset": 85.5,
+        "ordered": 83.5,
+        "float_tol": 86.5
+      }
+    },
+    "pairs": [
+      {
+        "a": "a_zeroshot_official",
+        "b": "b_retrieval",
+        "n": 500,
+        "set": {
+          "delta_pp": 7.2,
+          "p": 0.00411
+        },
+        "multiset": {
+          "delta_pp": 7.2,
+          "p": 0.00411
+        },
+        "ordered": {
+          "delta_pp": 7.4,
+          "p": 0.00326
+        },
+        "float_tol": {
+          "delta_pp": 7.2,
+          "p": 0.00411
+        }
+      },
+      {
+        "a": "b_retrieval",
+        "b": "c_fewshot",
+        "n": 500,
+        "set": {
+          "delta_pp": 1.8,
+          "p": 0.38567
+        },
+        "multiset": {
+          "delta_pp": 1.6,
+          "p": 0.4452
+        },
+        "ordered": {
+          "delta_pp": 1.4,
+          "p": 0.51543
+        },
+        "float_tol": {
+          "delta_pp": 1.6,
+          "p": 0.4452
+        }
+      },
+      {
+        "a": "c_fewshot",
+        "b": "d_selfcorrect",
+        "n": 500,
+        "set": {
+          "delta_pp": 1.6,
+          "p": 0.1338
+        },
+        "multiset": {
+          "delta_pp": 1.6,
+          "p": 0.1338
+        },
+        "ordered": {
+          "delta_pp": 1.4,
+          "p": 0.18925
+        },
+        "float_tol": {
+          "delta_pp": 1.6,
+          "p": 0.1338
+        }
+      },
+      {
+        "a": "a_zeroshot_official",
+        "b": "d_selfcorrect",
+        "n": 500,
+        "set": {
+          "delta_pp": 10.6,
+          "p": 4e-05
+        },
+        "multiset": {
+          "delta_pp": 10.4,
+          "p": 5e-05
+        },
+        "ordered": {
+          "delta_pp": 10.2,
+          "p": 6e-05
+        },
+        "float_tol": {
+          "delta_pp": 10.4,
+          "p": 5e-05
+        }
+      },
+      {
+        "a": "haiku_a2",
+        "b": "haiku_b",
+        "n": 200,
+        "set": {
+          "delta_pp": -4.5,
+          "p": 0.12208
+        },
+        "multiset": {
+          "delta_pp": -4.5,
+          "p": 0.12208
+        },
+        "ordered": {
+          "delta_pp": -4.5,
+          "p": 0.12208
+        },
+        "float_tol": {
+          "delta_pp": -4.5,
+          "p": 0.12208
+        }
+      },
+      {
+        "a": "haiku_d",
+        "b": "haiku_sc5",
+        "n": 200,
+        "set": {
+          "delta_pp": 2.0,
+          "p": 0.4545
+        },
+        "multiset": {
+          "delta_pp": 2.5,
+          "p": 0.30176
+        },
+        "ordered": {
+          "delta_pp": 2.5,
+          "p": 0.30176
+        },
+        "float_tol": {
+          "delta_pp": 2.0,
+          "p": 0.4545
+        }
+      },
+      {
+        "a": "haiku_d",
+        "b": "sonnet_d",
+        "n": 200,
+        "set": {
+          "delta_pp": 11.5,
+          "p": 0.0014
+        },
+        "multiset": {
+          "delta_pp": 12.0,
+          "p": 0.00094
+        },
+        "ordered": {
+          "delta_pp": 13.0,
+          "p": 0.00031
+        },
+        "float_tol": {
+          "delta_pp": 12.0,
+          "p": 0.00072
+        }
+      }
+    ]
+  },
+  "label_noise": {
+    "audit": {
+      "labelled_failures": 70,
+      "acceptable": 7,
+      "posterior": "Beta(8,64)",
+      "labels_by": "executing SQL per case; bird_093 re-checked"
+    },
+    "pairs": [
+      {
+        "a": "a_zeroshot_official",
+        "b": "b_retrieval",
+        "n": 500,
+        "delta_pp": 7.2,
+        "p": 0.00411,
+        "independent": {
+          "corrected_delta_pp_mean": 6.39,
+          "corrected_delta_ci95": [
+            4.0,
+            8.6
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 0.878
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 6.41,
+          "corrected_delta_ci95": [
+            4.8,
+            7.8
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 0.989
+        }
+      },
+      {
+        "a": "b_retrieval",
+        "b": "c_fewshot",
+        "n": 500,
+        "delta_pp": 1.8,
+        "p": 0.38567,
+        "independent": {
+          "corrected_delta_pp_mean": 1.57,
+          "corrected_delta_ci95": [
+            -0.6,
+            3.6
+          ],
+          "sign_kept": 0.918,
+          "significance_kept": null
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 1.61,
+          "corrected_delta_ci95": [
+            0.4,
+            2.6
+          ],
+          "sign_kept": 0.992,
+          "significance_kept": null
+        }
+      },
+      {
+        "a": "c_fewshot",
+        "b": "d_selfcorrect",
+        "n": 500,
+        "delta_pp": 1.6,
+        "p": 0.1338,
+        "independent": {
+          "corrected_delta_pp_mean": 1.45,
+          "corrected_delta_ci95": [
+            -0.6,
+            3.4
+          ],
+          "sign_kept": 0.912,
+          "significance_kept": null
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 1.43,
+          "corrected_delta_ci95": [
+            0.8,
+            2.0
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": null
+        }
+      },
+      {
+        "a": "a_zeroshot_official",
+        "b": "d_selfcorrect",
+        "n": 500,
+        "delta_pp": 10.6,
+        "p": 4e-05,
+        "independent": {
+          "corrected_delta_pp_mean": 9.45,
+          "corrected_delta_ci95": [
+            6.8,
+            11.6
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 0.999
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 9.39,
+          "corrected_delta_ci95": [
+            7.4,
+            11.0
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 1.0
+        }
+      },
+      {
+        "a": "haiku_a2",
+        "b": "haiku_b",
+        "n": 200,
+        "delta_pp": -4.5,
+        "p": 0.12208,
+        "independent": {
+          "corrected_delta_pp_mean": -4.02,
+          "corrected_delta_ci95": [
+            -7.0,
+            -0.5
+          ],
+          "sign_kept": 0.99,
+          "significance_kept": null
+        },
+        "shared": {
+          "corrected_delta_pp_mean": -3.95,
+          "corrected_delta_ci95": [
+            -5.5,
+            -2.0
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": null
+        }
+      },
+      {
+        "a": "haiku_d",
+        "b": "haiku_sc5",
+        "n": 200,
+        "delta_pp": 2.0,
+        "p": 0.4545,
+        "independent": {
+          "corrected_delta_pp_mean": 1.78,
+          "corrected_delta_ci95": [
+            -1.5,
+            4.5
+          ],
+          "sign_kept": 0.848,
+          "significance_kept": null
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 1.77,
+          "corrected_delta_ci95": [
+            0.5,
+            3.0
+          ],
+          "sign_kept": 0.987,
+          "significance_kept": null
+        }
+      },
+      {
+        "a": "haiku_d",
+        "b": "sonnet_d",
+        "n": 200,
+        "delta_pp": 11.5,
+        "p": 0.0014,
+        "independent": {
+          "corrected_delta_pp_mean": 10.26,
+          "corrected_delta_ci95": [
+            7.0,
+            12.5
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 0.984
+        },
+        "shared": {
+          "corrected_delta_pp_mean": 10.24,
+          "corrected_delta_ci95": [
+            7.5,
+            12.5
+          ],
+          "sign_kept": 1.0,
+          "significance_kept": 0.997
+        }
+      }
+    ]
+  }
+}

@@ -25,8 +25,8 @@ from analytics_agent.eval import run as R
 from analytics_agent.eval.configs import get_config
 from analytics_agent.eval.datasets import load_jsonl, load_olist_golden
 from analytics_agent.eval.metrics import business_ex
-from analytics_agent.executor import execute_all
 from analytics_agent.eval.report import MissingRunError, load_stem
+from analytics_agent.executor import execute_all
 from analytics_agent.llm import make_client
 from analytics_agent.llm.cache import strict_replay
 

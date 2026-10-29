@@ -1,94 +1,89 @@
-# Error analysis: what fails, which fix moved which bucket, and how much is label noise
+# Error analysis: what fails, how much is label noise, and do the conclusions survive it
 
-**Sample.** The zero-shot baseline (a) fails 187 of the 500 BIRD Mini-Dev questions. Exactly 70 of
-those 187 were drawn at random (seed 2026) by `scripts/dump_failures.py`. Each was categorized by
-hand with a taxonomy fixed beforehand. For every case the reviewer re-ran SQL on the database to find
-the actual cause: column values, join fan-out, and whether gold's reading of the question holds.
+**Sample.** The zero-shot baseline (a) fails 187 of the 500 BIRD Mini-Dev questions.
+`scripts/dump_failures.py` drew 70 of them at random (seed 2026).
+
+**How the labels were made.** The 70 failures were labelled in
+two batches of 35, using a taxonomy fixed beforehand and running SQL on the database for every case to find the
+actual cause (column values, join fan-out, whether gold's reading holds). The one disputed gold-error case (bird_093) was
+re-checked. These are careful per-case labels, but there is a single annotator and no inter-annotator agreement was measured.
 - Labels: `eval_sets/bird_failure_labels.jsonl`, each with a one-line evidence note.
-- Join with later runs: `uv run python scripts/error_analysis.py` → `results/error_analysis/summary.json`.
-- *Process note.* Labels follow this taxonomy, and every case was checked by executing SQL; the
-  disputed cases (for example bird_093) were re-checked. Single annotator.
+- Summary: `uv run python scripts/error_analysis.py` → `results/error_analysis/summary.json`.
 
 ## Taxonomy and counts (n = 70)
 
 | bucket | n | share | typical root cause (from the notes) |
 |---|---|---|---|
-| filter_error | 25 | 36% | literal or format mismatch with the stored data: CDS codes stored with a leading zero, 'YYYY/MM/DD' dates, lower-case 'azorius', comma-list columns compared with `=`, numbers stored as text, 'No Colour' vs 'Unknown' |
+| filter_error | 25 | 36% | literal or format mismatch with the stored data: CDS codes with a leading zero, 'YYYY/MM/DD' dates, lower-case 'azorius', comma-list columns compared with `=`, numbers stored as text, 'No Colour' vs 'Unknown' |
 | computation_error | 10 | 14% | date math, integer division, rounding, formula |
-| output_shape | 8 | 11% | right facts in a different layout (rows vs. one wide row), id instead of name, tie handling |
-| aggregation_error | 7 | 10% | counting printings or ruling rows instead of distinct cards (fan-out), blank-sex values counted as a group |
-| join_error | 7 | 10% | wrong path, missing zero rows for the population base |
+| output_shape | 8 | 11% | right facts in a different layout (rows vs one wide row), id instead of name, ties |
+| aggregation_error | 7 | 10% | counting printings or ruling rows instead of distinct cards (fan-out); blank values counted as a group |
+| join_error | 7 | 10% | wrong path; missing zero rows for the population base |
 | schema_linking | 4 | 6% | wrong column (`type` vs `types`), wrong table |
 | question_ambiguity | 3 | 4% | the question supports both readings |
 | null_handling | 3 | 4% | |
 | execution_error | 2 | 3% | |
 | gold_error | 1 | 1% | |
 
-## Label noise: how much of the "failure" is the benchmark's fault?
-- 7 of the 70 failures (10%; 95% CI 4.9–19.2%) are answers a careful analyst would accept:
-  - 1 gold label is wrong (bird_093). Gold groups by the full type line, so "Instant" wins; in MTG
-    "card type" is the `types` column, where Creature has 71 rows.
-  - 4 come from questions that support both readings, for example `totalSetSize` vs counted card rows.
-  - 2 are the same facts in a layout the question did not fix.
-  - 1 more is ambiguous but was judged unacceptable.
-- Scaled to all 187 failures, that is about 19 questions (9–36). **Strict EX therefore understates the
-  baseline by about 3.7 pp (1.8–7.2 pp).** That band is wider than several ablation steps below.
-  Before trusting a 1–2 pp improvement on this benchmark, re-label the questions whose outcome
-  changed.
-- Context. The 2026 "Mini-Dev 1024" release was re-annotated by a human-in-the-loop review, and it
-  shows. Wretblad et al. (ACL 2024, [arXiv:2402.12243](https://arxiv.org/abs/2402.12243)) found that
-  49% of the *original* BIRD dev questions in the financial domain contained errors. In our sample of
-  the cleaned release, the reviewers verified only one gold label as clearly wrong. **Most remaining
-  disagreement is ambiguity, not wrong labels.** That is also how real business questions behave,
-  which is why the agent has a clarification mode.
+## Label noise
+- **Acceptable failures.** 7 of 70 failures (10%; 95% CI 4.9–19.2%) are answers a careful analyst
+  would accept:
+  - 1 wrong gold label: bird_093, which groups by the full type line. In MTG, "card type" is the
+    `types` column.
+  - 4 questions that support both readings.
+  - 2 cases of the same facts in a layout the question did not fix.
+- **What that does to EX.** Scaled to all 187 failures, strict EX understates the baseline by about
+  3.7 pp (1.8–7.2 pp).
+- **What was not measured.** Only *failures* were audited. Wrong SQL that matches gold by
+  coincidence, which would make EX overstate accuracy, was not measured.
+- **Context.** The original BIRD release had heavy label noise: Wretblad et al., ACL 2024, found
+  errors in 49% of the financial-domain dev questions. In this sample of the re-annotated 2026
+  release, only one gold label was verified wrong. Most of the remaining disagreement is ambiguity.
 
-## Which fix moved which bucket
-Each cell shows how many of the bucket's labelled failures are correct under that configuration.
-Configs (b)–(d) are separate full runs, so each cell is "solved by config X", not an increment.
+## Do the ablation conclusions survive label noise and the choice of metric?
+`uv run python -m analytics_agent.eval.robustness` → `results/robustness.json`.
 
-| bucket | n | (b) our prompt + retrieval | (c) + few-shot | (d) + self-correction | Sonnet (d)* | Haiku SC×5* |
-|---|---|---|---|---|---|---|
-| filter_error | 25 | 10/25 | 12/25 | **18/25** | 5/5 | 3/3 |
-| computation_error | 10 | 8/10 | 5/10 | 6/10 | 1/2 | 0/1 |
-| output_shape | 8 | 4/8 | 3/8 | 3/8 | 2/2 | – |
-| aggregation_error | 7 | 3/7 | 4/7 | 5/7 | 1/3 | 0/1 |
-| join_error | 7 | 2/7 | 3/7 | 3/7 | 1/1 | – |
-| schema_linking | 4 | 2/4 | 1/4 | 1/4 | 2/2 | 1/2 |
-| question_ambiguity | 3 | 2/3 | 1/3 | 2/3 | – | – |
-| null_handling | 3 | 3/3 | 3/3 | 3/3 | 1/1 | – |
-| execution_error | 2 | 0/2 | 0/2 | 1/2 | – | – |
-| gold_error | 1 | 0/1 | 0/1 | 0/1 | – | – |
-| **all** | 70 | 34/70 | 32/70 | **42/70** | 13/16 | 4/7 |
+**Metric choice.** Every recorded prediction was re-executed and rescored four ways: official set
+equality, multiset, ordered list, and float tolerance 1e-6. Rescoring reproduces every stored EX
+exactly (an assertion checks this). Across the four metrics:
+- no paired comparison changes sign or significance;
+- deltas move by at most 1.5 pp;
+- ordered comparison costs every run 2–4 pp, because some questions do not fix an order.
 
-\* Sonnet and SC were run only on the frozen 200-question subset, which contains 16 of the 70
-labelled failures.
+**Label noise.** The audit gives a posterior Beta(8, 64) for the share of failures that are actually
+acceptable. In each of 2,000 simulations, every failure is turned into a pass with that probability
+and every paired comparison is recomputed. Two noise models are used: *independent* (per system and
+question) and *shared* (acceptability is a property of the question).
 
-How to read it:
-- **Filter errors** are the biggest bucket and the one the pipeline was designed against.
-  - They move from 10–12 solved, without execution feedback, to **18 of 25** with self-correction.
-  - The mechanism is value grounding: on an empty result the corrector sees the column's real values
-    (`value_hints.py`), so it learns that CDS codes have a leading zero or that the value is 'No Colour'.
-- **Computation errors** are fixed mostly by our prompt in (b), which asks for a short plan first. Few-shot examples do
-  not help them; examples from the old BIRD dev annotations sometimes teach a different formula style.
-- **Output-shape and join errors barely move.** These are "the model understood the question
-  differently" errors. A bigger model fixes them (Sonnet solves 4 of 4 in the subset), and so does a
-  clarifying question. More retries do not.
-- **Self-consistency rarely fixes errors.** It is valuable as a *confidence signal* (see the
-  abstention results), not as an accuracy booster.
+| comparison | Δ observed | Δ corrected, independent (95% interval) | significance kept, independent / shared |
+|---|---|---|---|
+| (a) → (b) prompt + retrieval, n=500 | +7.2, p=0.004 | +6.4 (4.0 to 8.6) | 88% / 99% |
+| (a) → (d) full pipeline, n=500 | +10.6, p=4e-5 | +9.5 (6.8 to 11.6) | 100% / 100% |
+| Haiku (d) → Sonnet (d), sub200 | +11.5, p=0.001 | +10.3 (7.0 to 12.5) | 98% / 100% |
+| (b) → (c) few-shot, n=500 | +1.8, n.s. | +1.6 (−0.6 to 3.6) | sign kept 92% |
+| (c) → (d) self-correction, n=500 | +1.6, n.s. | +1.5 (−0.6 to 3.4) | sign kept 91% |
+| full schema → retrieval, sub200 | −4.5, n.s. | −4.0 (−7.0 to −0.5) | sign kept 99% |
 
-## How self-correction behaves, measured exactly
-Inside run (d), the self-correction loop fired on 14 of 500 questions (2.8%):
+**Reading.** Label noise shrinks every delta by about 10%, because noise forgives some failures in both
+systems. It does not overturn any conclusion. The weakest significant claim is (a)→(b), at 88% under
+the pessimistic independent model.
 
-| trigger | fixed | not fixed |
-|---|---|---|
-| empty result | 6 | 1 |
-| execution error | 2 | 2 |
-| all-NULL result | 1 | 2 |
+## Which pipeline step fixed which failures, attributed correctly
+v1 of this document claimed that self-correction moved filter errors from 12 to 18 of 25. That
+compared separate runs: 60 of run (d)'s first drafts were fresh samples, not replays of (c), so most
+of that movement was redraw noise. The defensible attribution counts **within run (d)**:
+- Self-correction fired on 14 of 500 questions and fixed 9 (+1.8 pp, Wilson CI 0.9–3.4). By trigger:
 
-- An empty or erroring draft is certainly wrong, because every gold result in this release is
-  non-empty. So the within-run gain is exactly **+9 questions (+1.8 pp)**, or +7 in the worst case
-  if both unfixed all-NULL drafts had been right.
-- Run-level (c)→(d) differences, +15/−7, are larger than this. The extra movement is sampling noise:
-  58 of d's 500 first drafts were regenerated rather than replayed from (c)'s cache, because (c), (d)
-  and the SC run were partly concurrent and interrupted by a usage-limit restart. See
-  `results/noise_floor.json` for the measured run-to-run noise.
+  | trigger | fixed / fired |
+  |---|---|
+  | empty result | 6/7 |
+  | execution error | 2/4 |
+  | all-NULL result | 1/3 |
+
+- An empty or erroring draft is certainly wrong in this release, because every gold result is
+  non-empty. So the counterfactual is fixed.
+- Among the 70 labelled failures, correction fixed **6 of the 25 filter errors** (5 through
+  value-grounded empty-result hints, 1 through an all-NULL hint) and 1 execution error.
+- Fixes in other buckets came from different draws or configurations, and are not attributed to a
+  mechanism.
+- Sonnet solved 13 of the 16 labelled failures that fall in sub200 (`results/error_analysis/summary.json`).

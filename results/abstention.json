@@ -43,7 +43,8 @@
       "had_problem",
       "retrieval_top",
       "n_rows_log"
-    ]
+    ],
+    "note": "EX@x% uses a fixed-seed random tie-break among equal agreement values; see results/stats.json 'abstention' for the achievable thresholds and bootstrap CIs"
   },
   "olist_golden_raw": {
     "agreement": {
@@ -89,7 +90,8 @@
       "had_problem",
       "retrieval_top",
       "n_rows_log"
-    ]
+    ],
+    "note": "EX@x% uses a fixed-seed random tie-break among equal agreement values; see results/stats.json 'abstention' for the achievable thresholds and bootstrap CIs"
   },
   "olist_raw_agreement_by_outcome": {
     "correct": {

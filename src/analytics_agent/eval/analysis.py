@@ -1,10 +1,9 @@
 """Turns run files into the tables and plots used in the README.
 
     uv run python -m analytics_agent.eval.analysis ablations   -> results/ablations.md (+ .json)
-    uv run python -m analytics_agent.eval.analysis abstention  -> results/abstention.json, docs/img/risk_coverage_*.png
-    uv run python -m analytics_agent.eval.analysis routing     -> results/routing.json (runs the Router; cache hits)
-    uv run python -m analytics_agent.eval.analysis frontier    -> docs/img/frontier_*.png, results/frontier.json
-    uv run python -m analytics_agent.eval.analysis all
+    uv run python -m analytics_agent.eval.analysis abstention  -> results/abstention.json
+    uv run python -m analytics_agent.eval.analysis routing     -> results/routing.json (re-runs the Router from the cache)
+    uv run python -m analytics_agent.eval.analysis all         (ablations + abstention; charts: eval/charts.py)
 No new LLM calls are made unless a routed question was never answered by the strong model before.
 """
 
@@ -13,13 +12,12 @@ from __future__ import annotations
 import argparse
 import json
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
 
 import numpy as np
 
 from analytics_agent.agent import Agent
-from analytics_agent.confidence import FEATURES, features, oof_logreg, risk_coverage, selective_report
-from analytics_agent.config import RESULTS, ROOT, RUNS
+from analytics_agent.confidence import FEATURES, features, oof_logreg, selective_report
+from analytics_agent.config import RESULTS, ROOT
 from analytics_agent.eval.configs import get_config
 from analytics_agent.eval.datasets import load_bird, subset_ids
 from analytics_agent.eval.metrics import mcnemar_exact, percentile, score, wilson
@@ -169,29 +167,6 @@ def ablations() -> dict:
     return out
 
 
-def _plot_rc(curves: list[tuple[str, np.ndarray, np.ndarray]], title: str, path: Path) -> None:
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    fig, ax = plt.subplots(figsize=(6.4, 4.2), dpi=130)
-    colors = ["#2a6fdb", "#e07b39", "#3a9e5c", "#8e5bd8", "#777777"]
-    for (label, cov, acc), c in zip(curves, colors, strict=False):
-        ax.plot(100 * cov, 100 * acc, label=label, color=c, lw=2)
-    ax.axvline(80, color="#bbbbbb", ls="--", lw=1)
-    ax.set_xlabel("coverage: % of questions answered (most confident first)")
-    ax.set_ylabel("execution accuracy of answered questions (%)")
-    ax.set_title(title, fontsize=10)
-    ax.set_xlim(0, 100)
-    ax.grid(alpha=0.25)
-    ax.legend(fontsize=8, frameon=False, loc="lower left")
-    fig.tight_layout()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fig.savefig(path)
-    plt.close(fig)
-
-
 def _selective(recs: list[dict], target: str = "ex") -> dict:
     y = np.array([r[target] for r in recs], dtype=float)
     X = np.array([features(r) for r in recs])
@@ -209,7 +184,7 @@ def _selective(recs: list[dict], target: str = "ex") -> dict:
 
 def abstention() -> dict:
     out = {}
-    for name, stem, title in [
+    for name, stem, _title in [
         ("bird_sub200", "bird__e_sc5__haiku__sub200", "BIRD sub200, Haiku, 5 samples"),
         ("olist_golden_raw", "olist__olist_raw_n5__haiku", "Olist golden set, Haiku raw-SQL arm, 5 samples"),
     ]:
@@ -218,13 +193,9 @@ def abstention() -> dict:
             continue
         recs = list(runs.values())
         rep = _selective(recs)
-        cur = rep.pop("_curves")
-        curves = []
-        for key, label in (("agreement", "self-consistency agreement"), ("logreg_oof", "calibrated (logreg, out-of-fold)"),
-                           ("single", "single-sample signals only")):
-            cov, acc = risk_coverage(cur[key], cur["y"])
-            curves.append((label, cov, acc))
-        _plot_rc(curves, f"Selective prediction: {title}", IMG / f"risk_coverage_{name}.png")
+        rep.pop("_curves")
+        rep["note"] = ("EX@x% uses a fixed-seed random tie-break among equal agreement values; see results/stats.json "
+                       "'abstention' for the achievable thresholds and bootstrap CIs")
         out[name] = rep
         print(name, json.dumps({k: v for k, v in rep.items() if k != "features"}, indent=1))
     # Does self-consistency catch *definitional* errors? Compare agreement on correct answers, answers that
@@ -291,77 +262,16 @@ def routing(threshold: float = 0.8) -> dict:
     return results
 
 
-def frontier() -> dict:
-    import matplotlib
-
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-
-    abl = json.loads((RESULTS / "ablations.json").read_text()) if (RESULTS / "ablations.json").exists() else ablations()
-    pts = [(s["label"], s["ex"], s["cost_per_q"], s["p95_s"], s["model"]) for s in abl["sub200"] if not s.get("missing")]
-    rt = json.loads((RESULTS / "routing.json").read_text()) if (RESULTS / "routing.json").exists() else {}
-    for k, v in rt.items():
-        if k != "threshold_sweep":
-            pts.append((f"routed: {k}", v["ex"], v["cost_per_q"], v["p95_s"], "routed"))
-    colors = {"qwen": "#3a9e5c", "haiku": "#2a6fdb", "sonnet": "#e07b39", "routed": "#8e5bd8"}
-    short = {"qwen2.5:7b local, (a) official prompt": "Q-a", "qwen2.5:7b local, (d) full pipeline": "Q-d",
-             "haiku (a) official prompt": "H-a", "haiku (a2) our prompt, full schema": "H-a2", "haiku (b) retrieval": "H-b",
-             "haiku (c) few-shot": "H-c", "haiku (d) self-correction": "H-d", "haiku (e) self-consistency x5 (vote)": "H-SC5",
-             "sonnet (d) full pipeline": "S-d", "routed: haiku_sc5_then_sonnet": "R: H-SC5 → S",
-             "routed: haiku_single_then_sonnet": "R: H-d → S"}
-    for xkey, xlabel, fname in [(2, "mean USD per question (log scale; local qwen drawn at 1e-5 = $0 marginal)", "frontier_cost"),
-                                (3, "p95 end-to-end latency per question (s, log scale)", "frontier_latency")]:
-        fig, ax = plt.subplots(figsize=(7.4, 4.8), dpi=130)
-        placed: list[tuple[float, float]] = []
-        for label, ex, cost, p95, model in pts:
-            x = max(cost, 1e-5) if xkey == 2 else p95
-            ax.scatter(x, ex, color=colors[model], s=46, zorder=3)
-            code = short.get(label, label)
-            # hand-placed label offsets (points) so the dense Haiku cluster stays readable
-            if xkey == 2:
-                off = {"H-a": (-58, -14), "H-b": (-58, -4), "H-c": (-58, 6), "H-d": (-58, 16), "H-a2": (-58, 26),
-                       "R: H-d → S": (6, -14)}.get(code, (6, -3))
-            else:
-                off = {"H-a": (40, -40), "H-b": (40, -28), "H-c": (40, -16), "H-d": (-40, 22), "H-a2": (-40, 34),
-                       "R: H-d → S": (40, -52)}.get(code, (6, -3))
-            placed.append((x, ex))
-            ax.annotate(code, (x, ex), fontsize=7.5, xytext=off, textcoords="offset points",
-                        arrowprops={"arrowstyle": "-", "color": "#999999", "lw": 0.6} if abs(off[0]) > 6 else None)
-        ax.set_xscale("log")
-        if xkey == 3:
-            ax.set_xlim(8, 250)
-        ax.set_xlabel(xlabel.replace("$", r"\$"))
-        ax.set_ylabel("BIRD EX on frozen sub200 (%)")
-        ax.grid(alpha=0.25)
-        for m, c in colors.items():
-            ax.scatter([], [], color=c, label=m)
-        ax.legend(fontsize=8, frameon=False, loc="center right")
-        ax.set_title(("Cost" if xkey == 2 else "Latency") + "-quality frontier (each point = one configuration, "
-                     "same 200 questions)", fontsize=10)
-        fig.text(0.01, 0.005, "H=Haiku 5.5  S=Sonnet 5.5  Q=qwen2.5:7b | a=official prompt  a2=our prompt  b=+retrieval  "
-                 "c=+few-shot\nd=+self-correction  SC5=5-sample vote  R=routed (cheap first, escalate on low confidence)",
-                 fontsize=6.5, color="#555555")
-        fig.tight_layout(rect=(0, 0.05, 1, 1))
-        IMG.mkdir(parents=True, exist_ok=True)
-        fig.savefig(IMG / f"{fname}.png")
-        plt.close(fig)
-    out = [{"label": p[0], "ex": p[1], "cost_per_q": p[2], "p95_s": p[3], "model": p[4]} for p in pts]
-    (RESULTS / "frontier.json").write_text(json.dumps(out, indent=2))
-    return {"points": out}
-
-
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("what", choices=["ablations", "abstention", "routing", "frontier", "all"])
+    ap.add_argument("what", choices=["ablations", "abstention", "routing", "all"])
     args = ap.parse_args()
     if args.what in ("ablations", "all"):
         ablations()
     if args.what in ("abstention", "all"):
         abstention()
-    if args.what in ("routing", "all"):
+    if args.what == "routing":  # live replay of the router (cache hits); not part of "all"
         routing()
-    if args.what in ("frontier", "all"):
-        frontier()
 
 
 if __name__ == "__main__":
