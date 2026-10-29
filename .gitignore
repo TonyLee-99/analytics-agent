@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+data/
+.llm_cache/
+traces/*.jsonl
+.ruff_cache/
+.pytest_cache/
+results/runs/
+*.duckdb
+*.duckdb.wal

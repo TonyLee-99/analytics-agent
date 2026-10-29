@@ -1,0 +1,188 @@
+# Governed metric layer for the Olist warehouse (DuckDB, schema `main`).
+#
+# Why this file exists: the experiment in docs/semantic_layer_experiment.md compares an agent that
+# writes raw SQL against one that can only *select* governed metrics + dimensions and lets a
+# deterministic compiler (semantic/compiler.py) write the SQL. Definitions mirror the 12 metrics
+# required by a sister project acceptance file (section C1). That repo's YAML
+# did not exist yet when this was written (2026-10-29), so the exact filters below are our own
+# documented choices; see `caveats` on each metric.
+#
+# Conventions
+# - "valid order" = order_status NOT IN ('canceled', 'unavailable')
+# - Money is BRL. GMV is item price only (freight excluded) -- the classic ambiguity.
+# - Time dimension of every order-level metric is the purchase timestamp.
+
+version: 1
+owner: marketplace analytics (Olist)
+
+models:
+  order_items_enriched:
+    grain: one row per order item
+    time_column: order_purchase_timestamp
+    sql: |
+      SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,
+             o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,
+             c.customer_city, s.seller_state, s.seller_city,
+             COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,
+             op.payment_type AS payment_type
+      FROM order_items oi
+      JOIN orders o ON o.order_id = oi.order_id
+      JOIN customers c ON c.customer_id = o.customer_id
+      JOIN sellers s ON s.seller_id = oi.seller_id
+      LEFT JOIN products p ON p.product_id = oi.product_id
+      LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name
+      LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op
+             ON op.order_id = oi.order_id
+  orders_enriched:
+    grain: one row per order
+    time_column: order_purchase_timestamp
+    sql: |
+      SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,
+             o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,
+             op.payment_type AS payment_type
+      FROM orders o
+      JOIN customers c ON c.customer_id = o.customer_id
+      LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op
+             ON op.order_id = o.order_id
+  reviews_enriched:
+    grain: one row per review
+    time_column: order_purchase_timestamp
+    sql: |
+      SELECT r.review_id, r.order_id, r.review_score, o.order_status, o.order_purchase_timestamp,
+             c.customer_state, c.customer_city, c.customer_unique_id
+      FROM order_reviews r
+      JOIN orders o ON o.order_id = r.order_id
+      JOIN customers c ON c.customer_id = o.customer_id
+  customer_orders:
+    grain: one row per customer_unique_id (valid orders only)
+    time_column: first_purchase_timestamp
+    sql: |
+      SELECT c.customer_unique_id, min(c.customer_state) AS customer_state,
+             count(DISTINCT o.order_id) AS n_orders, min(o.order_purchase_timestamp) AS first_purchase_timestamp
+      FROM orders o JOIN customers c ON c.customer_id = o.customer_id
+      WHERE o.order_status NOT IN ('canceled', 'unavailable')
+      GROUP BY c.customer_unique_id
+
+dimensions:
+  customer_state: {description: "Two-letter Brazilian state of the customer (e.g. SP, RJ)"}
+  customer_city: {description: "Customer city (lower case, Portuguese)"}
+  seller_state: {description: "Two-letter state of the seller", models: [order_items_enriched]}
+  seller_city: {description: "Seller city", models: [order_items_enriched]}
+  product_category: {description: "Product category in English (falls back to Portuguese name)", models: [order_items_enriched]}
+  payment_type: {description: "Payment type of the first payment record (credit_card, boleto, voucher, debit_card)", models: [order_items_enriched, orders_enriched]}
+  order_status: {description: "Order status (delivered, shipped, canceled, ...)", models: [order_items_enriched, orders_enriched, reviews_enriched]}
+  seller_id: {description: "Seller identifier", models: [order_items_enriched]}
+
+metrics:
+  gmv:
+    label: Gross Merchandise Value (BRL)
+    model: order_items_enriched
+    type: sum
+    expr: price
+    filter: order_status NOT IN ('canceled', 'unavailable')
+    description: Sum of item prices on valid orders. Excludes freight and canceled/unavailable orders.
+    caveats: Freight is excluded on purpose; "revenue including freight" is a different number (see freight_value).
+  orders:
+    label: Orders
+    model: orders_enriched
+    type: count_distinct
+    expr: order_id
+    filter: order_status NOT IN ('canceled', 'unavailable')
+    description: Number of distinct valid orders.
+  aov:
+    label: Average Order Value (BRL)
+    model: order_items_enriched
+    type: ratio
+    numerator: sum(price)
+    denominator: count(DISTINCT order_id)
+    filter: order_status NOT IN ('canceled', 'unavailable')
+    description: GMV divided by number of valid orders that have at least one item. Freight excluded.
+  active_customers:
+    label: Active customers
+    model: orders_enriched
+    type: count_distinct
+    expr: customer_unique_id
+    filter: order_status NOT IN ('canceled', 'unavailable')
+    description: Distinct real people (customer_unique_id, not customer_id) with a valid order in the period.
+    caveats: customer_id is per-order in Olist; always count customer_unique_id.
+  repeat_purchase_rate:
+    label: Repeat-purchase rate
+    model: customer_orders
+    type: ratio
+    numerator: count(*) FILTER (WHERE n_orders >= 2)
+    denominator: count(*)
+    description: Share of customers (customer_unique_id) with 2+ valid orders over the whole history. Time filters apply to the first purchase (cohort).
+    allowed_dimensions: [customer_state]
+  on_time_delivery_rate:
+    label: On-time delivery rate
+    model: orders_enriched
+    type: ratio
+    numerator: count(*) FILTER (WHERE CAST(order_delivered_customer_date AS DATE) <= CAST(order_estimated_delivery_date AS DATE))
+    denominator: count(*)
+    filter: order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL
+    description: Share of delivered orders that arrived on or before the estimated delivery date (date level).
+  avg_delivery_days:
+    label: Average delivery time (days)
+    model: orders_enriched
+    type: avg
+    expr: date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0
+    filter: order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL
+    description: Mean days from purchase to customer delivery, delivered orders only (fractional days).
+  avg_delay_vs_promised_days:
+    label: Average days late vs promised date
+    model: orders_enriched
+    type: avg
+    expr: date_diff('day', CAST(order_estimated_delivery_date AS DATE), CAST(order_delivered_customer_date AS DATE))
+    filter: order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL
+    description: Mean of (delivered date - estimated date) in whole days; negative means early.
+  avg_review_score:
+    label: Average review score (1-5)
+    model: reviews_enriched
+    type: avg
+    expr: review_score
+    description: Mean review score over all review records.
+  nps_style_score:
+    label: NPS-style score
+    model: reviews_enriched
+    type: ratio
+    numerator: 100.0 * (count(*) FILTER (WHERE review_score = 5) - count(*) FILTER (WHERE review_score <= 3))
+    denominator: count(*)
+    description: (% of reviews scoring 5) minus (% scoring 1-3), times 100. 4 is passive.
+  freight_to_price_ratio:
+    label: Freight-to-price ratio
+    model: order_items_enriched
+    type: ratio
+    numerator: sum(freight_value)
+    denominator: sum(price)
+    filter: order_status NOT IN ('canceled', 'unavailable')
+    description: Total freight divided by total item price, valid orders.
+  cancellation_rate:
+    label: Cancellation rate
+    model: orders_enriched
+    type: ratio
+    numerator: count(*) FILTER (WHERE order_status = 'canceled')
+    denominator: count(*)
+    description: Canceled orders divided by all orders (any status).
+  top10pct_seller_gmv_share:
+    label: Top-10% seller GMV share
+    type: custom_sql
+    description: Share of GMV earned by the top 10% of sellers ranked by GMV (valid orders). No dimensions.
+    sql: |
+      WITH s AS (
+        SELECT oi.seller_id, sum(oi.price) AS gmv
+        FROM order_items oi JOIN orders o ON o.order_id = oi.order_id
+        WHERE o.order_status NOT IN ('canceled', 'unavailable')
+        GROUP BY oi.seller_id),
+      r AS (SELECT gmv, row_number() OVER (ORDER BY gmv DESC) AS rk, count(*) OVER () AS n FROM s)
+      SELECT sum(gmv) FILTER (WHERE rk <= ceil(0.1 * n)) / sum(gmv) AS top10pct_seller_gmv_share FROM r
+  seller_gmv_hhi:
+    label: Seller GMV concentration (HHI, 0-10000)
+    type: custom_sql
+    description: Herfindahl-Hirschman index of seller GMV shares (valid orders), scaled 0-10000. No dimensions.
+    sql: |
+      WITH s AS (
+        SELECT oi.seller_id, sum(oi.price) AS gmv
+        FROM order_items oi JOIN orders o ON o.order_id = oi.order_id
+        WHERE o.order_status NOT IN ('canceled', 'unavailable')
+        GROUP BY oi.seller_id)
+      SELECT sum(power(100.0 * gmv / (SELECT sum(gmv) FROM s), 2)) AS seller_gmv_hhi FROM s

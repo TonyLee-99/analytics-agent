@@ -1,0 +1,1 @@
+{"ts": 0, "backend": "claude_cli", "model": "claude-haiku-5-5", "tag": "manual_smoke_test_before_ledger", "input_tokens": 868, "output_tokens": 9, "cost_usd": 0.0001779, "latency_s": 3.07}

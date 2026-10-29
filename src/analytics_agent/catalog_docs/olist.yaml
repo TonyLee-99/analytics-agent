@@ -1,0 +1,111 @@
+# Data catalog for the governed Olist views (DuckDB schema `main`).
+# Written by hand from profiling the real data (2026-10-29); counts below are from data/olist.duckdb.
+# Period covered: purchases from 2016-09-04 to 2018-10-17 (Sep-2016..Dec-2016 and Sep/Oct-2018 are sparse).
+database: olist
+dialect: duckdb
+tables:
+  orders:
+    description: >-
+      One row per order (99,441 orders), the hub table of the warehouse. Join to customers on customer_id,
+      to order_items / order_payments / order_reviews on order_id.
+    columns:
+      order_id: Primary key of the order (32-char hex).
+      customer_id: FK to customers.customer_id. Olist issues a new customer_id per order, so this is NOT a person id.
+      order_status: "Lifecycle status: delivered (96,478), shipped, canceled (625), unavailable (609), invoiced, processing, created, approved."
+      order_purchase_timestamp: Timestamp the customer placed the order; the standard time dimension for order metrics.
+      order_approved_at: Timestamp the payment was approved (null for some canceled/created orders).
+      order_delivered_carrier_date: Timestamp the seller handed the parcel to the logistics carrier.
+      order_delivered_customer_date: Timestamp the customer received the order (null for 2,965 orders that were never delivered).
+      order_estimated_delivery_date: Delivery date promised to the customer at purchase; always midnight (date precision).
+    pii: []
+  customers:
+    description: >-
+      One row per customer_id (99,441 rows) but only 96,096 distinct real people (customer_unique_id).
+      Count customers with customer_unique_id; join to orders on customer_id.
+    columns:
+      customer_id: Per-order customer key; FK target of orders.customer_id.
+      customer_unique_id: Stable identifier of the person across orders; use this to count customers or repeat buyers.
+      customer_zip_code_prefix: "PII: first 5 digits of the zip code, tokenized as 'zip_<hash>' in this view; joinable to geolocation/sellers tokens."
+      customer_city: Customer city name, lower case Portuguese without accents (e.g. sao paulo, rio de janeiro).
+      customer_state: Two-letter Brazilian state code (27 values; SP is the largest).
+    pii: [customer_zip_code_prefix]
+  order_items:
+    description: >-
+      One row per item within an order (112,650 rows); an order can contain up to 21 items, possibly from different sellers.
+      Join to orders on order_id, products on product_id, sellers on seller_id. 775 orders have no items.
+    columns:
+      order_id: FK to orders.order_id.
+      order_item_id: Sequential item number within the order (1, 2, ...); (order_id, order_item_id) is unique.
+      product_id: FK to products.product_id.
+      seller_id: FK to sellers.seller_id.
+      shipping_limit_date: Deadline for the seller to hand the item to the carrier.
+      price: Item price in BRL, excluding freight (0.85 to 6,735).
+      freight_value: Freight charged for this item in BRL (an order's freight is split across its items).
+    pii: []
+  order_payments:
+    description: >-
+      One row per payment record (103,886 rows); an order can be paid with several methods/vouchers
+      (payment_sequential 1..29). Sum payment_value per order for the amount the customer paid (items + freight).
+    columns:
+      order_id: FK to orders.order_id.
+      payment_sequential: Sequence number of the payment record within the order, starting at 1.
+      payment_type: "credit_card (76,795), boleto (bank slip, 19,784), voucher, debit_card, not_defined (3)."
+      payment_installments: Number of installments chosen (credit cards; 0..24).
+      payment_value: Amount of this payment record in BRL (includes freight; can be 0 for vouchers).
+    pii: []
+  order_reviews:
+    description: >-
+      Post-delivery satisfaction survey, one row per review record (99,224 rows, 98,410 distinct review_id,
+      98,673 distinct orders); join to orders on order_id.
+    columns:
+      review_id: "Review identifier (not unique; a few reviews are attached to several orders)."
+      order_id: FK to orders.order_id (a few orders have more than one review).
+      review_score: Score from 1 to 5 given by the customer (mean 4.09).
+      review_comment_title: Optional comment title, Portuguese free text (mostly null).
+      review_comment_message: Optional comment, Portuguese free text (58,247 nulls). May contain personal data; treat as sensitive.
+      review_creation_date: Date the survey was sent to the customer.
+      review_answer_timestamp: Timestamp the customer answered the survey.
+    pii: [review_comment_message]
+  products:
+    description: >-
+      Product catalog, one row per product_id (32,951 rows); join to order_items on product_id and to
+      product_category_name_translation on product_category_name for English names.
+    columns:
+      product_id: Primary key.
+      product_category_name: Category in Portuguese (null for 610 products); translate via product_category_name_translation.
+      product_name_lenght: Number of characters in the product name (column name misspelled in the source data).
+      product_description_lenght: Number of characters in the product description (misspelled in the source data).
+      product_photos_qty: Number of product photos published.
+      product_weight_g: Weight in grams.
+      product_length_cm: Length in centimeters.
+      product_height_cm: Height in centimeters.
+      product_width_cm: Width in centimeters.
+    pii: []
+  sellers:
+    description: >-
+      One row per seller (3,095 sellers); join to order_items on seller_id.
+    columns:
+      seller_id: Primary key.
+      seller_zip_code_prefix: "PII: tokenized zip prefix ('zip_<hash>'), same tokenization as customer zips."
+      seller_city: Seller city name (lower case Portuguese).
+      seller_state: Two-letter state of the seller (most sellers are in SP).
+    pii: [seller_zip_code_prefix]
+  geolocation:
+    description: >-
+      Zip-prefix to coordinates lookup (1,000,163 rows, 19,015 distinct tokenized prefixes; several rows per prefix).
+      Coordinates are coarsened to 1 decimal place by the access policy. Join on the tokenized zip prefix.
+    columns:
+      geolocation_zip_code_prefix: Tokenized zip prefix ('zip_<hash>'), joins to customers/sellers zip prefix columns.
+      geolocation_lat: Latitude rounded to 1 decimal (~11 km).
+      geolocation_lng: Longitude rounded to 1 decimal (~11 km).
+      geolocation_city: City name.
+      geolocation_state: Two-letter state code.
+    pii: [geolocation_zip_code_prefix, geolocation_lat, geolocation_lng]
+  product_category_name_translation:
+    description: >-
+      Lookup from the Portuguese category name to English (71 rows). Two categories used by 13 products
+      (pc_gamer, portateis_cozinha_e_preparadores_de_alimentos) have no translation.
+    columns:
+      product_category_name: Portuguese category name (join key to products.product_category_name).
+      product_category_name_english: English category name, e.g. health_beauty, bed_bath_table.
+    pii: []
