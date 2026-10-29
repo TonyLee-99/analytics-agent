@@ -64,7 +64,7 @@ something measured in this repo, the number is cited with the file that produces
   - Low-confidence answers get a "review before sharing" badge and an option to route the question to
     the owning analytics team's queue.
   - Ambiguous questions get a clarifying question instead of a guess.
-  - Measured coverage/accuracy trade-offs are in `results/abstention.json` and `results/ambiguity__haiku.json`.
+  - Measured coverage/accuracy trade-offs are in `results/stats.json` (`abstention`) and `results/ambiguity__haiku.json`; the API serves the same self-consistency confidence (`serving/service.py`).
 - **Guided mode** for high-stakes requests: the user confirms the tables or metrics before
   execution. LinkedIn and QueryGPT both added table-confirmation steps after users asked for control.
 - **Certified answers.** Once an analyst approves a (question, SQL) pair, it is promoted into the

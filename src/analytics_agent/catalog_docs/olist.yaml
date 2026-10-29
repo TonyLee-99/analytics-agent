@@ -1,5 +1,5 @@
 # Data catalog for the governed Olist views (DuckDB schema `main`).
-# Written by hand from profiling the real data (2026-10-29); counts below are from data/olist.duckdb.
+# Written for this repo from profiling the real data (2026-10-29); counts are from data/olist.duckdb.
 # Period covered: purchases from 2016-09-04 to 2018-10-17 (Sep-2016..Dec-2016 and Sep/Oct-2018 are sparse).
 database: olist
 dialect: duckdb

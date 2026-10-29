@@ -124,7 +124,7 @@ First filled in on 2026-10-29 (v1). Revised the same day after three independent
 | H2 | PASS | `traces/*.jsonl`; `results/trace_summary.md` | |
 | H3 | PASS | `tests/test_serving.py` (6 passed, including `test_split_vote_is_routed_to_review`). The API now serves the evaluated SC confidence and a route field. Real smoke runs: `results/logs/smoke_*_real.txt` (v1 code) | v1 served a heuristic confidence |
 | H4 | PASS | paired gate: fail if net loss ≥ 5 of 30 vs the baseline recording; false-alarm rate 2.1% (v1's absolute threshold: 11.7%); flags the recorded degraded prompt (net −5); power against a true −5 pp regression only 10% at n = 30 (`tests/regression/gate.json`) | redesigned with stated error rates |
-| H5 | PASS | `make test` → 149 passed (DB-dependent tests skip without `make data`); `make lint` clean; Dockerfile, CI yaml (included, not yet run on a remote), `uv.lock` + `==` pins, py3.12 | |
+| H5 | PASS | `make test` → 154 passed; on a fresh clone without data 132 passed, 22 skipped; `make lint` clean; Dockerfile, CI yaml (included, not yet run on a remote), `uv.lock` + `==` pins, py3.12 | |
 | H6 | PASS | ledger: 3,397 Claude calls, $10.84 (CLI `total_cost_usd`); R1 added 0 calls. Plus 231 task attempts rejected with HTTP 429 (not billed, not in the ledger) | |
 | I1 | PASS | 70 failures labelled by executing SQL per case, the disputed case re-checked; single annotator. 10% acceptable (CI 5–19%) | |
 | I2 | **FAIL as v1 stated; PASS as corrected** | v1's "self-correction moved filter errors 12 → 18" compared separate noisy runs. Corrected within-run attribution: correction fixed 6 of the 25 labelled filter errors and 1 execution error (`docs/error_analysis.md`) | corrected |

@@ -5,7 +5,7 @@
                                 ^                    |
                                 +---- CORRECT <------+  (error / empty / all-NULL / suspicious size), <= N rounds
 
-Why no LangGraph: the graph is small and linear with one loop; a 40-line loop is easier to test,
+Why no LangGraph: the graph is small and linear with one loop; a single explicit loop in Agent.ask is easier to test,
 trace and reason about than a framework graph, and has zero dependency risk. LinkedIn's SQL Bot uses
 LangGraph because it has many cooperating agents and human-in-the-loop UI states; we document that
 trade-off in the README.
