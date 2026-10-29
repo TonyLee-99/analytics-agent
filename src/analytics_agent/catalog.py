@@ -82,7 +82,7 @@ class DatabaseCatalog:
                         d = (d + "; " if d else "") + c.value_description.strip()
                     if d:
                         comment.append(d[:max_desc])
-                if samples and c.samples:
+                if samples and c.samples and not c.pii:  # never show PII values, even tokenized
                     comment.append("example: " + json.dumps(c.samples[:3], ensure_ascii=False)[:120])
                 if c.pii:
                     comment.append("PII (masked)")

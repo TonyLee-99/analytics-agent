@@ -15,12 +15,16 @@ something measured in this repo, the number is cited with the file that produces
 - **Keep the agent-side guardrails anyway.** These are the AST validator, the read-only session, the
   table allowlist and the row/time caps (`docs/security.md`). They are cheap, they fail closed, and
   they protect against misconfigured grants.
-  - The red-team bypass test here found two holes at the connection layer (ATTACH creating files, and
-    raw PII readable next to masking views) that only the AST layer covered. Both were then fixed at
-    the connection layer too.
-- **PII.** Use warehouse-native classification plus masking policies; tokenize join keys so joins
-  still work, as this repo does with zip prefixes. Free-text columns get PII detection before they
-  are exposed. Result rows are logged only after masking.
+  - Red-teaming found five holes here: two at the connection layer (ATTACH creating files, and raw
+    PII readable next to masking views), invertible zip tokens, an allowlist bypass through CTE
+    shadowing, and an unbounded-memory query. All five are fixed and have regression tests
+    (`docs/security.md`).
+- **PII.** Use warehouse-native classification plus masking policies. Tokenize join keys with a
+  *keyed* function (HMAC with a key held by the platform), so joins still work but tokens cannot be
+  inverted. An unkeyed hash of a low-cardinality value is a lookup table, not masking: this repo's
+  v1 used `md5(zip)`, and a single SELECT re-identified all 99,441 customers (`docs/security.md`).
+  Free-text columns get PII detection before they are exposed. Result rows are logged only after
+  masking.
 - **Audit.** Log every (user, question, SQL, tables touched, rows returned, cost) to an append-only
   audit table. The JSONL traces here are the prototype of that record.
 

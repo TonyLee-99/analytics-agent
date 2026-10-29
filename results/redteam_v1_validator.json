@@ -1,0 +1,50 @@
+{
+  "validator_version": "db30f5f",
+  "attacks": 64,
+  "allowed_by_v1": [
+    {
+      "id": "cte_shadow_sqlite_master",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "cte_shadow_duck_sqlite_master",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "cte_shadow_info_schema",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "cte_shadow_pg_settings",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "cte_shadow_raw_schema",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "cte_self_reference",
+      "category": "allowlist_bypass"
+    },
+    {
+      "id": "bomb_zeroblob",
+      "category": "dos"
+    },
+    {
+      "id": "bomb_printf",
+      "category": "dos"
+    },
+    {
+      "id": "bomb_repeat",
+      "category": "dos"
+    },
+    {
+      "id": "bomb_repeat_col",
+      "category": "dos"
+    },
+    {
+      "id": "bomb_lpad",
+      "category": "dos"
+    }
+  ]
+}

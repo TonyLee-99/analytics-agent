@@ -16,6 +16,9 @@ Run: uv run python scripts/build_olist.py
 from __future__ import annotations
 
 import hashlib
+import hmac
+import os
+import secrets
 import sys
 from pathlib import Path
 
@@ -38,18 +41,41 @@ TABLES = {
     "product_category_name_translation": ("product_category_name_translation.csv", 71),
 }
 
-# zip-code prefixes are quasi-identifiers: tokenize deterministically (joins still work, values hidden);
+# zip-code prefixes are quasi-identifiers. They are replaced by a *keyed* token:
+#   token = 'zip_' + HMAC-SHA256(key, zip)[:16 hex]
+# The key lives outside the warehouse (data/secrets/zip_token.key or $AA_ZIP_TOKEN_KEY), so tokens keep
+# joins working but cannot be inverted from inside the database. (Version 1 used an unsalted
+# md5(zip): a single read-only recursive-CTE SELECT enumerated all 100,000 prefixes and re-identified
+# every customer -- found by red-teaming, see docs/security.md.)
 # lat/lng are coarsened to 1 decimal (~11 km).
-TOKEN = "'zip_' || substr(md5({c}), 1, 10)"
+ZIP_COLUMNS = {
+    "customers": ["customer_zip_code_prefix"],
+    "sellers": ["seller_zip_code_prefix"],
+    "geolocation": ["geolocation_zip_code_prefix"],
+}
 PII_POLICY = {
-    "customers": {"customer_zip_code_prefix": TOKEN.format(c="customer_zip_code_prefix")},
-    "sellers": {"seller_zip_code_prefix": TOKEN.format(c="seller_zip_code_prefix")},
     "geolocation": {
-        "geolocation_zip_code_prefix": TOKEN.format(c="geolocation_zip_code_prefix"),
-        "geolocation_lat": "round(geolocation_lat, 1)",
-        "geolocation_lng": "round(geolocation_lng, 1)",
+        "geolocation_lat": "round(t.geolocation_lat, 1)",
+        "geolocation_lng": "round(t.geolocation_lng, 1)",
     },
 }
+KEY_FILE = ROOT / "data" / "secrets" / "zip_token.key"
+
+
+def load_key() -> bytes:
+    env = os.environ.get("AA_ZIP_TOKEN_KEY")
+    if env:
+        return bytes.fromhex(env)
+    if not KEY_FILE.exists():
+        KEY_FILE.parent.mkdir(parents=True, exist_ok=True)
+        KEY_FILE.write_text(secrets.token_hex(32))
+        KEY_FILE.chmod(0o600)
+    return bytes.fromhex(KEY_FILE.read_text().strip())
+
+
+def zip_token(key: bytes, z: str) -> str:
+    return "zip_" + hmac.new(key, z.encode(), hashlib.sha256).hexdigest()[:16]
+
 
 TYPES = {
     "customers": {"customer_zip_code_prefix": "VARCHAR"},
@@ -105,12 +131,35 @@ def main(path: Path = OLIST_DB, redteam: bool = False) -> None:
             con.execute(stmt)
         print(f"planted {len(PLANTS)} malicious data values (red-team copy)")
 
-    # governed, masked, materialized tables in `main`; then drop raw entirely
+    # keyed zip tokens: computed in Python, so the key never enters the database file
+    key = load_key()
+    zips = set()
+    for table, cols in ZIP_COLUMNS.items():
+        for c in cols:
+            zips |= {r[0] for r in con.execute(f"SELECT DISTINCT {c} FROM raw.{table} WHERE {c} IS NOT NULL").fetchall()}
+    mapping = sorted((z, zip_token(key, z)) for z in zips)
+    if len({t for _, t in mapping}) != len(mapping):
+        raise SystemExit("zip token collision")
+    con.execute("CREATE TABLE raw.zip_map (zip VARCHAR, token VARCHAR)")
+    con.executemany("INSERT INTO raw.zip_map VALUES (?, ?)", mapping)
+
+    # governed, masked, materialized tables in `main` (original row order kept); then drop raw entirely
     for table in TABLES:
         cols = [r[0] for r in con.execute(f"DESCRIBE raw.{table}").fetchall()]
         policy = PII_POLICY.get(table, {})
-        select = ", ".join(f"{policy[c]} AS {c}" if c in policy else c for c in cols)
-        con.execute(f"CREATE TABLE main.{table} AS SELECT {select} FROM raw.{table}")
+        zcols = ZIP_COLUMNS.get(table, [])
+        select, joins = [], []
+        for c in cols:
+            if c in zcols:
+                alias = f"zm_{c}"
+                joins.append(f"LEFT JOIN raw.zip_map {alias} ON {alias}.zip = t.{c}")
+                select.append(f"{alias}.token AS {c}")
+            elif c in policy:
+                select.append(f"{policy[c]} AS {c}")
+            else:
+                select.append(f"t.{c}")
+        con.execute(f"CREATE TABLE main.{table} AS SELECT {', '.join(select)} FROM raw.{table} t "
+                    f"{' '.join(joins)} ORDER BY t.rowid")
     con.execute("DROP SCHEMA raw CASCADE")
     con.execute("CHECKPOINT")
     con.close()

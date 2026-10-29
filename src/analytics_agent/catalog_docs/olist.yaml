@@ -25,7 +25,7 @@ tables:
     columns:
       customer_id: Per-order customer key; FK target of orders.customer_id.
       customer_unique_id: Stable identifier of the person across orders; use this to count customers or repeat buyers.
-      customer_zip_code_prefix: "PII: first 5 digits of the zip code, tokenized as 'zip_<hash>' in this view; joinable to geolocation/sellers tokens."
+      customer_zip_code_prefix: "PII: first 5 digits of the zip code, replaced by a keyed HMAC token 'zip_<hex>' (key held outside the warehouse); joinable to geolocation/sellers tokens."
       customer_city: Customer city name, lower case Portuguese without accents (e.g. sao paulo, rio de janeiro).
       customer_state: Two-letter Brazilian state code (27 values; SP is the largest).
     pii: [customer_zip_code_prefix]
