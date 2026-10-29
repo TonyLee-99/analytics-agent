@@ -349,3 +349,28 @@ def answer_confidence(signals: dict[str, Any]) -> float:
 
 def vote_counter(rows_list: list[list[tuple]]) -> Counter:
     return Counter(result_signature(r) for r in rows_list)
+
+
+class HybridAgent:
+    """Metrics-first routing: try the governed semantic layer; if the model decides the question is
+    not expressible as governed metrics (it falls back to raw SQL), hand the question to the documented
+    raw-SQL agent (schema + metric glossary) instead of using the semantic prompt's own fallback SQL.
+
+    Motivation (measured, see docs/semantic_layer_experiment.md): the semantic arm was best on metric
+    questions but its fallback SQL over-applied metric filters to non-metric questions."""
+
+    def __init__(self, semantic: Agent, raw: Agent):
+        self.semantic, self.raw = semantic, raw
+        self.cfg = semantic.cfg
+
+    def ask(self, question: str, db_id: str, evidence: str = "", official_prompt: str | None = None,
+            task_id: str | None = None) -> AgentAnswer:
+        a = self.semantic.ask(question, db_id, evidence, task_id=task_id)
+        if a.status == "clarify" or a.signals.get("used_semantic"):
+            a.signals["route"] = "semantic"
+            return a
+        b = self.raw.ask(question, db_id, evidence, task_id=task_id)
+        ua, ub = a.signals.get("usage", {}), b.signals.get("usage", {})
+        b.signals["usage"] = {k: round(ua.get(k, 0) + ub.get(k, 0), 6) for k in set(ua) | set(ub)}
+        b.signals["route"] = "raw_fallback"
+        return b

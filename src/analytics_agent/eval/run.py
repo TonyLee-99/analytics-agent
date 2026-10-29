@@ -99,7 +99,13 @@ def main(argv: list[str] | None = None) -> dict:
     examples = bird_examples() if args.suite == "bird" else olist_examples()
     out = run_path(args.suite, cfg.name + (f"_n{args.n_samples}" if args.n_samples else ""), args.model, args.subset)
     trace_path = TRACES / (out.stem + ".jsonl")
-    agent = Agent(llm, cfg, examples, trace_path=trace_path)
+    if args.config == "olist_hybrid":  # semantic first, documented raw-SQL agent as the fallback
+        from analytics_agent.agent import HybridAgent
+
+        agent = HybridAgent(Agent(llm, get_config("olist_semantic"), examples, trace_path=trace_path),
+                            Agent(llm, get_config("olist_glossary"), examples, trace_path=trace_path))
+    else:
+        agent = Agent(llm, cfg, examples, trace_path=trace_path)
     tasks = load_tasks(args.suite, args.subset, args.limit)
     out.parent.mkdir(parents=True, exist_ok=True)
     done = set()

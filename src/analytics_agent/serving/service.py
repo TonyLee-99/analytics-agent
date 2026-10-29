@@ -6,7 +6,7 @@ import os
 from functools import lru_cache
 from typing import Any
 
-from analytics_agent.agent import Agent, AgentConfig, answer_confidence
+from analytics_agent.agent import Agent, AgentConfig, HybridAgent, answer_confidence
 from analytics_agent.catalog import get_catalog
 from analytics_agent.config import TRACES
 from analytics_agent.llm import make_client
@@ -15,11 +15,16 @@ MAX_ROWS_RETURNED = 200
 
 
 @lru_cache(maxsize=8)
-def get_agent(db_id: str) -> Agent:
+def get_agent(db_id: str) -> Agent | HybridAgent:
     model = os.environ.get("AA_MODEL", "haiku")
-    if db_id == "olist":  # business warehouse: governed metrics first, ask when ambiguous
-        cfg = AgentConfig(name="api_olist", schema_mode="full", max_corrections=2, semantic_mode="semantic",
-                          allow_clarify=True, summarize=model != "mock")
+    if db_id == "olist":  # business warehouse: governed metrics first (hybrid router), ask when ambiguous
+        llm = make_client(model)
+        common = dict(schema_mode="full", max_corrections=2, allow_clarify=True, summarize=model != "mock")
+        sem = Agent(llm, AgentConfig(name="api_olist_semantic", semantic_mode="semantic", **common),
+                    trace_path=TRACES / "serving.jsonl")
+        raw = Agent(llm, AgentConfig(name="api_olist_glossary", semantic_mode="glossary", **common),
+                    trace_path=TRACES / "serving.jsonl")
+        return HybridAgent(sem, raw)
     else:
         cfg = AgentConfig(name="api", schema_mode="retrieved", top_k=6, max_corrections=2, summarize=model != "mock")
     return Agent(make_client(model), cfg, trace_path=TRACES / "serving.jsonl")

@@ -1,0 +1,48 @@
+{
+  "olist_golden_raw": {
+    "agreement": {
+      "n": 50,
+      "ex_at_100": 62.0,
+      "ex_at_90": 62.22,
+      "ex_at_80": 65.0,
+      "ex_at_70": 68.57,
+      "ex_at_50": 72.0,
+      "aurc": 0.3531,
+      "auroc": 0.6078,
+      "ece": 0.216,
+      "brier": 0.2736
+    },
+    "logreg_oof": {
+      "n": 50,
+      "ex_at_100": 62.0,
+      "ex_at_90": 62.22,
+      "ex_at_80": 65.0,
+      "ex_at_70": 62.86,
+      "ex_at_50": 56.0,
+      "aurc": 0.5019,
+      "auroc": 0.4109,
+      "ece": 0.1942,
+      "brier": 0.2654
+    },
+    "single_sample_signals_only": {
+      "n": 50,
+      "ex_at_100": 62.0,
+      "ex_at_90": 66.67,
+      "ex_at_80": 62.5,
+      "ex_at_70": 65.71,
+      "ex_at_50": 68.0,
+      "aurc": 0.4064,
+      "auroc": 0.5,
+      "ece": 0.38,
+      "brier": 0.38
+    },
+    "features": [
+      "sc_agreement",
+      "main_in_majority",
+      "corrections",
+      "had_problem",
+      "retrieval_top",
+      "n_rows_log"
+    ]
+  }
+}

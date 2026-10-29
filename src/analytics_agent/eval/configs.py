@@ -25,11 +25,13 @@ CONFIGS: dict[str, AgentConfig] = {
                                   semantic_mode="glossary"),
     "olist_semantic": AgentConfig(name="olist_semantic", schema_mode="full", max_corrections=2,
                                   semantic_mode="semantic"),
+    # semantic first; non-metric questions routed to olist_glossary (see agent.HybridAgent)
+    "olist_hybrid": AgentConfig(name="olist_hybrid", schema_mode="full", max_corrections=2, semantic_mode="semantic"),
 }
 
 
-def get_config(name: str, **overrides) -> AgentConfig:
+def get_config(config_name: str, **overrides) -> AgentConfig:
     import dataclasses
 
-    base = CONFIGS[name]
+    base = CONFIGS[config_name]
     return dataclasses.replace(base, **overrides) if overrides else base

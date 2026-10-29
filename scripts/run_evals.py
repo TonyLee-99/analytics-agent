@@ -29,6 +29,11 @@ PLANS = {
         ("bird", "d_selfcorrect", "sonnet", "sub200", 4, None),
         ("bird", "e_sc5", "haiku", "sub200", 1, None),
     ],
+    "sub": [  # budget-limited runs on the frozen subset (can run in parallel with "full")
+        ("bird", "d_selfcorrect", "sonnet", "sub200", 4, None),
+        ("bird", "a2_ourprompt_full", "haiku", "sub200", 4, None),
+        ("bird", "e_sc5", "haiku", "sub200", 1, None),
+    ],
     "qwen": [
         ("bird", "d_selfcorrect", "qwen", "sub200", 1, None),
         ("bird", "a_zeroshot_official", "qwen", "sub200", 1, None),

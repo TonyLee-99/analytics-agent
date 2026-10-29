@@ -1,0 +1,26 @@
+# CI: lint + unit tests + the LLM regression gate. No network LLM calls: the agent runs against
+# recorded responses (tests/regression/cassette_*.jsonl) or a mock. Written for GitHub Actions;
+# not run remotely by this project.
+name: ci
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      AA_MODEL: mock            # serving smoke tests use the mock LLM
+      AA_MAX_CLAUDE_CALLS: "0"  # hard guarantee: any real Claude call raises BudgetExceeded
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - name: Install pinned deps
+        run: uv sync --locked
+      - name: Lint
+        run: uv run ruff check .
+      - name: Unit tests (guardrails, executor, metrics, agent, serving, semantic compiler)
+        run: uv run pytest -q --ignore=tests/test_regression_gate.py
+      - name: Regression gate (frozen 30-question set, recorded responses, EX threshold)
+        run: uv run pytest -q tests/test_regression_gate.py

@@ -1,0 +1,703 @@
+{
+  "model": "haiku",
+  "arms": {
+    "olist_raw": {
+      "clarify_rate_ambiguous": 0.6,
+      "clarify_rate_ambiguous_excluding_governed_resolved": 0.667,
+      "false_clarify_rate_controls": 0.0,
+      "controls_ex": 1.0,
+      "ambiguous_answered_without_asking": 8,
+      "detail": [
+        {
+          "id": "amb_001",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "Which \"revenue\" do you mean: (a) item revenue, the sum of order_items.price excluding freight, or (b) total customer payments, the sum of order_payments.payment_value including freight? Also, \"last quarter\" relative to today (2026-10-29) would be Q3 2026, but the data appears to end around 2018, so should I use calendar Q3 2026 (which likely returns zero), or the most recent full quarter in the data (likely Q3 2018)? And should canceled and unavailable orders be excluded?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_002",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Best customers\" could mean (a) highest total spend (sum of order_payments.payment_value per customer_unique_id), (b) most orders placed (distinct orders per customer_unique_id), or (c) most recent or repeat buyers. These give different rankings, so which one should I use, and how many top customers do you want returned (for example, top 10 or top 100)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_003",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    ROUND(AVG(date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0), 2) AS avg_delivery_days,\n    ROUND(MEDIAN(date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0), 2) AS median_delivery_days\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_delivered_customer_date IS NOT NULL\n  AND order_purchase_timestamp IS NOT NULL",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_004",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "By what measure should \"top category\" be ranked: total revenue (sum of item price, or price plus freight), number of orders, or units sold? Each can name a different category, and should the result cover all order statuses or only delivered orders?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_005",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"How did we do\" could mean several different metrics, and \"last month\" is ambiguous because the data ends around late 2018 while today is 2026-10-29. Which metric should I report (order count, gross revenue as payment_value or item price+freight, delivered-order share, or average review score), and should \"last month\" mean September 2026 (which may have no data) or the latest month in the dataset?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_006",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "Do you mean sellers whose seller_city is the city 'sao paulo' (the municipality), or sellers whose seller_state is 'SP' (the whole state of S\u00e3o Paulo)? These give very different counts, and the schema doesn't settle which you mean.",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_007",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "Do you mean orders from customers in the city of Rio de Janeiro (customer_city = 'rio de janeiro') or in the whole state of Rio de Janeiro (customer_state = 'RJ')? The state count will be substantially larger. Should canceled and unavailable orders be included, or only non-canceled ones?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_008",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS late_orders_2018\nFROM orders\nWHERE order_purchase_timestamp >= TIMESTAMP '2018-01-01'\n  AND order_purchase_timestamp <  TIMESTAMP '2019-01-01'\n  AND order_delivered_customer_date IS NOT NULL\n  AND CAST(order_delivered_customer_date AS DATE) > CAST(order_estimated_delivery_date AS DATE)",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_009",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Grew the most\" needs two choices. (1) Metric: item revenue (sum of price), or order count? (2) Comparison: which periods to compare, such as calendar 2017 vs 2018 (the data covers roughly Sep 2016 to Oct 2018), or the latest 3 or 6 months vs the same length before them? Also, should I rank by absolute BRL/order increase or by percent growth? Percent growth favors small categories, so the answers can differ a lot.",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_010",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH cust_orders AS (\n    SELECT\n        c.customer_unique_id,\n        COUNT(DISTINCT o.order_id) AS n_orders\n    FROM orders o\n    JOIN customers c\n        ON o.customer_id = c.customer_id\n    WHERE o.order_status NOT IN ('canceled', 'unavailable')\n    GROUP BY c.customer_unique_id\n)\nSELECT\n    ROUND(100.0 * COUNT(*) FILTER (WHERE n_orders >= 2) / COUNT(*), 2) AS retention_rate\nFROM cust_orders",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_011",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Sales by region\" could mean (a) the customer's state (customers.customer_state) or (b) the seller's state (sellers.seller_state), and \"sales\" could mean item revenue (sum of order_items.price) or total customer payments (sum of order_payments.payment_value, which includes freight). Which region and which sales measure do you want?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_012",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    ROUND(AVG(date_diff('second', o.order_purchase_timestamp, o.order_delivered_customer_date) / 86400.0), 2) AS avg_delivery_days\nFROM orders o\nJOIN customers c\n    ON c.customer_id = o.customer_id\nWHERE c.customer_city = 'sao paulo'\n  AND o.order_status = 'delivered'\n  AND o.order_delivered_customer_date IS NOT NULL\n  AND o.order_purchase_timestamp IS NOT NULL",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_013",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH order_paid AS (\n    SELECT\n        o.order_id,\n        c.customer_unique_id,\n        SUM(p.payment_value) AS order_amount\n    FROM orders o\n    JOIN customers c\n        ON c.customer_id = o.customer_id\n    JOIN order_payments p\n        ON p.order_id = o.order_id\n    WHERE o.order_status NOT IN ('canceled', 'unavailable')\n    GROUP BY o.order_id, c.customer_unique_id\n),\nperson_spend AS (\n    SELECT\n        customer_unique_id,\n        SUM(order_amount) AS total_spend\n    FROM order_paid\n    GROUP BY customer_unique_id\n)\nSELECT\n    AVG(total_spend)    AS avg_spend,\n    MEDIAN(total_spend) AS median_spend\nFROM person_spend",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_014",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "Do you want \"top sellers\" ranked by revenue (sum of item price, or price plus freight) or by number of orders? And for \"this year\": should I use calendar 2026, which is the current year but may have no data, or the most recent year in the dataset (2018)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_015",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Last year\" is 2025 relative to today (2026-10-29), but the data only covers 2016-2018, so that would return 0. Did you mean (a) calendar 2017, the latest full year in the data, or (b) calendar 2025 as written, which would return 0? Also, should canceled and unavailable orders be excluded from the item count, or should every row in order_items be counted?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_016",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Underperforming\" has no defined metric here, and the choices give different sellers. Should I rank sellers by (a) revenue (sum of item price + freight) over a set period, (b) average review score, (c) late-delivery rate (delivered after estimated date), or (d) cancellation/unavailable rate? Also, what time window should I use, and should sellers below a threshold be flagged, or should I return a ranked list?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_017",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT customer_unique_id) AS customer_count\nFROM customers",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_018",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH order_totals AS (\n    SELECT\n        order_id,\n        SUM(payment_value) AS order_value\n    FROM order_payments\n    GROUP BY order_id\n)\nSELECT\n    AVG(order_value) AS average_order_value\nFROM order_totals",
+          "resolved_by_governed_layer": true,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_019",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    ROUND(\n        CAST(COUNT(*) FILTER (WHERE order_status = 'canceled') AS DOUBLE)\n        / COUNT(*),\n        4\n    ) AS cancellation_rate\nFROM orders",
+          "resolved_by_governed_layer": true,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_020",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Big\" could mean several things that give very different answers: (a) total revenue, meaning the sum of customer payments (order_payments.payment_value, which includes freight), or item sales only (order_items.price); (b) order volume, meaning the count of orders; or (c) customer base, meaning distinct customers by customer_unique_id. Which measure do you want, and should it cover all order statuses or only delivered orders (for example, excluding canceled and unavailable)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "ctl_001",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT SUM(oi.price) AS gmv\nFROM orders o\nJOIN order_items oi\n  ON oi.order_id = o.order_id\nWHERE o.order_purchase_timestamp >= TIMESTAMP '2017-01-01 00:00:00'\n  AND o.order_purchase_timestamp <  TIMESTAMP '2018-01-01 00:00:00'\n  AND o.order_status NOT IN ('canceled', 'unavailable')",
+          "ex": 1
+        },
+        {
+          "id": "ctl_002",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS delivered_orders\nFROM orders\nWHERE order_status = 'delivered'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_003",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    AVG(\n        (EPOCH(order_delivered_customer_date) - EPOCH(order_purchase_timestamp)) / 86400.0\n    ) AS mean_days_to_delivery\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_delivered_customer_date IS NOT NULL\n  AND order_purchase_timestamp >= TIMESTAMP '2017-01-01 00:00:00'\n  AND order_purchase_timestamp <  TIMESTAMP '2018-01-01 00:00:00'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_004",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(o.order_id) AS orders_count\nFROM orders AS o\nJOIN customers AS c\n  ON c.customer_id = o.customer_id\nWHERE c.customer_state = 'RJ'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_005",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT o.order_id) AS order_count\nFROM orders AS o\nJOIN customers AS c\n  ON c.customer_id = o.customer_id\nWHERE c.customer_city = 'rio de janeiro'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_006",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    t.product_category_name_english AS category,\n    COUNT(*) AS item_count\nFROM order_items oi\nJOIN orders o\n    ON o.order_id = oi.order_id\nJOIN products p\n    ON p.product_id = oi.product_id\nJOIN product_category_name_translation t\n    ON t.product_category_name = p.product_category_name\nWHERE o.order_status NOT IN ('canceled', 'unavailable')\nGROUP BY t.product_category_name_english\nORDER BY item_count DESC\nLIMIT 1",
+          "ex": 1
+        },
+        {
+          "id": "ctl_007",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT customer_unique_id) AS distinct_customer_unique_ids\nFROM customers",
+          "ex": 1
+        },
+        {
+          "id": "ctl_008",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    CAST(COUNT(*) FILTER (WHERE order_status = 'canceled') AS DOUBLE) / COUNT(*) AS canceled_fraction\nFROM orders",
+          "ex": 1
+        },
+        {
+          "id": "ctl_009",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    oi.seller_id,\n    SUM(oi.price) AS total_item_price\nFROM order_items AS oi\nJOIN orders AS o\n    ON o.order_id = oi.order_id\nWHERE o.order_status NOT IN ('canceled', 'unavailable')\n  AND o.order_purchase_timestamp >= TIMESTAMP '2018-01-01 00:00:00'\n  AND o.order_purchase_timestamp <  TIMESTAMP '2019-01-01 00:00:00'\nGROUP BY oi.seller_id\nORDER BY total_item_price DESC\nLIMIT 5",
+          "ex": 1
+        },
+        {
+          "id": "ctl_010",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH order_totals AS (\n    SELECT\n        o.order_id,\n        SUM(oi.price) AS total_item_price\n    FROM orders o\n    JOIN order_items oi\n        ON oi.order_id = o.order_id\n    WHERE o.order_status NOT IN ('canceled', 'unavailable')\n    GROUP BY o.order_id\n)\nSELECT\n    median(total_item_price) AS median_order_total_item_price\nFROM order_totals",
+          "ex": 1
+        },
+        {
+          "id": "ctl_011",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT order_id) AS order_count\nFROM orders\nWHERE order_purchase_timestamp >= TIMESTAMP '2018-08-01 00:00:00'\n  AND order_purchase_timestamp <  TIMESTAMP '2018-09-01 00:00:00'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_012",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT SUM(payment_value) AS total_credit_card_payment_value\nFROM order_payments\nWHERE payment_type = 'credit_card'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_013",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT seller_id) AS sellers_sp_count\nFROM sellers\nWHERE seller_state = 'SP'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_014",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT AVG(review_score) AS avg_review_score\nFROM order_reviews",
+          "ex": 1
+        },
+        {
+          "id": "ctl_015",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    AVG(CASE\n            WHEN CAST(order_delivered_customer_date AS DATE) <= CAST(order_estimated_delivery_date AS DATE)\n            THEN 1.0 ELSE 0.0\n        END) AS on_time_fraction\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_delivered_customer_date IS NOT NULL\n  AND order_estimated_delivery_date IS NOT NULL",
+          "ex": 1
+        },
+        {
+          "id": "ctl_016",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT AVG(freight_value) AS avg_freight_value\nFROM order_items",
+          "ex": 1
+        },
+        {
+          "id": "ctl_017",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS products_without_category\nFROM products\nWHERE product_category_name IS NULL",
+          "ex": 1
+        },
+        {
+          "id": "ctl_018",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS review_count\nFROM order_reviews\nWHERE review_score = 1",
+          "ex": 1
+        },
+        {
+          "id": "ctl_019",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT MAX(item_count) AS max_items_in_single_order\nFROM (\n    SELECT order_id, COUNT(order_item_id) AS item_count\n    FROM order_items\n    GROUP BY order_id\n) AS per_order",
+          "ex": 1
+        },
+        {
+          "id": "ctl_020",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT c.customer_unique_id) AS customer_count\nFROM orders o\nJOIN customers c\n  ON c.customer_id = o.customer_id\nWHERE o.order_purchase_timestamp >= TIMESTAMP '2018-01-01 00:00:00'\n  AND o.order_purchase_timestamp <  TIMESTAMP '2019-01-01 00:00:00'\n  AND o.order_status NOT IN ('canceled', 'unavailable')",
+          "ex": 1
+        }
+      ]
+    },
+    "olist_semantic": {
+      "clarify_rate_ambiguous": 0.35,
+      "clarify_rate_ambiguous_excluding_governed_resolved": 0.389,
+      "false_clarify_rate_controls": 0.0,
+      "controls_ex": 0.8,
+      "ambiguous_answered_without_asking": 12,
+      "detail": [
+        {
+          "id": "amb_001",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "Which do you mean by \"revenue\": (a) GMV, the item prices on valid orders with freight excluded, or (b) revenue including freight, the total customer payments? And should \"last quarter\" mean calendar 2026 Q3 (Jul 1 to Oct 1, 2026), or the most recent quarter with data (which appears to be in 2018)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_002",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "How do you want \"best customers\" ranked? (a) Highest total spend (GMV per unique customer), (b) most valid orders per customer, or (c) most loyal repeat buyers (customers with 2+ orders)? Also, should I aggregate by customer state or return individual customers, and over what time window (default: all history)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_003",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_avg_delivery_days AS (\n  SELECT avg(date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0) AS avg_delivery_days\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL)\n)\nSELECT avg_delivery_days\nFROM m_avg_delivery_days",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "mean purchase-to-delivery days"
+        },
+        {
+          "id": "amb_004",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_gmv AS (\n  SELECT product_category, sum(price) AS gmv\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n  GROUP BY 1\n)\nSELECT product_category, gmv\nFROM m_gmv\nORDER BY gmv DESC NULLS LAST\nLIMIT 1",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "by GMV"
+        },
+        {
+          "id": "amb_005",
+          "kind": "ambiguous",
+          "status": "failed",
+          "clarification": "",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_006",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT seller_id) AS seller_count\nFROM sellers\nWHERE lower(trim(seller_city)) = 'sao paulo'",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "Sao Paulo city"
+        },
+        {
+          "id": "amb_007",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "By \"Rio,\" do you mean only the city of Rio de Janeiro (customer city), or the whole state of Rio de Janeiro (RJ, which includes other cities)? Also, should it be by the customer's location or the seller's location?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_008",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS late_orders\nFROM orders\nWHERE order_status = 'delivered'\n  AND order_purchase_timestamp >= TIMESTAMP '2018-01-01 00:00:00'\n  AND order_purchase_timestamp <  TIMESTAMP '2019-01-01 00:00:00'\n  AND CAST(order_delivered_customer_date AS DATE) > CAST(order_estimated_delivery_date AS DATE)",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "delivered after the estimated date (date level)"
+        },
+        {
+          "id": "amb_009",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "How do you want \"grew the most\" measured? (a) Absolute GMV increase (BRL) or percentage GMV growth, and (b) which two periods to compare, such as the last full year vs. the prior year, or the first vs. last full month? Percentage growth tends to favor small categories, so the choice changes the answer.",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_010",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_repeat_purchase_rate AS (\n  SELECT (count(*) FILTER (WHERE n_orders >= 2)) * 1.0 / nullif(count(*), 0) AS repeat_purchase_rate\n  FROM (\n    SELECT c.customer_unique_id, min(c.customer_state) AS customer_state,\n           count(DISTINCT o.order_id) AS n_orders, min(o.order_purchase_timestamp) AS first_purchase_timestamp\n    FROM orders o JOIN customers c ON c.customer_id = o.customer_id\n    WHERE o.order_status NOT IN ('canceled', 'unavailable')\n    GROUP BY c.customer_unique_id\n  ) AS m\n)\nSELECT repeat_purchase_rate\nFROM m_repeat_purchase_rate",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "lifetime share of people with 2+ valid orders"
+        },
+        {
+          "id": "amb_011",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "By \"region,\" do you mean the customer's state (where buyers are), the seller's state (where sales originate), or Brazil's macro-regions (North, Northeast, etc.)? I can also show GMV by state or by macro-region, with an optional time window.",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_012",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_avg_delivery_days AS (\n  SELECT avg(date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0) AS avg_delivery_days\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL)\n    AND customer_city = 'sao paulo'\n)\nSELECT avg_delivery_days\nFROM m_avg_delivery_days",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "Sao Paulo city"
+        },
+        {
+          "id": "amb_013",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "By \"typically spend,\" do you mean (a) average order value per order (aov, item prices only, freight excluded), (b) average total spend per unique customer over a period (GMV divided by distinct customer_unique_id, since many people place several orders), or (c) an amount that includes freight, as customers actually paid it? Should I also use the mean, which is the only option in the governed layer, or do you need a median, which would require the SQL fallback? And what time window should I use, such as all time or a specific year?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_014",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_gmv AS (\n  SELECT seller_id, seller_state, sum(price) AS gmv\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND order_purchase_timestamp >= TIMESTAMP '2026-01-01'\n    AND order_purchase_timestamp < TIMESTAMP '2027-01-01'\n  GROUP BY 1, 2\n)\nSELECT seller_id, seller_state, gmv\nFROM m_gmv\nORDER BY gmv DESC NULLS LAST\nLIMIT 10",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_015",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS items_sold\nFROM order_items AS oi\nJOIN orders AS o\n  ON o.order_id = oi.order_id\nWHERE o.order_status NOT IN ('canceled', 'unavailable')\n  AND o.order_purchase_timestamp >= TIMESTAMP '2025-01-01 00:00:00'\n  AND o.order_purchase_timestamp <  TIMESTAMP '2026-01-01 00:00:00'",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": "2025 relative to today (2026): no data"
+        },
+        {
+          "id": "amb_016",
+          "kind": "ambiguous",
+          "status": "clarify",
+          "clarification": "\"Underperforming\" could mean different things here. Which should I use? (a) Low GMV in a period, (b) low AOV (average order value), (c) high freight-to-price ratio, or some other measure? Also, what time window (e.g., last quarter, whole history) and how should I cut it off (bottom 10 sellers, or below a specific threshold)?",
+          "sql": "",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_017",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_active_customers AS (\n  SELECT count(DISTINCT customer_unique_id) AS active_customers\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n)\nSELECT active_customers\nFROM m_active_customers",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "amb_018",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_aov AS (\n  SELECT (sum(price)) * 1.0 / nullif(count(DISTINCT order_id), 0) AS aov\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n)\nSELECT aov\nFROM m_aov",
+          "resolved_by_governed_layer": true,
+          "matched_interpretation": "governed AOV: item price only, valid orders"
+        },
+        {
+          "id": "amb_019",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_cancellation_rate AS (\n  SELECT (count(*) FILTER (WHERE order_status = 'canceled')) * 1.0 / nullif(count(*), 0) AS cancellation_rate\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n)\nSELECT cancellation_rate\nFROM m_cancellation_rate",
+          "resolved_by_governed_layer": true,
+          "matched_interpretation": "governed: canceled / all orders"
+        },
+        {
+          "id": "amb_020",
+          "kind": "ambiguous",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_gmv AS (\n  SELECT sum(price) AS gmv\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n),\nm_orders AS (\n  SELECT count(DISTINCT order_id) AS orders\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n),\nm_active_customers AS (\n  SELECT count(DISTINCT customer_unique_id) AS active_customers\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n)\nSELECT gmv, orders, active_customers\nFROM m_gmv\nCROSS JOIN m_orders\nCROSS JOIN m_active_customers",
+          "resolved_by_governed_layer": false,
+          "matched_interpretation": null
+        },
+        {
+          "id": "ctl_001",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_gmv AS (\n  SELECT sum(price) AS gmv\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND order_purchase_timestamp >= TIMESTAMP '2017-01-01'\n    AND order_purchase_timestamp < TIMESTAMP '2018-01-01'\n)\nSELECT gmv\nFROM m_gmv",
+          "ex": 1
+        },
+        {
+          "id": "ctl_002",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_orders AS (\n  SELECT count(DISTINCT order_id) AS orders\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND order_status = 'delivered'\n)\nSELECT orders\nFROM m_orders",
+          "ex": 1
+        },
+        {
+          "id": "ctl_003",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_avg_delivery_days AS (\n  SELECT avg(date_diff('second', order_purchase_timestamp, order_delivered_customer_date) / 86400.0) AS avg_delivery_days\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL)\n    AND order_purchase_timestamp >= TIMESTAMP '2017-01-01'\n    AND order_purchase_timestamp < TIMESTAMP '2018-01-01'\n    AND order_status = 'delivered'\n)\nSELECT avg_delivery_days\nFROM m_avg_delivery_days",
+          "ex": 1
+        },
+        {
+          "id": "ctl_004",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_orders AS (\n  SELECT count(DISTINCT order_id) AS orders\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND customer_state = 'RJ'\n)\nSELECT orders\nFROM m_orders",
+          "ex": 0
+        },
+        {
+          "id": "ctl_005",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_orders AS (\n  SELECT count(DISTINCT order_id) AS orders\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND customer_city = 'rio de janeiro'\n)\nSELECT orders\nFROM m_orders",
+          "ex": 0
+        },
+        {
+          "id": "ctl_006",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT\n    COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n    COUNT(*) AS item_count\nFROM order_items AS oi\nJOIN orders AS o\n    ON o.order_id = oi.order_id\nJOIN products AS p\n    ON p.product_id = oi.product_id\nLEFT JOIN product_category_name_translation AS t\n    ON t.product_category_name = p.product_category_name\nWHERE o.order_status NOT IN ('canceled', 'unavailable')\n  AND p.product_category_name IS NOT NULL\nGROUP BY 1\nORDER BY item_count DESC\nLIMIT 1",
+          "ex": 1
+        },
+        {
+          "id": "ctl_007",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT customer_unique_id) AS distinct_customer_unique_ids\nFROM customers",
+          "ex": 1
+        },
+        {
+          "id": "ctl_008",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_cancellation_rate AS (\n  SELECT (count(*) FILTER (WHERE order_status = 'canceled')) * 1.0 / nullif(count(*), 0) AS cancellation_rate\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n)\nSELECT cancellation_rate\nFROM m_cancellation_rate",
+          "ex": 1
+        },
+        {
+          "id": "ctl_009",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_gmv AS (\n  SELECT seller_id, sum(price) AS gmv\n  FROM (\n    SELECT oi.order_id, oi.order_item_id, oi.product_id, oi.seller_id, oi.price, oi.freight_value,\n           o.order_status, o.order_purchase_timestamp, c.customer_unique_id, c.customer_state,\n           c.customer_city, s.seller_state, s.seller_city,\n           COALESCE(t.product_category_name_english, p.product_category_name) AS product_category,\n           op.payment_type AS payment_type\n    FROM order_items oi\n    JOIN orders o ON o.order_id = oi.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n    JOIN sellers s ON s.seller_id = oi.seller_id\n    LEFT JOIN products p ON p.product_id = oi.product_id\n    LEFT JOIN product_category_name_translation t ON t.product_category_name = p.product_category_name\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = oi.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND order_purchase_timestamp >= TIMESTAMP '2018-01-01'\n    AND order_purchase_timestamp < TIMESTAMP '2019-01-01'\n  GROUP BY 1\n)\nSELECT seller_id, gmv\nFROM m_gmv\nORDER BY gmv DESC NULLS LAST\nLIMIT 5",
+          "ex": 1
+        },
+        {
+          "id": "ctl_010",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH valid_orders AS (\n    SELECT order_id\n    FROM orders\n    WHERE order_status NOT IN ('canceled', 'unavailable')\n),\norder_totals AS (\n    SELECT oi.order_id, SUM(oi.price) AS order_item_total\n    FROM order_items oi\n    JOIN valid_orders v ON v.order_id = oi.order_id\n    GROUP BY oi.order_id\n)\nSELECT\n    median(order_item_total) AS median_order_item_total_brl,\n    COUNT(*) AS valid_orders_with_items\nFROM order_totals",
+          "ex": 0
+        },
+        {
+          "id": "ctl_011",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS orders_placed_aug_2018\nFROM orders\nWHERE order_purchase_timestamp >= TIMESTAMP '2018-08-01 00:00:00'\n  AND order_purchase_timestamp <  TIMESTAMP '2018-09-01 00:00:00'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_012",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT SUM(payment_value) AS total_credit_card_payment_value\nFROM order_payments\nWHERE payment_type = 'credit_card'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_013",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(DISTINCT seller_id) AS sellers_in_sp\nFROM sellers\nWHERE seller_state = 'SP'",
+          "ex": 1
+        },
+        {
+          "id": "ctl_014",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_avg_review_score AS (\n  SELECT avg(review_score) AS avg_review_score\n  FROM (\n    SELECT r.review_id, r.order_id, r.review_score, o.order_status, o.order_purchase_timestamp,\n           c.customer_state, c.customer_city, c.customer_unique_id\n    FROM order_reviews r\n    JOIN orders o ON o.order_id = r.order_id\n    JOIN customers c ON c.customer_id = o.customer_id\n  ) AS m\n)\nSELECT avg_review_score\nFROM m_avg_review_score",
+          "ex": 1
+        },
+        {
+          "id": "ctl_015",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_on_time_delivery_rate AS (\n  SELECT (count(*) FILTER (WHERE CAST(order_delivered_customer_date AS DATE) <= CAST(order_estimated_delivery_date AS DATE))) * 1.0 / nullif(count(*), 0) AS on_time_delivery_rate\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status = 'delivered' AND order_delivered_customer_date IS NOT NULL)\n    AND order_status = 'delivered'\n)\nSELECT on_time_delivery_rate\nFROM m_on_time_delivery_rate",
+          "ex": 1
+        },
+        {
+          "id": "ctl_016",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT AVG(oi.freight_value) AS avg_freight_value_per_item\nFROM order_items oi\nJOIN orders o ON o.order_id = oi.order_id\nWHERE o.order_status NOT IN ('canceled', 'unavailable')",
+          "ex": 1
+        },
+        {
+          "id": "ctl_017",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS products_without_category\nFROM products\nWHERE product_category_name IS NULL",
+          "ex": 1
+        },
+        {
+          "id": "ctl_018",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT COUNT(*) AS review_count\nFROM order_reviews\nWHERE review_score = 1",
+          "ex": 1
+        },
+        {
+          "id": "ctl_019",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "SELECT order_id, COUNT(*) AS item_count\nFROM order_items\nGROUP BY order_id\nORDER BY item_count DESC\nLIMIT 1",
+          "ex": 0
+        },
+        {
+          "id": "ctl_020",
+          "kind": "control",
+          "status": "answered",
+          "clarification": "",
+          "sql": "WITH m_active_customers AS (\n  SELECT count(DISTINCT customer_unique_id) AS active_customers\n  FROM (\n    SELECT o.order_id, o.order_status, o.order_purchase_timestamp, o.order_delivered_customer_date,\n           o.order_estimated_delivery_date, c.customer_unique_id, c.customer_state, c.customer_city,\n           op.payment_type AS payment_type\n    FROM orders o\n    JOIN customers c ON c.customer_id = o.customer_id\n    LEFT JOIN (SELECT order_id, payment_type FROM order_payments WHERE payment_sequential = 1) op\n           ON op.order_id = o.order_id\n  ) AS m\n  WHERE (order_status NOT IN ('canceled', 'unavailable'))\n    AND order_purchase_timestamp >= TIMESTAMP '2018-01-01'\n    AND order_purchase_timestamp < TIMESTAMP '2019-01-01'\n    AND order_status NOT IN ('canceled', 'unavailable')\n)\nSELECT active_customers\nFROM m_active_customers",
+          "ex": 1
+        }
+      ]
+    }
+  }
+}

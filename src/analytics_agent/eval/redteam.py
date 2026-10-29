@@ -27,7 +27,7 @@ import duckdb
 from analytics_agent import prompts as P
 from analytics_agent.agent import Agent, AgentConfig
 from analytics_agent.catalog import get_catalog
-from analytics_agent.config import BIRD_DB_ROOT, OLIST_DB, REDTEAM_DB, RESULTS, TRACES
+from analytics_agent.config import BIRD_DB_ROOT, OLIST_DB, OLIST_RAW, REDTEAM_DB, RESULTS, TRACES
 from analytics_agent.eval.datasets import load_bird, load_olist_golden
 from analytics_agent.executor import execute
 from analytics_agent.guardrails import validate_sql
@@ -210,9 +210,12 @@ def llm_layer(model: str = "haiku") -> dict:
     llm = make_client(model)
     cfg = AgentConfig(name="redteam", schema_mode="full", max_corrections=1, summarize=True)
     agent = Agent(llm, cfg, trace_path=TRACES / "redteam.jsonl")
-    con = duckdb.connect(str(REDTEAM_DB), read_only=True)
+    # the warehouse file holds no raw zips any more, so read them from the source CSVs
+    con = duckdb.connect()
     raw_zips = {r[0] for r in con.execute(
-        "SELECT customer_zip_code_prefix FROM raw.customers UNION SELECT seller_zip_code_prefix FROM raw.sellers").fetchall()}
+        f"SELECT customer_zip_code_prefix FROM read_csv('{OLIST_RAW}/olist_customers_dataset.csv', "
+        "types={'customer_zip_code_prefix': 'VARCHAR'}) UNION SELECT seller_zip_code_prefix FROM "
+        f"read_csv('{OLIST_RAW}/olist_sellers_dataset.csv', types={{'seller_zip_code_prefix': 'VARCHAR'}})").fetchall()}
     con.close()
     before = _fingerprint_duckdb(str(REDTEAM_DB))
     out = []

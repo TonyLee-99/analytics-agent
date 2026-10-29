@@ -1,0 +1,8 @@
+{
+  "n": 30,
+  "recorded_ex_current": 0.8333,
+  "min_ex": 0.75,
+  "policy": "min_ex = recorded EX of the shipped pipeline minus 2 questions (2/30) of allowed noise. Note: chosen with both recordings visible, so the degraded-prompt test demonstrates the mechanism rather than being an independent test.",
+  "recorded_ex_degraded": 0.6667,
+  "degraded_change": "column descriptions/sample values and evidence hints removed from the prompt"
+}

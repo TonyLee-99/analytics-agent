@@ -1,0 +1,726 @@
+{
+  "model": "haiku",
+  "arms": {
+    "olist_raw": {
+      "ex_all": 64.0,
+      "ex_metric_questions": 46.7,
+      "ex_non_metric_questions": 90.0,
+      "n_metric": 30,
+      "n_non_metric": 20,
+      "definition_drift_rate": 0.267,
+      "definition_drift_by_variant": {
+        "gmv_including_freight": 1,
+        "payment_value_per_order": 2,
+        "including_canceled_unavailable": 4,
+        "calendar_day_difference": 1
+      },
+      "paraphrase_groups_consistent": "2/4",
+      "answered_via_compiler": 0,
+      "cost_per_q": 0.00164,
+      "p95_latency_s": 11.44
+    },
+    "olist_glossary": {
+      "ex_all": 90.0,
+      "ex_metric_questions": 90.0,
+      "ex_non_metric_questions": 90.0,
+      "n_metric": 30,
+      "n_non_metric": 20,
+      "definition_drift_rate": 0.033,
+      "definition_drift_by_variant": {
+        "timestamp_level_comparison": 1
+      },
+      "paraphrase_groups_consistent": "4/4",
+      "answered_via_compiler": 0,
+      "cost_per_q": 0.00193,
+      "p95_latency_s": 10.59
+    },
+    "olist_semantic": {
+      "ex_all": 80.0,
+      "ex_metric_questions": 96.7,
+      "ex_non_metric_questions": 55.0,
+      "n_metric": 30,
+      "n_non_metric": 20,
+      "definition_drift_rate": 0.0,
+      "definition_drift_by_variant": {},
+      "paraphrase_groups_consistent": "4/4",
+      "answered_via_compiler": 28,
+      "cost_per_q": 0.00188,
+      "p95_latency_s": 10.91
+    },
+    "olist_hybrid": {
+      "ex_all": 94.0,
+      "ex_metric_questions": 96.7,
+      "ex_non_metric_questions": 90.0,
+      "n_metric": 30,
+      "n_non_metric": 20,
+      "definition_drift_rate": 0.0,
+      "definition_drift_by_variant": {},
+      "paraphrase_groups_consistent": "4/4",
+      "answered_via_compiler": 28,
+      "cost_per_q": 0.00272,
+      "p95_latency_s": 20.88
+    }
+  },
+  "per_question": {
+    "olist_001": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_002": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_004": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_003": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: gmv_including_freight",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_005": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_006": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_007": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: payment_value_per_order",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_008": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: payment_value_per_order",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_010": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: including_canceled_unavailable",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_009": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_011": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: including_canceled_unavailable",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_013": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_012": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: including_canceled_unavailable",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_014": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_015": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: including_canceled_unavailable",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_016": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_017": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_018": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "variant: calendar_day_difference",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_019": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_020": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_021": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_023": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_022": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_024": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 0,
+        "definition": "variant: timestamp_level_comparison",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_025": {
+      "olist_raw": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_027": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    },
+    "olist_026": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      }
+    },
+    "olist_029": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_hybrid": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      }
+    },
+    "olist_028": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      }
+    },
+    "olist_030": {
+      "olist_raw": {
+        "ex": 0,
+        "definition": "other_wrong",
+        "used_semantic": false
+      },
+      "olist_glossary": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": false
+      },
+      "olist_semantic": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      },
+      "olist_hybrid": {
+        "ex": 1,
+        "definition": "governed",
+        "used_semantic": true
+      }
+    }
+  }
+}

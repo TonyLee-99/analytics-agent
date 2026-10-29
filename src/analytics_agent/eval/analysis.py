@@ -205,6 +205,24 @@ def abstention() -> dict:
         _plot_rc(curves, f"Selective prediction: {title}", IMG / f"risk_coverage_{name}.png")
         out[name] = rep
         print(name, json.dumps({k: v for k, v in rep.items() if k != "features"}, indent=1))
+    # Does self-consistency catch *definitional* errors? Compare agreement on correct answers, answers that
+    # equal a known non-governed definition (drift), and other wrong answers (Olist raw arm).
+    sem = RESULTS / "semantic_experiment__haiku.json"
+    raw_sc = _load("olist__olist_raw_n5__haiku")
+    if sem.exists() and raw_sc:
+        per_q = json.loads(sem.read_text())["per_question"]
+        groups: dict[str, list[float]] = {"correct": [], "definition_drift": [], "other_wrong": []}
+        for qid, r in raw_sc.items():
+            a = float(r["signals"].get("sc_agreement") or 0)
+            if r["ex_main"]:
+                groups["correct"].append(a)
+            else:
+                lab = per_q.get(qid, {}).get("olist_raw", {}).get("definition", "other_wrong")
+                groups["definition_drift" if lab.startswith("variant") else "other_wrong"].append(a)
+        out["olist_raw_agreement_by_outcome"] = {k: {"n": len(v), "mean_agreement": round(float(np.mean(v)), 3) if v else None,
+                                                     "share_with_agreement_ge_0.8": round(float(np.mean([x >= 0.8 for x in v])), 3) if v else None}
+                                                 for k, v in groups.items()}
+        print("agreement by outcome (Olist raw):", out["olist_raw_agreement_by_outcome"])
     (RESULTS / "abstention.json").write_text(json.dumps(out, indent=2))
     return out
 
