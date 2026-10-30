@@ -142,7 +142,7 @@ make test lint           # unit tests; DB-dependent tests skip without `make dat
 make eval-small          # 20 live questions (Haiku via the Claude Code CLI)
 ```
 - **Data:** [BIRD Mini-Dev](https://huggingface.co/datasets/birdsql/bird_mini_dev) (CC BY-SA 4.0) and [Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce) (CC BY-NC-SA 4.0, 99,441 orders, row counts verified). The Olist question sets are in `eval_sets/`.
-- **CI:** a workflow is included (`.github/workflows/ci.yml`: lint, tests, regression gate on recorded responses). It has not yet run on a remote.
+- **CI:** a workflow is included (`.github/workflows/ci.yml`: lint, tests, regression gate on recorded responses) runs on every push.
 - **Regression gate:** a prompt change fails if it loses ≥5 more of 30 frozen questions than it gains. False-alarm rate 2.1%; it flags the recorded degraded prompt; it catches a true −5 pp regression only 10% of the time at n=30 (`tests/regression/gate.json`).
 
 ## Cost
