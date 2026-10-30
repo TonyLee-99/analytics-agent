@@ -1,5 +1,15 @@
 # Confidence catches SQL mistakes, not definition mistakes
 
+[![ci](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml)
+![python](https://img.shields.io/badge/python-3.12-blue) ![license](https://img.shields.io/badge/license-MIT-green)
+
+| | |
+|---|---|
+| **Problem** | Text-to-SQL assistants let anyone ask the warehouse a question, but a confidently wrong number in an exec deck is worse than no answer. The hard part is knowing when to trust the answer. |
+| **What I built** | An analytics agent (retrieve → plan → generate → validate → execute → self-correct) with read-only SQL guardrails, PII pseudonymization and resource limits; self-consistency confidence with abstention; a governed metric layer and SQL compiler; an evaluation harness on the BIRD Mini-Dev benchmark; a red-team suite; a prompt regression gate; FastAPI and MCP serving. |
+| **Key results** | Execution accuracy 62.6% → 73.2% on 500 BIRD questions (paired McNemar p < 0.001). Business-metric questions 14/30 → 27/30 with governed definitions, 29/30 when the metric is compiled. 86.3% accuracy at 69.5% coverage when answering only confident questions. 64/64 attacks blocked with 0 false positives on 550 valid queries. |
+| **Stack** | Python, SQL (SQLite, DuckDB), sqlglot, Claude Haiku / Sonnet, FastAPI, MCP, pytest, GitHub Actions |
+
 A text-to-SQL analytics agent ("ask your data warehouse") with a governed metric layer, evaluated for
 one question: **when can you trust its number?**
 

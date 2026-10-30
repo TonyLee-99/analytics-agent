@@ -1,6 +1,5 @@
 # CI: lint + unit tests + the LLM regression gate. No network LLM calls: the agent runs against
-# recorded responses (tests/regression/cassette_*.jsonl) or a mock. Written for GitHub Actions;
-# not run remotely by this project.
+# recorded responses (tests/regression/cassette_*.jsonl) or a mock.
 name: ci
 on:
   push:
