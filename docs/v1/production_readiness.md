@@ -13,16 +13,16 @@ something measured in this repo, the number is cited with the file that produces
   - LinkedIn's SQL Bot does the same: if the user lacks a dataset permission but belongs to a group
     that has it, the bot generates code that uses the group credential. It never uses its own.
 - **Keep the agent-side guardrails anyway.** These are the AST validator, the read-only session, the
-  table allowlist and the row/time caps (`docs/security.md`). They are cheap, they fail closed, and
+  table allowlist and the row/time caps (`docs/v1/security.md`). They are cheap, they fail closed, and
   they protect against misconfigured grants.
   - Red-teaming found five holes here: two at the connection layer (ATTACH creating files, and raw
     PII readable next to masking views), invertible zip tokens, an allowlist bypass through CTE
     shadowing, and an unbounded-memory query. All five are fixed and have regression tests
-    (`docs/security.md`).
+    (`docs/v1/security.md`).
 - **PII.** Use warehouse-native classification plus masking policies. Tokenize join keys with a
   *keyed* function (HMAC with a key held by the platform), so joins still work but tokens cannot be
   inverted. An unkeyed hash of a low-cardinality value is a lookup table, not masking: this repo's
-  v1 used `md5(zip)`, and a single SELECT re-identified all 99,441 customers (`docs/security.md`).
+  v1 used `md5(zip)`, and a single SELECT re-identified all 99,441 customers (`docs/v1/security.md`).
   Free-text columns get PII detection before they are exposed. Result rows are logged only after
   masking.
 - **Audit.** Log every (user, question, SQL, tables touched, rows returned, cost) to an append-only
@@ -53,7 +53,7 @@ something measured in this repo, the number is cited with the file that produces
   dbt Semantic Layer / MetricFlow, Airbnb's Minerva, Looker's LookML. The agent's first move is to
   *select* metrics, dimensions and filters, and a deterministic compiler writes the SQL. Raw SQL is a
   reviewed fallback.
-- The controlled experiment in `docs/semantic_layer_experiment.md` measures what this buys: accuracy,
+- The controlled experiment in `docs/v1/semantic_layer_experiment.md` measures what this buys: accuracy,
   definition drift, and answers that disagree with each other across paraphrases. Its numbers are the
   argument for funding the semantic layer before scaling the bot.
 
@@ -133,7 +133,7 @@ BIRD numbers say little about production on their own. The table below explains 
 | One gold SQL, scored by exact result-set equality | ~60% of LinkedIn's benchmark questions had multiple valid answers; correct-but-different SQL is common |
 | Static DB | Late-arriving data, stale or deprecated tables, schema changes |
 | No access control | Entitlements decide what may be answered at all |
-| Labels are assumed correct | Labels are noisy: our error analysis attributes part of the measured "failures" to gold or benchmark issues (`docs/error_analysis.md`) |
+| Labels are assumed correct | Labels are noisy: our error analysis attributes part of the measured "failures" to gold or benchmark issues (`docs/v1/error_analysis.md`) |
 
 How to close the gap:
 - Build the golden set from logged questions, and use the decoupled evaluation that Uber describes

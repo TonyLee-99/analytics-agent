@@ -1,6 +1,6 @@
 # Governed metric layer for the Olist warehouse (DuckDB, schema `main`).
 #
-# Why this file exists: the experiment in docs/semantic_layer_experiment.md compares an agent that
+# Why this file exists: the experiment in docs/v1/semantic_layer_experiment.md compares an agent that
 # writes raw SQL against one that can only *select* governed metrics + dimensions and lets a
 # deterministic compiler (semantic/compiler.py) write the SQL. The 12 metric names are the standard
 # marketplace KPIs (GMV, AOV, orders, active customers, repeat rate, on-time rate, delivery days, review

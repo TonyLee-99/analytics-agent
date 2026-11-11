@@ -72,7 +72,7 @@ column is filled in at the end (see "Results").
 ## I. Error analysis
 | ID | Criterion | Verify |
 |----|-----------|--------|
-| I1 | ≥ 60 BIRD failures hand-categorized into a taxonomy, with the share caused by gold-label or benchmark errors quantified | `docs/error_analysis.md`, `eval_sets/bird_failure_labels.jsonl` |
+| I1 | ≥ 60 BIRD failures hand-categorized into a taxonomy, with the share caused by gold-label or benchmark errors quantified | `docs/v1/error_analysis.md`, `eval_sets/bird_failure_labels.jsonl` |
 | I2 | For each pipeline change, show which error buckets it moved | same |
 
 ## J. Resources
@@ -127,5 +127,5 @@ First filled in on 2026-10-29 (v1). Revised the same day after three independent
 | H5 | PASS | `make test` → 154 passed; on a fresh clone without data 132 passed, 22 skipped; `make lint` clean; Dockerfile, CI yaml (included, not yet run on a remote), `uv.lock` + `==` pins, py3.12 | |
 | H6 | PASS | ledger: 3,397 Claude calls, $10.84 (CLI `total_cost_usd`); R1 added 0 calls. Plus 231 task attempts rejected with HTTP 429 (not billed, not in the ledger) | |
 | I1 | PASS | 70 failures labelled by executing SQL per case, the disputed case re-checked; single annotator. 10% acceptable (CI 5–19%) | |
-| I2 | **FAIL as v1 stated; PASS as corrected** | v1's "self-correction moved filter errors 12 → 18" compared separate noisy runs. Corrected within-run attribution: correction fixed 6 of the 25 labelled filter errors and 1 execution error (`docs/error_analysis.md`) | corrected |
+| I2 | **FAIL as v1 stated; PASS as corrected** | v1's "self-correction moved filter errors 12 → 18" compared separate noisy runs. Corrected within-run attribution: correction fixed 6 of the 25 labelled filter errors and 1 execution error (`docs/v1/error_analysis.md`) | corrected |
 | J1 | PASS | `du -sh data .llm_cache cache` → 1.7G + 15M + 2.5M (≤ 3.5 GB) | |

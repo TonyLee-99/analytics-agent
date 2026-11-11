@@ -350,7 +350,7 @@ class HybridAgent:
     not expressible as governed metrics (it falls back to raw SQL), hand the question to the documented
     raw-SQL agent (schema + metric glossary) instead of using the semantic prompt's own fallback SQL.
 
-    Motivation (measured, see docs/semantic_layer_experiment.md): the semantic arm was best on metric
+    Motivation (measured, see docs/v1/semantic_layer_experiment.md): the semantic arm was best on metric
     questions but its fallback SQL over-applied metric filters to non-metric questions."""
 
     def __init__(self, semantic: Agent, raw: Agent):

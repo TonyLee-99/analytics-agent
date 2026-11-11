@@ -51,7 +51,7 @@ and the 5 memory bombs.
   limit is the outer fence.
 - **Semantic exfiltration.** A user allowed to read a table can page through all of it
   (`LIMIT 1000 OFFSET k`). Entitlements and per-user rate limits decide that, not row caps.
-  Production runs queries *as the end user* (`docs/production_readiness.md`).
+  Production runs queries *as the end user* (`docs/v1/production_readiness.md`).
 - **Deny-list, not allow-list, for functions.** A new file or network function in a future engine
   version would not be blocked by layer 2. DuckDB's disabled external access is the backstop.
 - **Version functions** (`sqlite_version()`, `version()`) are allowed. They are a low-impact

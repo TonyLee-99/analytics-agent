@@ -7,7 +7,7 @@ Layout
   contains no raw PII at all (data minimization), so the policy holds no matter what SQL the LLM
   writes and even if every other guardrail failed. (A first version used masking *views* over a raw
   schema in the same file; the red-team bypass test showed a read-only connection could still read
-  raw.customers, so we switched -- see docs/security.md.)
+  raw.customers, so we switched -- see docs/v1/security.md.)
 
 Fails loudly if any row count differs from the published dataset.
 Run: uv run python scripts/build_olist.py
@@ -46,7 +46,7 @@ TABLES = {
 # The key lives outside the warehouse (data/secrets/zip_token.key or $AA_ZIP_TOKEN_KEY), so tokens keep
 # joins working but cannot be inverted from inside the database. (Version 1 used an unsalted
 # md5(zip): a single read-only recursive-CTE SELECT enumerated all 100,000 prefixes and re-identified
-# every customer -- found by red-teaming, see docs/security.md.)
+# every customer -- found by red-teaming, see docs/v1/security.md.)
 # lat/lng are coarsened to 1 decimal (~11 km).
 ZIP_COLUMNS = {
     "customers": ["customer_zip_code_prefix"],

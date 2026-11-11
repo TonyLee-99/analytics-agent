@@ -26,7 +26,7 @@ one question: **when can you trust its number?**
 
 ![hero](docs/img/hero.png)
 
-**What did not work** (pre-registered criteria, `docs/ACCEPTANCE.md`):
+**What did not work** (pre-registered criteria, `docs/v1/ACCEPTANCE.md`):
 - The confidence score ranks right vs wrong with AUROC 0.69 (CI 0.61–0.77): *inconclusive* against
   the 0.70 target.
 - The agent asks a clarifying question on only 60% of genuinely ambiguous questions (target 70%).
@@ -53,7 +53,7 @@ The same 50 PM-style questions, the same model, and 2 self-correction rounds in 
 - The compiler arm's weak non-metric score (55%) is its fallback prompt, which over-applied metric
   filters. The hybrid was designed after reading those failures.
 
-Details: `docs/semantic_layer_experiment.md`. Numbers: `results/stats.json` (`semantic`).
+Details: `docs/v1/semantic_layer_experiment.md`. Numbers: `results/stats.json` (`semantic`).
 
 ## 2. Knowing when not to answer (BIRD sub200, Haiku, 5 samples)
 | Policy | Answered | EX of answered |
@@ -117,9 +117,9 @@ Details: `docs/semantic_layer_experiment.md`. Numbers: `results/stats.json` (`se
   - No conclusion changes with the metric: same signs, same significance.
   - Under label noise, the three significant results stay significant in 88–100% of simulated
     draws. The least robust is (a)→(b), at 88% under independent noise.
-  - Details: `results/robustness.json`, `docs/error_analysis.md`.
+  - Details: `results/robustness.json`, `docs/v1/error_analysis.md`.
 
-## 4. Safety (`docs/security.md`)
+## 4. Safety (`docs/v1/security.md`)
 The defence has an AST validator, read-only connections with an SQLite authorizer and DuckDB config
 lock, masked materialized tables, and time/row/byte limits. Each layer is tested with the layers above
 it switched off. Five holes were found and fixed:
@@ -153,4 +153,4 @@ make eval-small          # 20 live questions (Haiku via the Claude Code CLI)
 - One draw per configuration at the CLI's default temperature, so single-run deltas carry the noise above.
 - 10 of 200 self-consistency prompts predate a determinism fix and do not replay byte-identically; reported numbers come from the recorded run files.
 - The Olist question sets, definitions and gold SQL were written for this repo (every query executed); the ambiguity set has n=20.
-- Latency includes CLI process start-up, so it is not a headline. Production mapping: `docs/production_readiness.md`.
+- Latency includes CLI process start-up, so it is not a headline. Production mapping: `docs/v1/production_readiness.md`.

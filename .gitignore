@@ -10,3 +10,17 @@ results/runs/*.jsonl
 *.duckdb
 *.duckdb.wal
 results/logs/*.log
+# local-only harness files (never committed)
+AGENTS.md
+CLAUDE.md
+.claude/
+PROGRESS.md
+feature_list.json
+reviews/
+# v2 local state
+data/
+cache/v2_llm/
+cache/v2_sql/
+cache/embed_raw/
+.fastembed_cache/
+node_modules/

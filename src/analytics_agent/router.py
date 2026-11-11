@@ -1,7 +1,7 @@
 """Cost-aware model routing: answer with the cheap model, escalate to the strong one only when the
 cheap model's confidence is low. Confidence comes from self-consistency agreement (see confidence.py).
 
-The threshold was fixed before the results were seen (docs/ACCEPTANCE.md, F2): escalate when fewer
+The threshold was fixed before the results were seen (docs/v1/ACCEPTANCE.md, F2): escalate when fewer
 than 4 of 5 Haiku samples agree on the execution result (agreement < 0.8).
 """
 
