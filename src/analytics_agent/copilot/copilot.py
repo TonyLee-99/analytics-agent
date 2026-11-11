@@ -54,6 +54,37 @@ def definition_signals(question_lower: str, variants: dict[str, dict]) -> list[s
     return named
 
 
+_SENT_RE = re.compile(r".*?(?:[.!?]+(?=\s|$)|$)")  # a sentence ends at . ! ? followed by space/end (keeps 3.5)
+_BRACKET_META = re.compile(r"\[[^\]]*\b(?:SOURCES|DATA|NOTICES)\b[^\]]*\]|\[DATA\]")
+_CAPS_INTERNAL = re.compile(r"\b(?:SOURCES|DATA|NOTICES)\b|warehouse_results|</?documents>")
+NOT_FOUND = "I could not find that in the documents or data you can access."
+
+
+def scrub_internal(text: str) -> tuple[str, list[str]]:
+    """Output contract: drop bracketed meta notes and any sentence that names a prompt section.
+
+    Deterministic last line of defence behind the prompt rule ("never mention input sections"). Only the
+    upper-case section names count, so ordinary words ("the data shows") are untouched. Returns the
+    cleaned text and the removed fragments (recorded in the trace)."""
+    removed = [m.group(0) for m in _BRACKET_META.finditer(text or "")]
+    text = re.sub(r"[ \t]+([.,;:!?])", r"\1", _BRACKET_META.sub("", text or ""))
+    out_lines = []
+    for line in text.split("\n"):
+        keep = []
+        for sent in _SENT_RE.findall(line):
+            if not sent:
+                continue
+            if _CAPS_INTERNAL.search(sent):
+                removed.append(sent.strip())
+            else:
+                keep.append(sent)
+        joined = "".join(keep).strip()
+        if joined or not line.strip():
+            out_lines.append(joined)
+    cleaned = re.sub(r"\n{3,}", "\n\n", "\n".join(out_lines)).strip()
+    return (cleaned or NOT_FOUND), removed
+
+
 @dataclass
 class Answer:
     status: str  # answered | clarify | denied | error
@@ -243,7 +274,7 @@ class Copilot:
         ans = Answer("answered", "", route=route)
 
         # ---------------- warehouse path
-        data_block = "(no warehouse data used)"
+        data_block = "(none)"
         if route in ("sql", "both"):
             res = self._sql_path(trace, user_id, question, plan, live_depts, notices, ans)
             if ans.status == "clarify":
@@ -253,7 +284,7 @@ class Copilot:
 
         # ---------------- document path
         retrieval: Retrieval | None = None
-        sources_block = "(no documents used)"
+        sources_block = "(none)"
         tag_map: dict[str, dict[str, Any]] = {}
         if route in ("docs", "both"):
             with trace.span("retrieve") as s:
@@ -271,10 +302,10 @@ class Copilot:
                                    "url": c.url, "start": c.start, "end": c.end, "doc_version": c.doc_version}
                 parts.append(f"[S{i}] {c.title} ({c.url})\n{c.text}")
                 ans.doc_deps[c.doc_id] = c.doc_version
-            sources_block = "\n\n".join(parts) if parts else "(no documents matched)"
+            sources_block = "\n\n".join(parts) if parts else "(none)"
 
         # ---------------- answer
-        notice_text = ("NOTICES (tell the user):\n" + "\n".join(f"- {n}" for n in notices) + "\n\n") if notices else ""
+        notice_text = ("Tell the user:\n" + "\n".join(f"- {n}" for n in notices) + "\n\n") if notices else ""
         prompt = P.ANSWER_PROMPT.format(question=question, notices=notice_text, sources=sources_block, data=data_block)
         r = self._llm(trace, "answer", P.ANSWER_SYSTEM, prompt)
         self._track_llm_deps(ans.doc_deps, P.ANSWER_SYSTEM, prompt)
@@ -288,6 +319,9 @@ class Copilot:
             if bad:
                 text = "I could not produce an answer grounded in the documents you can access."
                 ans.status = "error"
+        text, removed = scrub_internal(text)
+        if removed:
+            trace.attrs["internal_text_removed"] = removed
         used = sorted({m for m in TAG_RE.findall(text) if m in tag_map}, key=int)
         ans.citations = [tag_map[m] for m in used]
         ans.text = text
