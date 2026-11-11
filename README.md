@@ -3,7 +3,7 @@
 [![ci](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.12-blue) ![postgres](https://img.shields.io/badge/postgres-16%20RLS-336791) ![license](https://img.shields.io/badge/license-MIT-green)
 
-**0/40 permission leaks in the first red-team round (half of the attacks written blind by another model), 0 vs 15/15 leaks inside a 300 s revocation-lag window with and without the query-time recheck, and 93% correct answers on 30 questions against 27% for docs-only RAG.**
+**A Slack copilot over 4.0M real Chicago 311 requests and 157 City documents that showed nobody data they may not see: 0 leaks across a 40-attack red team, while the same checker finds 8 of 10 revocation scenarios leaking with the defences switched off.**
 
 ![demo](docs/img/demo.png)
 
