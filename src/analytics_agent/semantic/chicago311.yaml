@@ -35,7 +35,7 @@ dimensions:
   sr_type: {description: "Service request type, e.g. 'Pothole in Street Complaint', 'Rodent Baiting/Rat Complaint', 'Graffiti Removal Request', 'Street Light Out Complaint', 'Tree Trim Request'"}
   status: {description: "Open, Completed or Canceled"}
   origin: {description: "How the request was opened (Phone Call, Mobile Device, Internet, Generated In House, ...)"}
-  community_area_name: {description: "One of Chicago's 77 community areas (e.g. 'AUSTIN', 'LOOP', 'NEAR WEST SIDE'), upper case"}
+  community_area_name: {description: "One of Chicago's 77 community areas (e.g. 'Austin', 'Loop', 'Near West Side'), title case as published"}
   ward: {description: "City council ward number, 1-50"}
 
 metrics:

@@ -1,0 +1,20 @@
+{
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND sr_type = 'Water in Basement Complaint'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"311\", \"ALD\", \"AVI\", \"BACP\", \"CACC\", \"CCHR\", \"CDOT\", \"CDPH\", \"CFD\", \"CLERK\", \"CPD\", \"CSR\", \"CTA\", \"DFSS\", \"DOAH\", \"DOB\", \"DOE\", \"DOH\", \"DOIT\", \"DPD\", \"DSS\", \"DWM\", \"EWN\", \"FIN\", \"MOPD\", \"OUT\", \"UNK\"]]": {
+"ok": true,
+"rows": [
+[
+19279
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND sr_type = 'Water in Basement Complaint'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+19279
+]
+],
+"error": ""
+}
+}

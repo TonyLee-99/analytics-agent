@@ -1,0 +1,1304 @@
+{
+ "set": "questions_codex",
+ "sha256": "8b2333bb8f7f27b45ab21bb16a3a51e415ab090c78dac4bbf4c986199c576523",
+ "items": {
+  "cx-q21": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "requests"
+   ],
+   "rows": [
+    [
+     "2026-01-01",
+     18415
+    ],
+    [
+     "2026-02-01",
+     15355
+    ],
+    [
+     "2026-03-01",
+     22114
+    ],
+    [
+     "2026-04-01",
+     23216
+    ],
+    [
+     "2026-05-01",
+     18251
+    ],
+    [
+     "2026-06-01",
+     19680
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q22": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "Graffiti Removal Request",
+     90857
+    ],
+    [
+     "Abandoned Vehicle Complaint",
+     52937
+    ],
+    [
+     "Garbage Cart Maintenance",
+     48744
+    ],
+    [
+     "Rodent Baiting/Rat Complaint",
+     43083
+    ],
+    [
+     "Tree Trim Request (NO LONGER BEING ACCEPTED)",
+     42858
+    ],
+    [
+     "Tree Debris Clean-Up Request",
+     27043
+    ],
+    [
+     "Tree Emergency",
+     25862
+    ],
+    [
+     "Blue Recycling Cart",
+     21115
+    ],
+    [
+     "Tree Removal Inspection",
+     17672
+    ],
+    [
+     "Yard Waste Pick-Up Request",
+     16118
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q23": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "open_backlog"
+   ],
+   "rows": [
+    [
+     "Water Lead Test Kit Request",
+     9752
+    ],
+    [
+     "Sewer Cleaning Inspection Request",
+     2296
+    ],
+    [
+     "Water On Street Complaint",
+     854
+    ],
+    [
+     "Sewer Cave-In Inspection Request",
+     851
+    ],
+    [
+     "Water Lead Test Visit Request",
+     568
+    ],
+    [
+     "Alley Sewer Inspection Request",
+     395
+    ],
+    [
+     "Check for Leak",
+     341
+    ],
+    [
+     "Water Quality Concern",
+     127
+    ],
+    [
+     "Water in Basement Complaint",
+     62
+    ],
+    [
+     "Open Fire Hydrant Complaint",
+     43
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "cx-q24": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "quarter",
+    "requests",
+    "duplicate_requests",
+    "duplicate_rate"
+   ],
+   "rows": [
+    [
+     "2025-01-01",
+     8680,
+     398,
+     0.045853
+    ],
+    [
+     "2025-04-01",
+     10378,
+     570,
+     0.054924
+    ],
+    [
+     "2025-07-01",
+     11895,
+     700,
+     0.058848
+    ],
+    [
+     "2025-10-01",
+     8728,
+     435,
+     0.04984
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "cx-q25": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "work_requests",
+    "canceled_requests",
+    "cancellation_rate"
+   ],
+   "rows": [
+    [
+     2933,
+     541,
+     0.184453
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "cx-q26": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "2026-05-01",
+     1948
+    ],
+    [
+     "2026-06-01",
+     18594
+    ],
+    [
+     "2026-07-01",
+     8848
+    ],
+    [
+     "2026-08-01",
+     5239
+    ],
+    [
+     "2026-09-01",
+     1971
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q27": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "requests",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "CDOT",
+     51194,
+     39267
+    ],
+    [
+     "DSS",
+     164712,
+     157535
+    ]
+   ],
+   "depts": [
+    "CDOT",
+    "DSS"
+   ]
+  },
+  "cx-q28": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "origin",
+    "requests"
+   ],
+   "rows": [
+    [
+     "Phone Call",
+     47826
+    ],
+    [
+     "Walk-in",
+     1
+    ]
+   ],
+   "depts": [
+    "311"
+   ]
+  },
+  "cx-q29": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "department_name",
+    "requests"
+   ],
+   "rows": [
+    [
+     "311",
+     "311 City Services",
+     691302
+    ],
+    [
+     "DSS",
+     "Streets and Sanitation",
+     501924
+    ],
+    [
+     "AVI",
+     "Aviation",
+     364926
+    ],
+    [
+     "CDOT",
+     "CDOT - Department of Transportation",
+     181276
+    ],
+    [
+     "DWM",
+     "DWM - Department of Water Management",
+     89316
+    ],
+    [
+     "CACC",
+     "Animal Care and Control",
+     41216
+    ],
+    [
+     "DOB",
+     "DOB - Buildings",
+     39681
+    ],
+    [
+     "FIN",
+     "Finance",
+     20377
+    ],
+    [
+     "BACP",
+     "BACP - Business Affairs and Consumer Protection",
+     11997
+    ],
+    [
+     "OUT",
+     "Outside Agencies",
+     9866
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "cx-q30": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "community_area",
+    "community_area_name",
+    "population_acs",
+    "requests",
+    "requests_per_1k_residents"
+   ],
+   "rows": [
+    [
+     76,
+     "Ohare",
+     16281,
+     367757,
+     22588.108839
+    ],
+    [
+     28,
+     "Near West Side",
+     65370,
+     682862,
+     10446.106777
+    ],
+    [
+     37,
+     "Fuller Park",
+     2186,
+     1826,
+     835.315645
+    ],
+    [
+     67,
+     "West Englewood",
+     25971,
+     15858,
+     610.604135
+    ],
+    [
+     48,
+     "Calumet Heights",
+     12078,
+     7060,
+     584.533863
+    ],
+    [
+     47,
+     "Burnside",
+     2229,
+     1284,
+     576.043069
+    ],
+    [
+     68,
+     "Englewood",
+     21337,
+     11852,
+     555.467029
+    ],
+    [
+     57,
+     "Archer Heights",
+     13875,
+     7632,
+     550.054054
+    ],
+    [
+     53,
+     "West Pullman",
+     25159,
+     13623,
+     541.476211
+    ],
+    [
+     51,
+     "South Deering",
+     15100,
+     8025,
+     531.456954
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "cx-q31": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "ward",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     19,
+     594
+    ],
+    [
+     18,
+     566
+    ],
+    [
+     41,
+     456
+    ],
+    [
+     39,
+     447
+    ],
+    [
+     42,
+     430
+    ],
+    [
+     8,
+     427
+    ],
+    [
+     47,
+     421
+    ],
+    [
+     45,
+     418
+    ],
+    [
+     11,
+     395
+    ],
+    [
+     13,
+     392
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q32": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "status",
+    "requests"
+   ],
+   "rows": [
+    [
+     "Canceled",
+     621
+    ],
+    [
+     "Completed",
+     25863
+    ],
+    [
+     "Open",
+     14293
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q33": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "q3_2025_requests",
+    "q3_2026_requests"
+   ],
+   "rows": [
+    [
+     15925,
+     2868
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "cx-q34": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "requests",
+    "duplicate_requests",
+    "duplicate_rate"
+   ],
+   "rows": [
+    [
+     "Building Violation",
+     19972,
+     1491,
+     0.074655
+    ],
+    [
+     "No Building Permit and Construction Violation",
+     5071,
+     372,
+     0.073358
+    ],
+    [
+     "Vacant/Abandoned Building Complaint",
+     5209,
+     234,
+     0.044922
+    ],
+    [
+     "Porch Inspection Request",
+     428,
+     6,
+     0.014019
+    ],
+    [
+     "Buildings - Plumbing Violation",
+     8485,
+     0,
+     0.0
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "cx-q35": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "work_requests",
+    "open_backlog"
+   ],
+   "rows": [
+    [
+     "2026-07-01",
+     484,
+     0
+    ],
+    [
+     "2026-08-01",
+     482,
+     0
+    ],
+    [
+     "2026-09-01",
+     463,
+     11
+    ],
+    [
+     "2026-10-01",
+     431,
+     83
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "cx-q36": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "community_area",
+    "community_area_name",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     19,
+     "Belmont Cragin",
+     1070
+    ],
+    [
+     24,
+     "West Town",
+     558
+    ],
+    [
+     22,
+     "Logan Square",
+     538
+    ],
+    [
+     15,
+     "Portage Park",
+     505
+    ],
+    [
+     21,
+     "Avondale",
+     440
+    ],
+    [
+     6,
+     "Lake View",
+     385
+    ],
+    [
+     5,
+     "North Center",
+     381
+    ],
+    [
+     7,
+     "Lincoln Park",
+     357
+    ],
+    [
+     16,
+     "Irving Park",
+     254
+    ],
+    [
+     10,
+     "Norwood Park",
+     253
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q37": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "work_requests",
+    "canceled_requests",
+    "cancellation_rate"
+   ],
+   "rows": [
+    [
+     "CDOT",
+     11555,
+     13,
+     0.001125
+    ],
+    [
+     "DSS",
+     39068,
+     608,
+     0.015563
+    ]
+   ],
+   "depts": [
+    "CDOT",
+    "DSS"
+   ]
+  },
+  "cx-q38": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "open_backlog"
+   ],
+   "rows": [
+    [
+     "DSS",
+     55937
+    ],
+    [
+     "CDOT",
+     30004
+    ],
+    [
+     "DWM",
+     26109
+    ],
+    [
+     "DOB",
+     9945
+    ],
+    [
+     "BACP",
+     1968
+    ],
+    [
+     "CACC",
+     1709
+    ],
+    [
+     "OUT",
+     467
+    ],
+    [
+     "CDPH",
+     126
+    ],
+    [
+     "CLERK",
+     47
+    ],
+    [
+     "CFD",
+     19
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "cx-q39": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "day",
+    "requests",
+    "duplicate_requests",
+    "duplicate_rate"
+   ],
+   "rows": [
+    [
+     "2026-11-01",
+     1210,
+     0,
+     0.0
+    ],
+    [
+     "2026-11-02",
+     1611,
+     0,
+     0.0
+    ]
+   ],
+   "depts": [
+    "311"
+   ]
+  },
+  "cx-q40": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "weekday_number",
+    "weekday",
+    "requests"
+   ],
+   "rows": [
+    [
+     1,
+     "Monday",
+     314093
+    ],
+    [
+     2,
+     "Tuesday",
+     306435
+    ],
+    [
+     3,
+     "Wednesday",
+     309067
+    ],
+    [
+     4,
+     "Thursday",
+     303827
+    ],
+    [
+     5,
+     "Friday",
+     296505
+    ],
+    [
+     6,
+     "Saturday",
+     210905
+    ],
+    [
+     7,
+     "Sunday",
+     219763
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "cx-q41": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "requests"
+   ],
+   "rows": [
+    [
+     94893
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q42": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "2026-04-01",
+     806
+    ],
+    [
+     "2026-05-01",
+     993
+    ],
+    [
+     "2026-06-01",
+     867
+    ],
+    [
+     "2026-07-01",
+     787
+    ],
+    [
+     "2026-08-01",
+     821
+    ],
+    [
+     "2026-09-01",
+     763
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q43": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "requests"
+   ],
+   "rows": [
+    [
+     "Water Lead Test Kit Request",
+     16360
+    ],
+    [
+     "Water Lead Test Visit Request",
+     3191
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "cx-q44": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "requests"
+   ],
+   "rows": [
+    [
+     "2026-07-01",
+     485
+    ],
+    [
+     "2026-08-01",
+     450
+    ],
+    [
+     "2026-09-01",
+     447
+    ],
+    [
+     "2026-10-01",
+     394
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "cx-q45": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "year",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     2025,
+     2328
+    ],
+    [
+     2026,
+     1903
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q46": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "open_backlog"
+   ],
+   "rows": [
+    [
+     "Alley Light Out Complaint",
+     126
+    ],
+    [
+     "Street Light Out Complaint",
+     933
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q47": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "work_requests"
+   ],
+   "rows": [
+    [
+     14649
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q48": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "requests"
+   ],
+   "rows": [
+    [
+     "No Water Complaint",
+     4524
+    ],
+    [
+     "Water in Basement Complaint",
+     19279
+    ],
+    [
+     "Water On Street Complaint",
+     10983
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "cx-q49": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "work_requests"
+   ],
+   "rows": [
+    [
+     4975
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "cx-q50": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "requests",
+    "completed_requests"
+   ],
+   "rows": [
+    [
+     44729,
+     44559
+    ]
+   ],
+   "depts": [
+    "CDOT",
+    "DSS"
+   ]
+  },
+  "cx-q51": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "2026-01-01",
+     653
+    ],
+    [
+     "2026-02-01",
+     932
+    ],
+    [
+     "2026-03-01",
+     1101
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q52": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "requests"
+   ],
+   "rows": [
+    [
+     4442
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q57": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "median_days_to_close_completed"
+   ],
+   "rows": [
+    [
+     5.543553
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "cx-q58": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "median_days_to_close_all_closed"
+   ],
+   "rows": [
+    [
+     "2026-07-01",
+     4.142043
+    ],
+    [
+     "2026-08-01",
+     3.696898
+    ],
+    [
+     "2026-09-01",
+     2.811019
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "cx-q59": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "resolved_requests",
+    "on_time_requests",
+    "sla_attainment_resolved"
+   ],
+   "rows": [
+    [
+     36607,
+     14771,
+     0.403502
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "cx-q60": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "work_requests",
+    "on_time_requests",
+    "sla_attainment_all_requests"
+   ],
+   "rows": [
+    [
+     "CDOT",
+     29539,
+     9119,
+     0.308711
+    ],
+    [
+     "DSS",
+     129868,
+     38870,
+     0.299304
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  }
+ }
+}

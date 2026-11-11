@@ -1,7 +1,7 @@
 """LLM backends for v2 behind v1's LLMClient interface.
 
 - claude-cli (default): `claude -p` on the owner's subscription, via v1's ClaudeCLIClient
-- anthropic: Messages API over HTTP, used only when ANTHROPIC_API_KEY is set
+- anthropic: Messages API over HTTP, used only with AA_LLM_BACKEND=anthropic and ANTHROPIC_API_KEY set
 - replay: strict cache only; any miss raises (what `make check` and CI use: zero model calls)
 
 Every live response is cached under cache/v2_llm (key = hash of backend, model, system, prompt, sample,
@@ -111,7 +111,7 @@ def make_llm(model: str = "haiku"):
     if replay_mode():
         return ReplayClient(model, cache)
     ledger = Ledger(LEDGER_PATH)
-    if os.environ.get("AA_LLM_BACKEND") == "anthropic" or (
-            os.environ.get("ANTHROPIC_API_KEY") and os.environ.get("AA_LLM_BACKEND") != "claude-cli"):
+    # opt-in only: a key in the environment is not enough (the owner's key is budgeted for other work)
+    if os.environ.get("AA_LLM_BACKEND") == "anthropic" and os.environ.get("ANTHROPIC_API_KEY"):
         return AnthropicClient(model, cache, ledger)
     return V2ClaudeCLI(model, cache=cache, ledger=ledger, max_retries=3)

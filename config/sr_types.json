@@ -1,0 +1,337 @@
+[
+{
+"sr_type": "311 INFORMATION ONLY CALL",
+"dept_code": "311",
+"requests_in_window": 1325304
+},
+{
+"sr_type": "Aircraft Noise Complaint",
+"dept_code": "AVI",
+"requests_in_window": 814542
+},
+{
+"sr_type": "Graffiti Removal Request",
+"dept_code": "DSS",
+"requests_in_window": 192458
+},
+{
+"sr_type": "Pothole in Street Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 105750
+},
+{
+"sr_type": "Abandoned Vehicle Complaint",
+"dept_code": "DSS",
+"requests_in_window": 105409
+},
+{
+"sr_type": "Garbage Cart Maintenance",
+"dept_code": "DSS",
+"requests_in_window": 103817
+},
+{
+"sr_type": "Rodent Baiting/Rat Complaint",
+"dept_code": "DSS",
+"requests_in_window": 89419
+},
+{
+"sr_type": "Tree Trim Request (NO LONGER BEING ACCEPTED)",
+"dept_code": "DSS",
+"requests_in_window": 83479
+},
+{
+"sr_type": "Street Light Out Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 73277
+},
+{
+"sr_type": "Tree Debris Clean-Up Request",
+"dept_code": "DSS",
+"requests_in_window": 72373
+},
+{
+"sr_type": "Tree Emergency",
+"dept_code": "DSS",
+"requests_in_window": 72288
+},
+{
+"sr_type": "Traffic Signal Out Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 57639
+},
+{
+"sr_type": "Blue Recycling Cart",
+"dept_code": "DSS",
+"requests_in_window": 45793
+},
+{
+"sr_type": "Finance Parking Code Enforcement Review",
+"dept_code": "FIN",
+"requests_in_window": 43458
+},
+{
+"sr_type": "Building Violation",
+"dept_code": "DOB",
+"requests_in_window": 43288
+},
+{
+"sr_type": "Tree Removal Inspection",
+"dept_code": "DSS",
+"requests_in_window": 42068
+},
+{
+"sr_type": "Yard Waste Pick-Up Request",
+"dept_code": "DSS",
+"requests_in_window": 36340
+},
+{
+"sr_type": "Dead Animal Pick-Up Request",
+"dept_code": "DSS",
+"requests_in_window": 34449
+},
+{
+"sr_type": "Fly Dumping Complaint",
+"dept_code": "DSS",
+"requests_in_window": 34012
+},
+{
+"sr_type": "Water Lead Test Kit Request",
+"dept_code": "DWM",
+"requests_in_window": 31588
+},
+{
+"sr_type": "Sanitation Code Violation",
+"dept_code": "DSS",
+"requests_in_window": 30768
+},
+{
+"sr_type": "Water On Street Complaint",
+"dept_code": "DWM",
+"requests_in_window": 28601
+},
+{
+"sr_type": "Water in Basement Complaint",
+"dept_code": "DWM",
+"requests_in_window": 27195
+},
+{
+"sr_type": "Sign Repair Request - All Other Signs",
+"dept_code": "CDOT",
+"requests_in_window": 26752
+},
+{
+"sr_type": "Stray Animal Complaint",
+"dept_code": "CACC",
+"requests_in_window": 25271
+},
+{
+"sr_type": "Inspect Public Way Request",
+"dept_code": "CDOT",
+"requests_in_window": 22846
+},
+{
+"sr_type": "Check for Leak",
+"dept_code": "DWM",
+"requests_in_window": 22802
+},
+{
+"sr_type": "Alley Pothole Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 21402
+},
+{
+"sr_type": "Sewer Cleaning Inspection Request",
+"dept_code": "DWM",
+"requests_in_window": 20114
+},
+{
+"sr_type": "Tree Planting Request",
+"dept_code": "DSS",
+"requests_in_window": 19741
+},
+{
+"sr_type": "E-Scooter Parking Complaint",
+"dept_code": "OUT",
+"requests_in_window": 19590
+},
+{
+"sr_type": "Missed Garbage Pick-Up Complaint",
+"dept_code": "DSS",
+"requests_in_window": 18898
+},
+{
+"sr_type": "Report an Injured Animal",
+"dept_code": "CACC",
+"requests_in_window": 18261
+},
+{
+"sr_type": "Buildings - Plumbing Violation",
+"dept_code": "DOB",
+"requests_in_window": 17630
+},
+{
+"sr_type": "Sidewalk Inspection Request",
+"dept_code": "CDOT",
+"requests_in_window": 17417
+},
+{
+"sr_type": "Weed Removal Request",
+"dept_code": "DSS",
+"requests_in_window": 16747
+},
+{
+"sr_type": "Snow \u2013 Uncleared Sidewalk Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 12568
+},
+{
+"sr_type": "Nuisance Animal Complaint",
+"dept_code": "CACC",
+"requests_in_window": 12374
+},
+{
+"sr_type": "Open Fire Hydrant Complaint",
+"dept_code": "DWM",
+"requests_in_window": 12155
+},
+{
+"sr_type": "Alley Light Out Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 11982
+},
+{
+"sr_type": "Recycling Pick Up",
+"dept_code": "DSS",
+"requests_in_window": 11066
+},
+{
+"sr_type": "Ice and Snow Removal Request",
+"dept_code": "DSS",
+"requests_in_window": 10917
+},
+{
+"sr_type": "Vicious Animal Complaint",
+"dept_code": "CACC",
+"requests_in_window": 10884
+},
+{
+"sr_type": "Vacant/Abandoned Building Complaint",
+"dept_code": "DOB",
+"requests_in_window": 10708
+},
+{
+"sr_type": "Street Cleaning Request",
+"dept_code": "DSS",
+"requests_in_window": 10419
+},
+{
+"sr_type": "Divvy Bike Parking Complaint",
+"dept_code": "OUT",
+"requests_in_window": 10400
+},
+{
+"sr_type": "No Building Permit and Construction Violation",
+"dept_code": "DOB",
+"requests_in_window": 10295
+},
+{
+"sr_type": "Sewer Cave-In Inspection Request",
+"dept_code": "DWM",
+"requests_in_window": 9770
+},
+{
+"sr_type": "Clean Vacant Lot Request",
+"dept_code": "DSS",
+"requests_in_window": 9685
+},
+{
+"sr_type": "Sign Repair Request - Stop Sign",
+"dept_code": "CDOT",
+"requests_in_window": 9682
+},
+{
+"sr_type": "Street Light Pole Damage Complaint",
+"dept_code": "CDOT",
+"requests_in_window": 9406
+},
+{
+"sr_type": "City Vehicle Sticker Violation",
+"dept_code": "CLERK",
+"requests_in_window": 9226
+},
+{
+"sr_type": "No Water Complaint",
+"dept_code": "DWM",
+"requests_in_window": 9187
+},
+{
+"sr_type": "Cab Feedback",
+"dept_code": "BACP",
+"requests_in_window": 8665
+},
+{
+"sr_type": "Pet Wellness Check Request",
+"dept_code": "CACC",
+"requests_in_window": 7233
+},
+{
+"sr_type": "Restaurant Complaint",
+"dept_code": "CDPH",
+"requests_in_window": 7099
+},
+{
+"sr_type": "Business Complaints",
+"dept_code": "BACP",
+"requests_in_window": 6324
+},
+{
+"sr_type": "Water Lead Test Visit Request",
+"dept_code": "DWM",
+"requests_in_window": 5222
+},
+{
+"sr_type": "Coyote Interaction Complaint",
+"dept_code": "CACC",
+"requests_in_window": 4507
+},
+{
+"sr_type": "Shared Cost Sidewalk Program Request",
+"dept_code": "CDOT",
+"requests_in_window": 4308
+},
+{
+"sr_type": "Sign Repair Request - One Way Sign",
+"dept_code": "CDOT",
+"requests_in_window": 4273
+},
+{
+"sr_type": "Low Water Pressure Complaint",
+"dept_code": "DWM",
+"requests_in_window": 4015
+},
+{
+"sr_type": "Snow - Object/Dibs Removal Request",
+"dept_code": "DSS",
+"requests_in_window": 3822
+},
+{
+"sr_type": "Alley Sewer Inspection Request",
+"dept_code": "DWM",
+"requests_in_window": 3099
+},
+{
+"sr_type": "Wire Basket Request",
+"dept_code": "DSS",
+"requests_in_window": 2830
+},
+{
+"sr_type": "Consumer Fraud Complaint",
+"dept_code": "BACP",
+"requests_in_window": 2630
+},
+{
+"sr_type": "Dead Bird",
+"dept_code": "DSS",
+"requests_in_window": 2419
+}
+]

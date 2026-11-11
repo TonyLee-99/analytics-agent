@@ -1,0 +1,935 @@
+{
+ "set": "questions_author",
+ "sha256": "87e7d06ba75a072bd01da790d4541b8e05b341b388b5d00c134e7b02e69e7a7a",
+ "items": {
+  "au-q21": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     44729
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q22": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "month",
+    "count"
+   ],
+   "rows": [
+    [
+     "2025-01-01",
+     2123
+    ],
+    [
+     "2025-02-01",
+     2068
+    ],
+    [
+     "2025-03-01",
+     2733
+    ],
+    [
+     "2025-04-01",
+     3302
+    ],
+    [
+     "2025-05-01",
+     3988
+    ],
+    [
+     "2025-06-01",
+     4765
+    ],
+    [
+     "2025-07-01",
+     5984
+    ],
+    [
+     "2025-08-01",
+     5362
+    ],
+    [
+     "2025-09-01",
+     5126
+    ],
+    [
+     "2025-10-01",
+     4337
+    ],
+    [
+     "2025-11-01",
+     2799
+    ],
+    [
+     "2025-12-01",
+     1594
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q23": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "count"
+   ],
+   "rows": [
+    [
+     "Water Lead Test Kit Request",
+     30152
+    ],
+    [
+     "Water On Street Complaint",
+     27639
+    ],
+    [
+     "Water in Basement Complaint",
+     26641
+    ],
+    [
+     "Check for Leak",
+     21107
+    ],
+    [
+     "Sewer Cleaning Inspection Request",
+     19266
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "au-q24": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     9945
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "au-q25": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "count"
+   ],
+   "rows": [
+    [
+     "DSS",
+     55937
+    ],
+    [
+     "CDOT",
+     30004
+    ],
+    [
+     "DWM",
+     26109
+    ],
+    [
+     "DOB",
+     9945
+    ],
+    [
+     "BACP",
+     1968
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q26": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "?column?"
+   ],
+   "rows": [
+    [
+     0.042532
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q27": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "?column?"
+   ],
+   "rows": [
+    [
+     0.005487
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q28": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     47827
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q29": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "community_area_name",
+    "count"
+   ],
+   "rows": [
+    [
+     "Near West Side",
+     682862
+    ],
+    [
+     "Ohare",
+     367757
+    ],
+    [
+     "West Town",
+     35886
+    ],
+    [
+     "Austin",
+     32744
+    ],
+    [
+     "Logan Square",
+     28498
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q30": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "dept_code",
+    "count"
+   ],
+   "rows": [
+    [
+     "CDOT",
+     144709
+    ],
+    [
+     "DSS",
+     483252
+    ]
+   ],
+   "depts": [
+    "CDOT",
+    "DSS"
+   ]
+  },
+  "au-q31": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "date_trunc",
+    "count"
+   ],
+   "rows": [
+    [
+     "2025-01-01",
+     8957
+    ],
+    [
+     "2025-04-01",
+     9875
+    ],
+    [
+     "2025-07-01",
+     9075
+    ],
+    [
+     "2025-10-01",
+     8032
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q32": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "percentile_cont"
+   ],
+   "rows": [
+    [
+     0.73625
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q33": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     19279
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "au-q34": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "ward",
+    "count"
+   ],
+   "rows": [
+    [
+     28,
+     686424
+    ],
+    [
+     41,
+     382774
+    ],
+    [
+     21,
+     28029
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q35": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count",
+    "?column?"
+   ],
+   "rows": [
+    [
+     3732,
+     0.053591
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "au-q36": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "origin",
+    "count"
+   ],
+   "rows": [
+    [
+     "Phone Call",
+     1034959
+    ],
+    [
+     "Internet",
+     583303
+    ],
+    [
+     "Mobile Device",
+     181189
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q37": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     26514
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q38": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "community_area_name",
+    "?column?"
+   ],
+   "rows": [
+    [
+     "Austin",
+     326.53224
+    ],
+    [
+     "Loop",
+     292.968342
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q39": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     11033
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "au-q40": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     691302
+    ]
+   ],
+   "depts": [
+    "311"
+   ]
+  },
+  "au-q41": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "percentile_cont"
+   ],
+   "rows": [
+    [
+     12.938588
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q42": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "percentile_cont"
+   ],
+   "rows": [
+    [
+     3.676794
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q43": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     94893
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q44": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     16360
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "au-q45": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     35939
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q46": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     19198
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q47": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "count"
+   ],
+   "rows": [
+    [
+     "Graffiti Removal Request",
+     94893
+    ],
+    [
+     "Pothole in Street Complaint",
+     44729
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q48": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     2502
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q49": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "?column?"
+   ],
+   "rows": [
+    [
+     0.037262
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q50": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     19972
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "au-q51": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     58371
+    ]
+   ],
+   "depts": [
+    "311"
+   ]
+  },
+  "au-q52": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "count"
+   ],
+   "rows": [
+    [
+     126
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "au-q57": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "percentile_cont"
+   ],
+   "rows": [
+    [
+     4.85849
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "au-q58": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "?column?"
+   ],
+   "rows": [
+    [
+     0.449074
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "au-q59": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "?column?"
+   ],
+   "rows": [
+    [
+     0.438113
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "au-q60": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "percentile_cont"
+   ],
+   "rows": [
+    [
+     1.22206
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  }
+ }
+}
