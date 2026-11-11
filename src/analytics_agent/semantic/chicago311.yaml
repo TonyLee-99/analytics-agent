@@ -61,6 +61,13 @@ metrics:
     family: time_to_close
     owner: CDOT performance team (Simulated)
     selectors: ["completed only", "completed requests", "excluding canceled", "excluding cancelled", "resolved requests", "time to complete", "to resolve", "completed-only"]
+    signals:  # regexes over the lower-cased question; see copilot.definition_signals
+      - '\b(exclud\w*|without|not counting|except|minus|ignor\w*|leav\w* out)\b[^.?]{0,20}\bcancel'
+      - '\b(only|just|solely)\b[^.?]{0,40}\b(complet|resolv)'
+      - '\b(complet|resolv)\w*[^.?]{0,25}\bonly\b'
+      - '\bstatus\b[^.?]{0,12}\bcomplet'
+      - '\b(complet|resolv)\w* (requests|ones|cases)\b'
+      - '\btime to (complete|resolve)\b'
     model: requests
     type: median
     expr: days_to_close
@@ -71,6 +78,11 @@ metrics:
     family: time_to_close
     owner: Streets and Sanitation analytics (Simulated)
     selectors: ["including canceled", "including cancelled", "incl. canceled", "all closed", "any closure", "closed or canceled", "all-closed"]
+    signals:
+      - '\b(includ\w*|incl\.?|plus|with|counting|count)\b[^.?]{0,25}\bcancel'
+      - '\b(complet\w*|resolv\w*) (and|or|plus) cancel'
+      - '\bcancel\w*[^.?]{0,15}\b(too|as well|included)\b'
+      - '\b(all|any|every) clos'
     model: requests
     type: median
     expr: days_to_close
@@ -83,6 +95,11 @@ metrics:
     selectors: ["of resolved", "of completed", "resolved requests within", "completed requests within", "resolved-basis", "among resolved", "among completed"]
     model: requests
     type: ratio
+    signals:
+      - '\b(of|among|for|across)\s+(the\s+)?(non-duplicate\s+)?(resolved|completed)\b'
+      - '\b(only|just)\b[^.?]{0,40}\b(resolved|completed)\b'
+      - '\bstatus\b[^.?]{0,12}\bcomplet'
+      - '\b(resolved|completed)\s+(non-duplicate\s+)?requests\b'
     numerator: count(*) FILTER (WHERE days_to_close <= benchmark_days)
     denominator: count(*)
     filter: status = 'Completed' AND NOT is_duplicate AND benchmark_days > 0
@@ -94,6 +111,11 @@ metrics:
     selectors: ["of all requests", "all requests within", "including open", "including unresolved", "all-requests basis", "among all requests"]
     model: requests
     type: ratio
+    signals:
+      - '\b(of|among|across|for)\s+(the\s+)?all\b[^.?]{0,20}\brequests\b'
+      - '\bincluding\s+(open|unresolved|canceled|cancelled)'
+      - '\b(open|unresolved|canceled|cancelled|late)\b[^.?]{0,60}\b(as\s+misses|count\w* as|in the denominator)'
+      - '\ball\s+requests\b'
     numerator: count(*) FILTER (WHERE status = 'Completed' AND days_to_close <= benchmark_days)
     denominator: count(*)
     filter: NOT is_duplicate AND benchmark_days > 0

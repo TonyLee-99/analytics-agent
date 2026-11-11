@@ -39,6 +39,21 @@ OP_ALIASES = {"eq": "=", "equals": "=", "==": "=", "ne": "!=", "neq": "!=", "not
               "ge": ">=", "lt": "<", "lte": "<=", "le": "<=", "not_in": "not in", "nin": "not in", "contains": "like"}
 
 
+def definition_signals(question_lower: str, variants: dict[str, dict]) -> list[str]:
+    """Variants of a metric family the question explicitly asks for.
+
+    A variant is named when one of its literal selector phrases or one of its `signals` (regexes for how
+    people state that definition: "only ... completed", "excluding canceled", "status Completed",
+    "including canceled", "of all requests", "open ... as misses") occurs in the question. If both or
+    neither variant is named, the caller asks. Deterministic on purpose: the model never chooses."""
+    named = []
+    for name, meta in variants.items():
+        if any(sel in question_lower for sel in meta.get("selectors", [])) or any(
+                re.search(rx, question_lower) for rx in meta.get("signals", [])):
+            named.append(name)
+    return named
+
+
 @dataclass
 class Answer:
     status: str  # answered | clarify | denied | error
@@ -178,7 +193,7 @@ class Copilot:
                 out.append(m)
                 continue
             variants = [n for n, x in self.layer.metrics.items() if x.get("family") == fam]
-            named = [n for n in variants if any(sel in q for sel in self.layer.metrics[n].get("selectors", []))]
+            named = definition_signals(q, {n: self.layer.metrics[n] for n in variants})
             if len(named) == 1:
                 out.append(named[0])
                 continue
