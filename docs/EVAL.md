@@ -7,8 +7,10 @@ All numbers come from `results/v2/` (commands below). Sample sizes are small by 
 |---|---|---|---|---|
 | `eval_sets/v2/questions_author.jsonl` | repo author, from corpus + schema | 60 | 15 (stratified by type) + 4 definition controls | `make eval-v2 N=all` |
 | `eval_sets/v2/questions_codex.jsonl` | ChatGPT via `codex exec`, **blind**: given only the corpus, schema, metric catalog and org chart, not the system | 60 | 15 (stratified) + 4 definition controls | same |
+| `eval_sets/v2/questions_holdout.jsonl` | ChatGPT via codex, blind, written **after** the round-1 fixes (sha256 d22537fe6b14...) | 15 | 15 | — |
 | `eval_sets/v2/redteam_author.jsonl` | repo author | 20 | 20 | `make redteam-v2 RT_N=...` |
 | `eval_sets/v2/redteam_codex.jsonl` | ChatGPT via codex, **blind** (threat model + org chart + ACL rules, no code) | 20 | 20 | same |
+| `eval_sets/v2/redteam_holdout.jsonl` | ChatGPT via codex, blind, written after the fixes and told the system had been hardened (sha256 b76fd0498cc5...) | 20 | 20 | — |
 
 Gold for SQL items: the item's gold SQL run as the owner with an explicit `dept_code IN (<asker's departments>)`
 restriction from the policy model (`scripts/v2/build_gold.py`), frozen in `gold_*.json` with the set's sha256.
@@ -23,7 +25,28 @@ The codex half was not used for development; the author half was (one bug, INCID
 - **mixed**: SQL match AND judge correct. **clarify**: the system asked which definition.
 - Route accuracy, recall@5 of gold documents, citation validity, clarification rates.
 
-## Results (N = 30: 15 author + 15 codex-blind)
+## Results, full run (round 2: all 135 questions, after the fixes)
+`make eval-v2 N=all`. The author half was used for development; the two codex halves were not.
+
+| System | All 135 | Author (60) | Codex-blind (60) | Blind holdout (15) | docs | sql | mixed | clarify | Route |
+|---|---|---|---|---|---|---|---|---|---|
+| **copilot** | **81%** (CI 73–87%) | 98% | 65% | 73% | 91% | 69% | 81% | 100% | 99% |
+| docs-only RAG | 30% | 32% | 27% | 33% | 89% | 0% | 0% | 0% | 33% |
+| v1 SQL agent (reference) | 25% | 27% | 25% | 20% | 0% | 63% | 0% | 0% | 39% |
+
+- Paired exact McNemar: copilot vs docs-only 70 wins / 1 loss; vs v1 84 / 9; both p < 0.001.
+- Copilot on the codex half by type: docs 85%, sql 42%, mixed 67%, clarify 100%. Counting only the key value of
+  each SQL answer, the codex half is 75%. SQL/mixed misses on all 135: 6 right key value without the requested
+  helper columns, 6 different row breakdown, 4 different values, 4 no rows (not expressible), 2 document part
+  judged incomplete.
+- Recall@5 100%; delivered citations 100% within the allowed context; every answered docs/mixed question cites.
+- **Metric definitions (Q6).** Asked back on 9/9 ambiguous questions; asked back on 0/9 questions that state the
+  definition (was 1/8 before INCIDENTS I-7; the fix is a general signal list, checked on 14 unseen paraphrases).
+  Of those 9, 6 return the right result; 3 return the right figure in a different shape.
+- Cost of this round: 1,112 ledger calls in total for the project so far, $0.86 list-price equivalent
+  (561 copilot, 292 v1 baseline, 259 judge).
+
+## Results, first run (N = 30: 15 author + 15 codex-blind, before the definition fix)
 | System | All | Author half | Codex-blind half | docs | sql | mixed | clarify | Route |
 |---|---|---|---|---|---|---|---|---|
 | **copilot** (Haiku 5.5) | **93%** (28/30, CI 79–98%) | 100% | 87% | 8/8 | 6/6 | 6/8 | 8/8 | 97% |
@@ -56,8 +79,10 @@ Caveat: 10 items, 8 of one class: kappa is unstable at this n.
   identity mapping, which reads the live directory; and an ACL change with `sync: full`, where the index has
   already caught up). So the oracle does detect leaks when they happen.
 - **Final round** (after the quality fix I-2 and harness fixes): 0/40.
-- **Not done** (rescoped): a post-fix holdout of fresh blind attacks. With 0 first-round leaks there were no
-  red-team-driven fixes, so the 40 are still unseen attacks for the shipped code.
+- **Round 2, after the acceptance-review fixes (I-4..I-7): 0/60**, including **0/20 on a fresh holdout batch**
+  written blind by codex after the fixes (multi-turn escalation, differencing, multi-member channels, injected
+  'official' metric definitions, identity edge cases). Many holdout answers refuse in-scope parts as well
+  (over-denial; not scored).
 - **The red team missed two delivery leaks** that the independent acceptance review then reproduced: a
   channel audience past the first page of members, and a revocation during the audience lookup (INCIDENTS I-4,
   I-5). Both are fixed with tests; the oracle now takes readers from the emulator, not from the bot.

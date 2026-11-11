@@ -228,7 +228,6 @@ def main() -> None:  # pragma: no cover - needs the owner's Slack app tokens
     from slack_bolt.adapter.socket_mode import SocketModeHandler
 
     from analytics_agent.copilot.copilot import build_deployment
-
     from analytics_agent.copilot.identity import apply_local_identity
 
     bot_token, app_token = os.environ.get("SLACK_BOT_TOKEN", ""), os.environ.get("SLACK_APP_TOKEN", "")

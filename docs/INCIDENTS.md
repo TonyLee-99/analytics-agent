@@ -58,6 +58,18 @@ fix and prevention. v1's security findings are in `docs/v1/security.md`.
 - **Fix.** The BM25 cache key includes each chunk's content hash; LLM spans keep usage only. Embedding purges
   persist in production (`persist_purges`); harnesses save additively so shared replay caches stay intact.
 
+## I-7. Over-clarification when the definition was stated in other words (found by the eval)
+- **Symptom.** 1 of 8 questions that already named a definition ("counting only requests with status Completed")
+  was answered with "which definition do you want?" (12.5%; target <= 10%).
+- **Root cause.** Variant detection matched a short list of literal phrases ("completed only", "excluding
+  canceled"); any other way of stating the same definition fell through to "ambiguous".
+- **Fix (general, not per question).** Each variant carries `signals`: regexes for how people state that definition
+  (only/just ... completed, status Completed, excluding/leaving out cancellations, including/counting canceled,
+  completed or canceled, every closed request, of/among all requests, open ... as misses). Still deterministic; if
+  both or neither variant is named, the copilot asks.
+- **Check.** 14 paraphrases written for the test and absent from every eval set (`test_definition_signals.py`);
+  on the full question set 0 of 9 explicit-definition questions were asked back and all 9 ambiguous ones still were.
+
 ## Postmortem: I-1 (multi-statement execution through the gateway)
 **Summary.** A design assumption about the database driver was false: the gateway would execute a string with
 several statements. It was caught by a smoke test on day one, before any evaluation, and never reached a user.

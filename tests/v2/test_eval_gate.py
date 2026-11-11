@@ -18,8 +18,10 @@ def committed():
     return json.loads((V2_RESULTS / "eval.json").read_text())
 
 
-def test_recorded_runs_rescore_to_committed_numbers():
-    now, then = E.score(write=False), committed()
+def test_recorded_runs_rescore_to_committed_numbers(monkeypatch):
+    then = committed()
+    monkeypatch.setenv("AA_EVAL_N", "all" if then["n_items"] > 60 else "15")
+    now = E.score(write=False)
     for s, v in then["systems"].items():
         assert now["systems"][s]["all"] == v["all"], s
         assert now["systems"][s]["route_accuracy"] == v["route_accuracy"]
