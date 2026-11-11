@@ -83,12 +83,11 @@ with the same event model; managed Postgres with scram/TLS and the gateway crede
 sync-lag SLO and leak-oracle alerts (docs/RUNBOOK.md); phased rollout with kill switches (docs/ROLLOUT.md).
 Product and platform lessons: docs/FEEDBACK_TO_PRODUCT.md. PRD: docs/PRD.md.
 
-## How I used Claude Code, and how I checked it
-Claude Code wrote most of the code under a harness of written rules, a feature list whose states only a
-verification script may change, and tests written against the database layer with the SQL guard switched off.
-Its output was checked by things it does not control: a second model (ChatGPT via codex) reviewed the design
-before coding and wrote half of the questions and attacks blind; gold answers are executed SQL; the leak oracle
-is mechanical and was itself validated by switching the defences off.
+## How the results were checked
+Checks the code under test does not control: an independent design review before coding; half of the
+questions and half of the attacks written blind by a different model (ChatGPT via codex) from the corpus,
+schema and org chart only; gold answers are executed SQL; the leak oracle is mechanical and was itself
+validated by switching the defences off; database-layer tests run with the SQL guard bypassed.
 
 ---
 
