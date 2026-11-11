@@ -35,7 +35,7 @@ fix and prevention. v1's security findings are in `docs/v1/security.md`.
   run sequentially (or each against its own database, as the unit tests do with `copilot_test`).
 
 ## I-4. Channel answers could be posted publicly when the channel had more than one page of members (found by the acceptance review)
-- **Symptom.** The independent acceptance review (ChatGPT via codex) reproduced a public post of a restricted
+- **Symptom.** An independent acceptance review reproduced a public post of a restricted
   answer in a channel whose unentitled member was on the second page of `conversations.members`.
 - **Root cause.** The audience check read only the first page (ignored `next_cursor`), and an empty or failed
   member lookup was treated as "safe to post publicly".

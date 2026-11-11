@@ -157,7 +157,7 @@ Terraform, Okta/SCIM, multiple connectors, an Onyx PR, real pilot users (the des
 replaced by a Simulated org; real feedback would replace DISCOVERY notes later).
 
 ## 6. Review changes (independent design review before coding)
-An independent review of this design (ChatGPT via codex, read-only) raised 17 points. Accepted:
+An independent review of this design raised 17 points. Accepted:
 1. **Audience, not just asker.** In a channel, an answer is posted publicly only if every member of the
    channel is entitled to every source and department it used; otherwise it is sent ephemerally to the
    asker. Threads and retries go through the same check.
