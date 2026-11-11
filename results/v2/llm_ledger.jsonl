@@ -1538,3 +1538,4 @@
 {"ts": 1794426945.605859, "backend": "claude_cli", "model": "claude-haiku-5-5", "tag": "judge", "input_tokens": 1415, "output_tokens": 168, "cost_usd": 0.00036679999999999997, "latency_s": 5.112, "attempts": 1}
 {"ts": 1794426946.826942, "backend": "claude_cli", "model": "claude-haiku-5-5", "tag": "judge", "input_tokens": 1438, "output_tokens": 579, "cost_usd": 0.0005769, "latency_s": 8.617, "attempts": 1}
 {"ts": 1794426953.240633, "backend": "claude_cli", "model": "claude-haiku-5-5", "tag": "judge", "input_tokens": 1437, "output_tokens": 677, "cost_usd": 0.0006257000000000001, "latency_s": 7.633, "attempts": 1}
+{"ts": 1794427236.5421162, "backend": "claude_cli", "model": "claude-haiku-5-5", "tag": "copilot:answer", "input_tokens": 1504, "output_tokens": 685, "cost_usd": 0.0006431, "latency_s": 6.474, "attempts": 1}

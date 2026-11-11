@@ -163,4 +163,8 @@ slack-live:       ## live Slack (Socket Mode); tokens come from the macOS keycha
 	 SLACK_APP_TOKEN="$$(security find-generic-password -s slack-app-token -w)" \
 	 AA_LOCAL_IDENTITY=config/local_identity.yaml $(PY) -m analytics_agent.copilot.slack_app
 
+slack-smoke:      ## post one real answer to the owner's DM via the Web API (keychain tokens)
+	@SLACK_BOT_TOKEN="$$(security find-generic-password -s slack-bot-token -w)" \
+	 $(PY) scripts/v2/slack_smoke.py $(Q)
+
 reproduce: pg-load corpus index eval-v2 redteam-v2 lag-experiment site   ## live v2 path end to end

@@ -243,7 +243,11 @@ def build_app(core: SlackCopilot, token: str, client: WebClient | None = None, t
 
 
 def main() -> None:  # pragma: no cover - needs the owner's Slack app tokens
+    import logging
+
     from slack_bolt.adapter.socket_mode import SocketModeHandler
+
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
     from analytics_agent.copilot.copilot import build_deployment
     from analytics_agent.copilot.identity import apply_local_identity
