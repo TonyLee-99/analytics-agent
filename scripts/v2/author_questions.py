@@ -131,9 +131,9 @@ add("jules", "sql", "What were the top 3 origins (how requests were opened) for 
 add("rosa", "sql", "How many Tree Emergency requests were created in 2025?",
     sql=f"SELECT count(*) FROM wh.service_request WHERE sr_type = 'Tree Emergency' AND {Y25}")
 add("lena", "sql", "What were the requests per 1,000 residents in the Loop and Austin community areas in 2025?",
-    sql=f"SELECT ca.community_area_name, count(*) * 1000.0 / max(ca.population_acs) FROM wh.service_request r JOIN "
-        f"wh.community_area ca ON ca.community_area = r.community_area WHERE ca.community_area_name IN ('Loop', 'Austin') "
-        f"AND r.created_at >= TIMESTAMP '2025-01-01' AND r.created_at < TIMESTAMP '2026-01-01' GROUP BY 1 ORDER BY 1")
+    sql="SELECT ca.community_area_name, count(*) * 1000.0 / max(ca.population_acs) FROM wh.service_request r JOIN "
+        "wh.community_area ca ON ca.community_area = r.community_area WHERE ca.community_area_name IN ('Loop', 'Austin') "
+        "AND r.created_at >= TIMESTAMP '2025-01-01' AND r.created_at < TIMESTAMP '2026-01-01' GROUP BY 1 ORDER BY 1")
 add("sam", "sql", "How many Building Violation requests were created in the first half of 2026 (January through June)?",
     sql="SELECT count(*) FROM wh.service_request WHERE sr_type = 'Building Violation' AND created_at >= TIMESTAMP '2026-01-01' "
         "AND created_at < TIMESTAMP '2026-07-01'")

@@ -3,7 +3,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: unpack pack reproduce-results setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
+.PHONY: init check verify pg-start pg-stop pg-load pg-verify corpus index eval-v2 redteam-v2 lag-experiment judge-v2 site pack-v2 unpack-v2 unpack pack reproduce-results setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
         abstention routing frontier redteam traces report test lint gate record-regression all reproduce clean-runs
 
 setup:            ## create the py3.12 venv with pinned deps (uv.lock)
@@ -90,7 +90,72 @@ test:
 lint:
 	$(UV) run ruff check .
 
-all reproduce: setup data verify-data retrieval redteam eval-full semantic ambiguity abstention routing frontier traces report test lint
+all reproduce-v1: setup data verify-data retrieval redteam eval-full semantic ambiguity abstention routing frontier traces report test lint
 
 clean-runs:       ## delete run outputs (NOT the LLM cache)
 	rm -f results/runs/*.jsonl traces/*.jsonl
+
+# ------------------------------------------------------------------ v2 copilot
+PGBIN ?= /opt/homebrew/opt/postgresql@16/bin
+N ?= 15          ## questions per half (15 author + 15 codex-blind); N=all for the full 60+60
+RT_N ?=          ## red-team scenarios per set (empty = all 20+20)
+
+init:             ## pinned deps + committed replay caches
+	$(UV) sync --locked
+	$(MAKE) unpack-v2
+
+unpack-v2:
+	mkdir -p cache/v2_llm && tar -xzf cache/v2_llm.tar.gz -C cache
+
+pack-v2:          ## after live runs: refresh the committed LLM replay cache
+	tar -czf cache/v2_llm.tar.gz -C cache v2_llm
+
+check:            ## OFFLINE: lint + unit/permission tests + eval gate (replay backend, zero LLM calls)
+	$(UV) run ruff check src tests scripts/v2
+	AA_LLM_BACKEND=replay AA_MAX_CLAUDE_CALLS=0 $(UV) run pytest -q tests/v2
+	AA_LLM_BACKEND=replay AA_MAX_CLAUDE_CALLS=0 AA_MODEL=mock $(UV) run pytest -q tests --ignore=tests/v2 --ignore=tests/test_regression_gate.py
+	AA_MAX_CLAUDE_CALLS=0 $(UV) run pytest -q tests/test_regression_gate.py
+
+verify:           ## run every feature_list.json verification command and record PASS/FAIL
+	$(UV) run python scripts/verify_features.py
+
+pg-start:
+	mkdir -p data/pg && ( [ -d data/pg/cluster ] || $(PGBIN)/initdb -D data/pg/cluster -U postgres --auth=trust -E UTF8 --locale=en_US.UTF-8 )
+	LC_ALL=en_US.UTF-8 $(PGBIN)/pg_ctl -D data/pg/cluster -l data/pg/server.log -o "-p 5433 -c shared_buffers=256MB" start
+
+pg-stop:
+	$(PGBIN)/pg_ctl -D data/pg/cluster stop
+
+pg-load:          ## 311 window (2024-11-01..2026-11-03) from ~/projects/chicago-311-warehouse (read-only) + RLS
+	$(PY) scripts/v2/pg_load.py
+
+pg-verify:
+	$(PY) scripts/v2/pg_verify.py
+
+corpus:           ## polite fetch of City of Chicago documents (cached)
+	$(PY) scripts/v2/fetch_corpus.py
+
+index:            ## chunk + embed the corpus (bge-small via fastembed), refresh cache/embeddings.npz
+	$(PY) -c "from analytics_agent.copilot.copilot import build_deployment as b; d=b(); d.index.embedder.cache.save()"
+
+eval-v2:          ## live: copilot + baselines + judge on N per half, then score
+	AA_EVAL_N=$(N) $(PY) -m analytics_agent.eval.copilot_eval run --system copilot
+	AA_EVAL_N=$(N) $(PY) -m analytics_agent.eval.copilot_eval run --system docs_only
+	AA_EVAL_N=$(N) $(PY) -m analytics_agent.eval.copilot_eval run --system v1_sql
+	$(MAKE) judge-v2 N=$(N)
+
+judge-v2:
+	for s in copilot docs_only v1_sql; do AA_EVAL_N=$(N) $(PY) -m analytics_agent.eval.copilot_eval judge --system $$s; done
+	AA_EVAL_N=$(N) $(PY) -m analytics_agent.eval.copilot_eval score
+
+redteam-v2:       ## live red team (sequential; shares the Postgres role table)
+	$(PY) -m analytics_agent.eval.redteam_v2 --round final $(if $(RT_N),--n $(RT_N),)
+
+lag-experiment:
+	$(PY) scripts/v2/lag_experiment.py
+
+site:             ## static demo page from recorded runs + Playwright screenshots
+	$(PY) scripts/v2/build_site.py
+	cd site && npx --yes playwright@1 screenshot --viewport-size=1280,900 --full-page index.html ../docs/img/demo.png
+
+reproduce: pg-load corpus index eval-v2 redteam-v2 lag-experiment site   ## live v2 path end to end

@@ -1,25 +1,33 @@
-# CI: lint + unit tests + the LLM regression gate. No network LLM calls: the agent runs against
-# recorded responses (tests/regression/cassette_*.jsonl) or a mock.
+# CI: `make check` offline. v1: lint, unit tests, regression gate on recorded responses.
+# v2: permission tests against a real Postgres service (no skips), unit tests, eval gate that re-scores the
+# recorded runs and replays part of the pipeline from the committed LLM + SQL caches. No model calls.
 name: ci
 on:
   push:
   pull_request:
 jobs:
-  test:
+  check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
     env:
-      AA_MODEL: mock            # serving smoke tests use the mock LLM
-      AA_MAX_CLAUDE_CALLS: "0"  # hard guarantee: any real Claude call raises BudgetExceeded
+      AA_MODEL: mock
+      AA_MAX_CLAUDE_CALLS: "0"
+      AA_LLM_BACKEND: replay
+      AA_REQUIRE_PG: "1"
+      AA_PG_ADMIN_BASE: "host=localhost port=5432 user=postgres"
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v6
         with:
           python-version: "3.12"
-      - name: Install pinned deps
-        run: uv sync --locked
-      - name: Lint
-        run: uv run ruff check .
-      - name: Unit tests (guardrails, executor, metrics, agent, serving, semantic compiler)
-        run: uv run pytest -q --ignore=tests/test_regression_gate.py
-      - name: Regression gate (frozen 30-question set, recorded responses, EX threshold)
-        run: uv run pytest -q tests/test_regression_gate.py
+      - name: Install pinned deps + unpack replay caches
+        run: make init
+      - name: make check (lint, v1 + v2 tests, permission tests on Postgres, eval gates)
+        run: make check

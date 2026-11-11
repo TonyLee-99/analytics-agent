@@ -8,6 +8,7 @@ cache hits. Anything that fails it is discarded, never "patched".
 from __future__ import annotations
 
 import json
+import os
 import re
 import time
 from dataclasses import asdict, dataclass, field
@@ -33,6 +34,9 @@ TRACE_PATH = ROOT / "traces" / "copilot.jsonl"
 CODE_TO_NAME = {v: k for k, v in DEPT_CODES.items()}
 TAG_RE = re.compile(r"\[S(\d+)\]")
 DATA_END = "2026-11-03"
+# planners write operators as words surprisingly often ("eq"); found on the development half of the eval
+OP_ALIASES = {"eq": "=", "equals": "=", "==": "=", "ne": "!=", "neq": "!=", "not_eq": "!=", "gt": ">", "gte": ">=",
+              "ge": ">=", "lt": "<", "lte": "<=", "le": "<=", "not_in": "not in", "nin": "not in", "contains": "like"}
 
 
 @dataclass
@@ -128,6 +132,7 @@ class Copilot:
         self.llm_deps: dict[str, set[str]] = {}  # doc_id -> LLM cache keys whose prompt contained its text
         self.purge_llm_on_delete = purge_llm_on_delete
         self.purged_llm_keys: list[str] = []
+        self.live_depts_fn = None  # ablation hook only (red team): replaces the live entitlement lookup
         dep.index.on_purge.append(self._purge_llm_for_doc)
 
     # ------------------------------------------------------------ helpers
@@ -190,6 +195,8 @@ class Copilot:
         st = self.dep.directory.state
         trace.attrs.update({"user": user_id, "slack_user": slack_user, "mode": self.mode,
                             "directory_version": st.version})
+        if os.environ.get("AA_COPILOT_DISABLED"):  # kill switch (docs/ROLLOUT.md)
+            return self._finish(Answer("denied", "The assistant is temporarily disabled."), trace, t0, store=False)
         user = st.users.get(user_id)
         if not user or not user["active"]:
             return self._finish(Answer("denied", "You are not authorised to use this assistant."), trace, t0)
@@ -203,9 +210,13 @@ class Copilot:
                 return self._finish(a, trace, t0, store=False)
             trace.attrs["cache"] = "miss"
 
-        live_depts = st.data_departments(user_id)
+        live_depts = self.live_depts_fn(user_id) if self.live_depts_fn else st.data_departments(user_id)
         plan = self._plan(trace, user, question, live_depts)
         route = plan.get("route", "both")
+        if os.environ.get("AA_DISABLE_SQL") and route in ("sql", "both"):
+            route = "docs"
+        elif os.environ.get("AA_DISABLE_DOCS") and route in ("docs", "both"):
+            route = "sql"
         if self.mode == "docs_only":
             route = "docs"
         elif self.mode == "sql_only":
@@ -313,6 +324,7 @@ class Copilot:
             # department filters may only name departments the user can see
             fl = []
             for f in mq.get("filters") or []:
+                f = {**f, "op": OP_ALIASES.get(str(f.get("op", "=")).lower(), f.get("op", "="))}
                 if f.get("field") == "dept_code":
                     vals = f.get("value") if isinstance(f.get("value"), list) else [f.get("value")]
                     keep = [v for v in vals if v in live_depts]

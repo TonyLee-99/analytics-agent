@@ -51,6 +51,9 @@ class RecordingWarehouse:
         return res
 
     def save(self) -> None:
+        # merge with what other processes wrote since we loaded (several runs record concurrently)
+        with _lock:
+            self.data = {**load(self.path), **self.data}
         with _lock, gzip.open(self.path, "wt") as f:
             for r in sorted(self.data.values(), key=lambda r: r["key"]):
                 f.write(json.dumps(r) + "\n")

@@ -16,5 +16,1075 @@
 ]
 ],
 "error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+181276
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+1960595
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT sr_type, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND dept_code = 'DSS'\\n    AND sr_type = 'Graffiti Removal Request'\\n  GROUP BY 1\\n)\\nSELECT sr_type, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"DSS\"]]": {
+"ok": true,
+"rows": [
+[
+"Graffiti Removal Request",
+94893
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT sr_type, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND dept_code = 'DSS'\\n    AND sr_type = 'Graffiti Removal Request'\\n  GROUP BY 1\\n)\\nSELECT sr_type, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"Graffiti Removal Request",
+94893
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT community_area_name, sr_type, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n    AND sr_type = 'Pothole in Street Complaint'\\n  GROUP BY 1, 2\\n)\\nSELECT community_area_name, sr_type, requests\\nFROM m_requests\\nORDER BY community_area_name ASC NULLS LAST\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+"Albany Park",
+"Pothole in Street Complaint",
+53
+],
+[
+"Archer Heights",
+"Pothole in Street Complaint",
+24
+],
+[
+"Armour Square",
+"Pothole in Street Complaint",
+18
+],
+[
+"Ashburn",
+"Pothole in Street Complaint",
+103
+],
+[
+"Auburn Gresham",
+"Pothole in Street Complaint",
+42
+],
+[
+"Austin",
+"Pothole in Street Complaint",
+107
+],
+[
+"Avalon Park",
+"Pothole in Street Complaint",
+13
+],
+[
+"Avondale",
+"Pothole in Street Complaint",
+39
+],
+[
+"Belmont Cragin",
+"Pothole in Street Complaint",
+80
+],
+[
+"Beverly",
+"Pothole in Street Complaint",
+42
+],
+[
+"Bridgeport",
+"Pothole in Street Complaint",
+26
+],
+[
+"Brighton Park",
+"Pothole in Street Complaint",
+36
+],
+[
+"Burnside",
+"Pothole in Street Complaint",
+8
+],
+[
+"Calumet Heights",
+"Pothole in Street Complaint",
+27
+],
+[
+"Chatham",
+"Pothole in Street Complaint",
+22
+],
+[
+"Chicago Lawn",
+"Pothole in Street Complaint",
+41
+],
+[
+"Clearing",
+"Pothole in Street Complaint",
+60
+],
+[
+"Douglas",
+"Pothole in Street Complaint",
+2
+],
+[
+"Dunning",
+"Pothole in Street Complaint",
+43
+],
+[
+"East Garfield Park",
+"Pothole in Street Complaint",
+24
+],
+[
+"East Side",
+"Pothole in Street Complaint",
+12
+],
+[
+"Edgewater",
+"Pothole in Street Complaint",
+33
+],
+[
+"Edison Park",
+"Pothole in Street Complaint",
+8
+],
+[
+"Englewood",
+"Pothole in Street Complaint",
+13
+],
+[
+"Forest Glen",
+"Pothole in Street Complaint",
+88
+],
+[
+"Fuller Park",
+"Pothole in Street Complaint",
+2
+],
+[
+"Gage Park",
+"Pothole in Street Complaint",
+31
+],
+[
+"Garfield Ridge",
+"Pothole in Street Complaint",
+84
+],
+[
+"Grand Boulevard",
+"Pothole in Street Complaint",
+14
+],
+[
+"Greater Grand Crossing",
+"Pothole in Street Complaint",
+22
+],
+[
+"Hegewisch",
+"Pothole in Street Complaint",
+7
+],
+[
+"Hermosa",
+"Pothole in Street Complaint",
+26
+],
+[
+"Humboldt Park",
+"Pothole in Street Complaint",
+73
+],
+[
+"Hyde Park",
+"Pothole in Street Complaint",
+31
+],
+[
+"Irving Park",
+"Pothole in Street Complaint",
+113
+],
+[
+"Jefferson Park",
+"Pothole in Street Complaint",
+46
+],
+[
+"Kenwood",
+"Pothole in Street Complaint",
+17
+],
+[
+"Lake View",
+"Pothole in Street Complaint",
+52
+],
+[
+"Lincoln Park",
+"Pothole in Street Complaint",
+110
+],
+[
+"Lincoln Square",
+"Pothole in Street Complaint",
+28
+],
+[
+"Logan Square",
+"Pothole in Street Complaint",
+84
+],
+[
+"Loop",
+"Pothole in Street Complaint",
+41
+],
+[
+"Lower West Side",
+"Pothole in Street Complaint",
+99
+],
+[
+"Mckinley Park",
+"Pothole in Street Complaint",
+22
+],
+[
+"Montclare",
+"Pothole in Street Complaint",
+24
+],
+[
+"Morgan Park",
+"Pothole in Street Complaint",
+38
+],
+[
+"Mount Greenwood",
+"Pothole in Street Complaint",
+35
+],
+[
+"Near North Side",
+"Pothole in Street Complaint",
+91
+],
+[
+"Near South Side",
+"Pothole in Street Complaint",
+12
+],
+[
+"Near West Side",
+"Pothole in Street Complaint",
+93
+],
+[
+"New City",
+"Pothole in Street Complaint",
+66
+],
+[
+"North Center",
+"Pothole in Street Complaint",
+40
+],
+[
+"North Lawndale",
+"Pothole in Street Complaint",
+26
+],
+[
+"North Park",
+"Pothole in Street Complaint",
+14
+],
+[
+"Norwood Park",
+"Pothole in Street Complaint",
+56
+],
+[
+"Oakland",
+"Pothole in Street Complaint",
+5
+],
+[
+"Ohare",
+"Pothole in Street Complaint",
+10
+],
+[
+"Portage Park",
+"Pothole in Street Complaint",
+105
+],
+[
+"Pullman",
+"Pothole in Street Complaint",
+6
+],
+[
+"Riverdale",
+"Pothole in Street Complaint",
+3
+],
+[
+"Rogers Park",
+"Pothole in Street Complaint",
+38
+],
+[
+"Roseland",
+"Pothole in Street Complaint",
+49
+],
+[
+"South Chicago",
+"Pothole in Street Complaint",
+22
+],
+[
+"South Deering",
+"Pothole in Street Complaint",
+54
+],
+[
+"South Lawndale",
+"Pothole in Street Complaint",
+87
+],
+[
+"South Shore",
+"Pothole in Street Complaint",
+38
+],
+[
+"Uptown",
+"Pothole in Street Complaint",
+17
+],
+[
+"Washington Heights",
+"Pothole in Street Complaint",
+34
+],
+[
+"Washington Park",
+"Pothole in Street Complaint",
+5
+],
+[
+"West Elsdon",
+"Pothole in Street Complaint",
+60
+],
+[
+"West Englewood",
+"Pothole in Street Complaint",
+26
+],
+[
+"West Garfield Park",
+"Pothole in Street Complaint",
+17
+],
+[
+"West Lawn",
+"Pothole in Street Complaint",
+37
+],
+[
+"West Pullman",
+"Pothole in Street Complaint",
+30
+],
+[
+"West Ridge",
+"Pothole in Street Complaint",
+46
+],
+[
+"West Town",
+"Pothole in Street Complaint",
+100
+],
+[
+"Woodlawn",
+"Pothole in Street Complaint",
+17
+],
+[
+null,
+"Pothole in Street Complaint",
+16
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT community_area_name, sr_type, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n    AND sr_type = 'Pothole in Street Complaint'\\n  GROUP BY 1, 2\\n)\\nSELECT community_area_name, sr_type, requests\\nFROM m_requests\\nORDER BY community_area_name ASC NULLS LAST\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"Albany Park",
+"Pothole in Street Complaint",
+53
+],
+[
+"Archer Heights",
+"Pothole in Street Complaint",
+24
+],
+[
+"Armour Square",
+"Pothole in Street Complaint",
+18
+],
+[
+"Ashburn",
+"Pothole in Street Complaint",
+103
+],
+[
+"Auburn Gresham",
+"Pothole in Street Complaint",
+42
+],
+[
+"Austin",
+"Pothole in Street Complaint",
+107
+],
+[
+"Avalon Park",
+"Pothole in Street Complaint",
+13
+],
+[
+"Avondale",
+"Pothole in Street Complaint",
+39
+],
+[
+"Belmont Cragin",
+"Pothole in Street Complaint",
+80
+],
+[
+"Beverly",
+"Pothole in Street Complaint",
+42
+],
+[
+"Bridgeport",
+"Pothole in Street Complaint",
+26
+],
+[
+"Brighton Park",
+"Pothole in Street Complaint",
+36
+],
+[
+"Burnside",
+"Pothole in Street Complaint",
+8
+],
+[
+"Calumet Heights",
+"Pothole in Street Complaint",
+27
+],
+[
+"Chatham",
+"Pothole in Street Complaint",
+22
+],
+[
+"Chicago Lawn",
+"Pothole in Street Complaint",
+41
+],
+[
+"Clearing",
+"Pothole in Street Complaint",
+60
+],
+[
+"Douglas",
+"Pothole in Street Complaint",
+2
+],
+[
+"Dunning",
+"Pothole in Street Complaint",
+43
+],
+[
+"East Garfield Park",
+"Pothole in Street Complaint",
+24
+],
+[
+"East Side",
+"Pothole in Street Complaint",
+12
+],
+[
+"Edgewater",
+"Pothole in Street Complaint",
+33
+],
+[
+"Edison Park",
+"Pothole in Street Complaint",
+8
+],
+[
+"Englewood",
+"Pothole in Street Complaint",
+13
+],
+[
+"Forest Glen",
+"Pothole in Street Complaint",
+88
+],
+[
+"Fuller Park",
+"Pothole in Street Complaint",
+2
+],
+[
+"Gage Park",
+"Pothole in Street Complaint",
+31
+],
+[
+"Garfield Ridge",
+"Pothole in Street Complaint",
+84
+],
+[
+"Grand Boulevard",
+"Pothole in Street Complaint",
+14
+],
+[
+"Greater Grand Crossing",
+"Pothole in Street Complaint",
+22
+],
+[
+"Hegewisch",
+"Pothole in Street Complaint",
+7
+],
+[
+"Hermosa",
+"Pothole in Street Complaint",
+26
+],
+[
+"Humboldt Park",
+"Pothole in Street Complaint",
+73
+],
+[
+"Hyde Park",
+"Pothole in Street Complaint",
+31
+],
+[
+"Irving Park",
+"Pothole in Street Complaint",
+113
+],
+[
+"Jefferson Park",
+"Pothole in Street Complaint",
+46
+],
+[
+"Kenwood",
+"Pothole in Street Complaint",
+17
+],
+[
+"Lake View",
+"Pothole in Street Complaint",
+52
+],
+[
+"Lincoln Park",
+"Pothole in Street Complaint",
+110
+],
+[
+"Lincoln Square",
+"Pothole in Street Complaint",
+28
+],
+[
+"Logan Square",
+"Pothole in Street Complaint",
+84
+],
+[
+"Loop",
+"Pothole in Street Complaint",
+41
+],
+[
+"Lower West Side",
+"Pothole in Street Complaint",
+99
+],
+[
+"Mckinley Park",
+"Pothole in Street Complaint",
+22
+],
+[
+"Montclare",
+"Pothole in Street Complaint",
+24
+],
+[
+"Morgan Park",
+"Pothole in Street Complaint",
+38
+],
+[
+"Mount Greenwood",
+"Pothole in Street Complaint",
+35
+],
+[
+"Near North Side",
+"Pothole in Street Complaint",
+91
+],
+[
+"Near South Side",
+"Pothole in Street Complaint",
+12
+],
+[
+"Near West Side",
+"Pothole in Street Complaint",
+93
+],
+[
+"New City",
+"Pothole in Street Complaint",
+66
+],
+[
+"North Center",
+"Pothole in Street Complaint",
+40
+],
+[
+"North Lawndale",
+"Pothole in Street Complaint",
+26
+],
+[
+"North Park",
+"Pothole in Street Complaint",
+14
+],
+[
+"Norwood Park",
+"Pothole in Street Complaint",
+56
+],
+[
+"Oakland",
+"Pothole in Street Complaint",
+5
+],
+[
+"Ohare",
+"Pothole in Street Complaint",
+10
+],
+[
+"Portage Park",
+"Pothole in Street Complaint",
+105
+],
+[
+"Pullman",
+"Pothole in Street Complaint",
+6
+],
+[
+"Riverdale",
+"Pothole in Street Complaint",
+3
+],
+[
+"Rogers Park",
+"Pothole in Street Complaint",
+38
+],
+[
+"Roseland",
+"Pothole in Street Complaint",
+49
+],
+[
+"South Chicago",
+"Pothole in Street Complaint",
+22
+],
+[
+"South Deering",
+"Pothole in Street Complaint",
+54
+],
+[
+"South Lawndale",
+"Pothole in Street Complaint",
+87
+],
+[
+"South Shore",
+"Pothole in Street Complaint",
+38
+],
+[
+"Uptown",
+"Pothole in Street Complaint",
+17
+],
+[
+"Washington Heights",
+"Pothole in Street Complaint",
+34
+],
+[
+"Washington Park",
+"Pothole in Street Complaint",
+5
+],
+[
+"West Elsdon",
+"Pothole in Street Complaint",
+60
+],
+[
+"West Englewood",
+"Pothole in Street Complaint",
+26
+],
+[
+"West Garfield Park",
+"Pothole in Street Complaint",
+17
+],
+[
+"West Lawn",
+"Pothole in Street Complaint",
+37
+],
+[
+"West Pullman",
+"Pothole in Street Complaint",
+30
+],
+[
+"West Ridge",
+"Pothole in Street Complaint",
+46
+],
+[
+"West Town",
+"Pothole in Street Complaint",
+100
+],
+[
+"Woodlawn",
+"Pothole in Street Complaint",
+17
+],
+[
+null,
+"Pothole in Street Complaint",
+16
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\nORDER BY requests DESC NULLS LAST\\n) AS _guarded LIMIT 1000\", [\"DSS\"]]": {
+"ok": true,
+"rows": [
+[
+"DSS",
+40777
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\nORDER BY requests DESC NULLS LAST\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"311",
+47827
+],
+[
+"AVI",
+43070
+],
+[
+"BACP",
+1211
+],
+[
+"CACC",
+3280
+],
+[
+"CDOT",
+14115
+],
+[
+"CDPH",
+448
+],
+[
+"CFD",
+43
+],
+[
+"CLERK",
+418
+],
+[
+"DOB",
+3828
+],
+[
+"DOH",
+12
+],
+[
+"DSS",
+40777
+],
+[
+"DWM",
+4774
+],
+[
+"FIN",
+2303
+],
+[
+"OUT",
+807
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+14115
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+14115
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, CAST(date_trunc('month', created_at) AS DATE) AS period, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1, 2\\n),\\nm_work_requests AS (\\n  SELECT dept_code, CAST(date_trunc('month', created_at) AS DATE) AS period, count(*) AS work_requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1, 2\\n)\\nSELECT dept_code, period, requests, work_requests\\nFROM m_requests\\nFULL OUTER JOIN m_work_requests USING (dept_code, period)\\nORDER BY period ASC NULLS LAST\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+"2026-10-01",
+14115,
+11555
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, CAST(date_trunc('month', created_at) AS DATE) AS period, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1, 2\\n),\\nm_work_requests AS (\\n  SELECT dept_code, CAST(date_trunc('month', created_at) AS DATE) AS period, count(*) AS work_requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n  GROUP BY 1, 2\\n)\\nSELECT dept_code, period, requests, work_requests\\nFROM m_requests\\nFULL OUTER JOIN m_work_requests USING (dept_code, period)\\nORDER BY period ASC NULLS LAST\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+"2026-10-01",
+14115,
+11555
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code IN ('DWM', 'DOB')\\n  GROUP BY 1\\n),\\nm_open_backlog AS (\\n  SELECT dept_code, count(*) AS open_backlog\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (is_open AND NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code IN ('DWM', 'DOB')\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests, open_backlog\\nFROM m_requests\\nFULL OUTER JOIN m_open_backlog USING (dept_code)\\n) AS _guarded LIMIT 1000\", [\"311\", \"ALD\", \"AVI\", \"BACP\", \"CACC\", \"CCHR\", \"CDOT\", \"CDPH\", \"CFD\", \"CLERK\", \"CPD\", \"CSR\", \"CTA\", \"DFSS\", \"DOAH\", \"DOB\", \"DOE\", \"DOH\", \"DOIT\", \"DPD\", \"DSS\", \"DWM\", \"EWN\", \"FIN\", \"MOPD\", \"OUT\", \"UNK\"]]": {
+"ok": true,
+"rows": [
+[
+"DOB",
+3828,
+2522
+],
+[
+"DWM",
+4774,
+2070
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code IN ('DWM', 'DOB')\\n  GROUP BY 1\\n),\\nm_open_backlog AS (\\n  SELECT dept_code, count(*) AS open_backlog\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (is_open AND NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code IN ('DWM', 'DOB')\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests, open_backlog\\nFROM m_requests\\nFULL OUTER JOIN m_open_backlog USING (dept_code)\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"DOB",
+3828,
+2522
+],
+[
+"DWM",
+4774,
+2070
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND sr_type = 'Tree Emergency'\\n    AND dept_code = 'DSS'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", []]": {
+"ok": true,
+"rows": [
+[
+0
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2025-01-01'\\n    AND created_at < TIMESTAMP '2026-01-01'\\n    AND sr_type = 'Tree Emergency'\\n    AND dept_code = 'DSS'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+26514
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", []]": {
+"ok": true,
+"rows": [
+[
+0
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'CDOT'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+14115
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'DSS'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+0
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'DSS'\\n)\\nSELECT requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+40777
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_open_backlog AS (\\n  SELECT count(*) AS open_backlog\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (is_open AND NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'DSS'\\n)\\nSELECT open_backlog\\nFROM m_open_backlog\\n) AS _guarded LIMIT 1000\", []]": {
+"ok": true,
+"rows": [
+[
+0
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_open_backlog AS (\\n  SELECT count(*) AS open_backlog\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE (is_open AND NOT is_duplicate)\\n    AND created_at >= TIMESTAMP '2026-10-01'\\n    AND created_at < TIMESTAMP '2026-11-01'\\n    AND dept_code = 'DSS'\\n)\\nSELECT open_backlog\\nFROM m_open_backlog\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+13606
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE dept_code = 'CDOT'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", [\"CDOT\"]]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+386106
+]
+],
+"error": ""
+},
+"[\"SELECT * FROM (\\nWITH m_requests AS (\\n  SELECT dept_code, count(*) AS requests\\n  FROM (\\n    SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,\\n           r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,\\n           ca.population_acs, r.ward,\\n           EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,\\n           b.benchmark_days\\n    FROM wh.service_request r\\n    JOIN wh.department d ON d.dept_code = r.dept_code\\n    LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area\\n    LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)\\n  ) AS m\\n  WHERE dept_code = 'CDOT'\\n  GROUP BY 1\\n)\\nSELECT dept_code, requests\\nFROM m_requests\\n) AS _guarded LIMIT 1000\", null]": {
+"ok": true,
+"rows": [
+[
+"CDOT",
+386106
+]
+],
+"error": ""
 }
 }

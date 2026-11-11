@@ -52,16 +52,38 @@ Answer to grade:
 {answer}"""
 
 
-def load_items(names: list[str] = SETS) -> list[dict]:
+def stratified(items: list[dict], n: int) -> list[dict]:
+    """First n items, round-robin over item types in file order (deterministic, keeps every type)."""
+    by: dict[str, list[dict]] = {}
+    for q in items:
+        by.setdefault(q["type"], []).append(q)
+    out, i = [], 0
+    while len(out) < min(n, len(items)):
+        for t in sorted(by):
+            if i < len(by[t]) and len(out) < n:
+                out.append(by[t][i])
+        i += 1
+    return sorted(out, key=lambda q: q["id"])
+
+
+def load_items(names: list[str] = SETS, n_per_set: int | None = None) -> list[dict]:
+    """n_per_set: stratified sample per question file (env AA_EVAL_N; default 15). 0 or 'all' = everything."""
+    import os
+
+    if n_per_set is None:
+        v = os.environ.get("AA_EVAL_N", "15")
+        n_per_set = 0 if v in ("all", "0") else int(v)
     out = []
     for n in names:
+        sel = []
         gold = json.loads((V2_EVAL_SETS / f"gold_{n}.json").read_text())["items"]
         for line in (V2_EVAL_SETS / f"{n}.jsonl").read_text().splitlines():
             if line.strip():
                 q = json.loads(line)
                 q["set"] = n
                 q["gold"] = gold.get(q["id"])
-                out.append(q)
+                sel.append(q)
+        out += stratified(sel, n_per_set) if n_per_set else sel
     return out
 
 
@@ -120,6 +142,9 @@ def rows_match(got: list[list], gold: list[list], key_only: bool = False) -> boo
 
 
 # ------------------------------------------------------------ systems
+_DEPS: list = []  # deployments built by make_system, so run() can persist new query embeddings
+
+
 def make_system(name: str):
     if name in ("copilot", "docs_only", "copilot_rerank", "copilot_norecheck"):
         from analytics_agent.copilot.copilot import Copilot, build_deployment
@@ -133,6 +158,7 @@ def make_system(name: str):
 
             wh, sync = RecordingWarehouse(Warehouse()), True
         dep = build_deployment(warehouse=wh, wh_sync=sync, rerank=name == "copilot_rerank")
+        _DEPS.append(dep)
         cp = Copilot(dep, llm=make_llm("haiku"), mode="docs_only" if name == "docs_only" else "full",
                      use_cache=False, trace_path=None)
 
@@ -185,8 +211,9 @@ def _j(v):
     return v if v is None or isinstance(v, bool | int | str) else str(v)
 
 
-def run(system: str, workers: int = 3, only: list[str] | None = None) -> Path:
-    items = [q for q in load_items() if not only or q["id"] in only]
+def run(system: str, workers: int = 3, only: list[str] | None = None, sets: list[str] | None = None,
+        fresh: bool = False) -> Path:
+    items = [q for q in load_items(sets or SETS) if not only or q["id"] in only]
     ask, wh = make_system(system)
     RUNS.mkdir(parents=True, exist_ok=True)
     out_path = RUNS / f"eval__{system}.jsonl"
@@ -198,7 +225,7 @@ def run(system: str, workers: int = 3, only: list[str] | None = None) -> Path:
                 done[r["id"]] = r
 
     def one(q):
-        if q["id"] in done:
+        if q["id"] in done and not fresh:
             return done[q["id"]]
         t0 = time.time()
         try:
@@ -211,11 +238,18 @@ def run(system: str, workers: int = 3, only: list[str] | None = None) -> Path:
 
     with ThreadPoolExecutor(workers) as ex:
         results = list(ex.map(one, items))
+    merged = {**done, **{r["id"]: r for r in results}}
     with open(out_path, "w") as f:
-        for r in results:
+        for r in sorted(merged.values(), key=lambda r: r["id"]):
             f.write(json.dumps(r, default=str) + "\n")
     if wh is not None and hasattr(wh, "save"):
         wh.save()
+    for dep in _DEPS:
+        if dep.index.embedder.cache.dirty:
+            dep.index.embedder.cache.save()
+        rr = dep.retriever.reranker
+        if rr is not None and rr.dirty:
+            rr.save()
     return out_path
 
 
@@ -249,7 +283,7 @@ def judge(system: str, workers: int = 3, model: str = "haiku") -> Path:
                 "auto": False, "model": llm.model}
 
     with ThreadPoolExecutor(workers) as ex:
-        res = [r for r in ex.map(one, sorted(run_)) if r]
+        res = [r for r in ex.map(one, sorted(i for i in run_ if i in items)) if r]
     with open(out_path, "w") as f:
         for r in res:
             f.write(json.dumps(r) + "\n")
@@ -320,7 +354,7 @@ def wilson(k: int, n: int) -> list[float]:
     return [round(c - h, 4), round(c + h, 4)]
 
 
-def score(systems: list[str] = ("copilot", "docs_only", "v1_sql")) -> dict:
+def score(systems: list[str] = ("copilot", "docs_only", "v1_sql"), write: bool = True) -> dict:
     items = load_items()
     out: dict[str, Any] = {"n_items": len(items), "systems": {}}
     per_sys_correct: dict[str, list[bool]] = {}
@@ -354,7 +388,9 @@ def score(systems: list[str] = ("copilot", "docs_only", "v1_sql")) -> dict:
         summ["docs_answers_with_citation"] = round(
             sum(r["n_citations"] > 0 for r in answered_docs) / max(1, len(answered_docs)), 4)
         summ["clarify_rate_on_conflicts"] = round(sum(r["status"] == "clarify" for r in clar) / max(1, len(clar)), 4)
-        explicit = [r for r in rows if r["id"] in EXPLICIT_DEFINITION_IDS]
+        all_items = {q["id"]: q for q in load_items(n_per_set=0)}  # controls run outside the sample
+        explicit = [score_item(all_items[i], run_[i], jud.get(i)) for i in sorted(EXPLICIT_DEFINITION_IDS) if i in run_]
+        summ["explicit_definition_controls"] = {"n": len(explicit), "correct": sum(r["correct"] for r in explicit)}
         summ["false_clarify_on_explicit_definitions"] = round(
             sum(r["false_clarify"] for r in explicit) / max(1, len(explicit)), 4) if explicit else None
         summ["false_clarify_rate_all"] = round(sum(r["false_clarify"] for r in nonclar) / max(1, len(nonclar)), 4)
@@ -364,7 +400,8 @@ def score(systems: list[str] = ("copilot", "docs_only", "v1_sql")) -> dict:
     if "copilot" in per_sys_correct:
         out["paired"] = {f"copilot_vs_{s}": mcnemar(per_sys_correct["copilot"], per_sys_correct[s])
                          for s in per_sys_correct if s != "copilot"}
-    (V2_RESULTS / "eval.json").write_text(json.dumps(out, indent=1))
+    if write:
+        (V2_RESULTS / "eval.json").write_text(json.dumps(out, indent=1))
     return out
 
 
@@ -385,9 +422,11 @@ def main() -> None:
     ap.add_argument("--system", default="copilot")
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--only", nargs="*")
+    ap.add_argument("--sets", nargs="*")
+    ap.add_argument("--fresh", action="store_true", help="re-run items already recorded (LLM cache still applies)")
     a = ap.parse_args()
     if a.cmd == "run":
-        print(run(a.system, a.workers, a.only))
+        print(run(a.system, a.workers, a.only, a.sets, a.fresh))
     elif a.cmd == "judge":
         print(judge(a.system, a.workers))
     else:

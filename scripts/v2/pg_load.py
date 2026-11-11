@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import csv
 import gzip
+import os
 import sys
 import time
 
@@ -41,10 +42,10 @@ WHERE f.created_at >= TIMESTAMP '{WINDOW_START}' AND f.created_at < TIMESTAMP '{
 """
 
 
-def ensure_db(admin_base: str) -> None:
+def ensure_db(admin_base: str, db: str) -> None:
     with psycopg.connect(admin_base + " dbname=postgres", autocommit=True) as c:
-        if not c.execute("SELECT 1 FROM pg_database WHERE datname='copilot'").fetchone():
-            c.execute("CREATE DATABASE copilot")
+        if not c.execute("SELECT 1 FROM pg_database WHERE datname = %s", (db,)).fetchone():
+            c.execute(f'CREATE DATABASE "{db}"')
 
 
 def load_dims(pg: psycopg.Connection, src: duckdb.DuckDBPyConnection | None) -> dict:
@@ -82,11 +83,12 @@ def rows_from_source(src: duckdb.DuckDBPyConnection):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", action="store_true")
-    ap.add_argument("--admin", default="host=localhost port=5433 user=postgres")
+    ap.add_argument("--admin", default=os.environ.get("AA_PG_ADMIN_BASE", "host=localhost port=5433 user=postgres"))
+    ap.add_argument("--db", default="copilot")
     args = ap.parse_args()
-    ensure_db(args.admin)
+    ensure_db(args.admin, args.db)
     t0 = time.time()
-    with psycopg.connect(args.admin + " dbname=copilot") as pg:
+    with psycopg.connect(args.admin + f" dbname={args.db}") as pg:
         pg.execute(SCHEMA.read_text())
         src = None if args.fixture else duckdb.connect(str(SOURCE_WAREHOUSE), read_only=True)
         load_dims(pg, src)
@@ -109,7 +111,10 @@ def main() -> int:
             pg.execute(ddl)
         pg.commit()
         pg.execute("ANALYZE")
-    print(f"loaded {n:,} rows in {time.time() - t0:.0f}s")
+    from analytics_agent.copilot.warehouse import setup_security
+
+    setup_security(args.admin + f" dbname={args.db}")
+    print(f"loaded {n:,} rows in {time.time() - t0:.0f}s; security policies applied")
     return 0
 
 

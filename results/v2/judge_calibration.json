@@ -1,0 +1,85 @@
+{
+ "n": 10,
+ "grader_1": "claude-haiku-5-5 (the pipeline's judge)",
+ "grader_2": "ChatGPT via codex exec (read-only, blind to grader 1)",
+ "sample": "10 copilot docs/mixed answers: the 2 the judge did not mark correct + the first 8 it marked correct (deterministic)",
+ "agreement": 0.9,
+ "cohen_kappa": 0.615,
+ "labels": [
+  "correct",
+  "partially_correct",
+  "incorrect"
+ ],
+ "items": [
+  {
+   "id": "au-q01",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "Gives the correct alternate number, 312.744.5000."
+  },
+  {
+   "id": "au-q02",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "States January 1999, the one-stop service purpose, and replacement of smaller call centers and an outdated mainframe system."
+  },
+  {
+   "id": "au-q03",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "States approximately 2.8 million calls and translation in more than 100 languages."
+  },
+  {
+   "id": "au-q04",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "Gives CHICAGO and 311311 and accurately lists all five menu options."
+  },
+  {
+   "id": "au-q41",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "States the pothole repair target is within 7 days; database numbers are evaluated separately."
+  },
+  {
+   "id": "au-q42",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "States the rodent baiting response target is within 7 days; database numbers are evaluated separately."
+  },
+  {
+   "id": "au-q43",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "Describes baking soda blast trucks and paint trucks accurately; database counts are evaluated separately."
+  },
+  {
+   "id": "au-q44",
+   "judge": "correct",
+   "codex": "correct",
+   "codex_reason": "Confirms free residential water testing and describes both a DWM sampling visit and self-collected test kit options."
+  },
+  {
+   "id": "cx-q42",
+   "judge": "partially_correct",
+   "codex": "partially_correct",
+   "codex_reason": "States the 75,000-tree goal and requests through 311 or the CHI311 app, but omits the equitable approach across neighborhoods."
+  },
+  {
+   "id": "cx-q44",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "States complaints can be filed through 311 or the CHI311 website and gives 312.744.5000 for callers outside Chicago."
+  }
+ ],
+ "disagreements": [
+  {
+   "id": "cx-q44",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "adjudication": "correct",
+   "why": "The answer states both key facts (311 or CHI311 website; 312.744.5000 from outside Chicago). The judge's own reason lists no missing fact, so its partial verdict is a judge error."
+  }
+ ],
+ "note": "Headline accuracy uses the judge's verdicts as pre-registered; the adjudicated verdict is reported separately."
+}

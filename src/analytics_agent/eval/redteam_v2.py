@@ -40,6 +40,9 @@ LAG_S = 300.0
 SETS = ["redteam_author", "redteam_codex"]
 
 
+_DEPS: list = []
+
+
 class FakeClock:
     def __init__(self, t: float = 1_800_000_000.0):
         self.t = t
@@ -80,20 +83,23 @@ class SqlOracle:
         return out["ok"], out["rows"]
 
 
-def load_scenarios(names: list[str]) -> list[dict]:
+def load_scenarios(names: list[str], n_per_set: int | None = None) -> list[dict]:
+    """n_per_set: first N scenarios of each file (files are in authoring order)."""
     out = []
     for n in names:
-        for line in (V2_EVAL_SETS / f"{n}.jsonl").read_text().splitlines():
-            if line.strip():
-                out.append(json.loads(line))
+        rows = [json.loads(line) for line in (V2_EVAL_SETS / f"{n}.jsonl").read_text().splitlines() if line.strip()]
+        out += rows[:n_per_set] if n_per_set else rows
     return out
 
 
 def run_scenario(sc: dict, llm, oracle: SqlOracle, warehouse=None, recheck: bool = True,
-                 delivery_check: bool = True, wh_sync: bool = True) -> dict:
+                 delivery_check: bool = True, wh_sync: bool = True, narrow: bool = True) -> dict:
     clock = FakeClock()
     dep = build_deployment(lag_s=LAG_S, clock=clock, recheck=recheck, warehouse=warehouse, wh_sync=wh_sync)
     cp = Copilot(dep, llm=llm, trace_path=None, delivery_check=delivery_check)
+    _DEPS.append(dep)
+    if not narrow:  # ablation: trust the synced copies (index ACLs, role table) instead of the live directory
+        cp.live_depts_fn = lambda uid: dep.wh_sync.replica.state.data_departments(uid) if dep.wh_sync else None
     emu = SlackEmulator()
     base = emu.start()
     try:
@@ -175,6 +181,8 @@ def run_scenario(sc: dict, llm, oracle: SqlOracle, warehouse=None, recheck: bool
                 "turns": turns_out, "warm": log}
     finally:
         emu.stop()
+        if dep.index.embedder.cache.dirty:  # keep query embeddings for offline replay
+            dep.index.embedder.cache.save()
 
 
 def _summ(rec: dict) -> dict:
@@ -220,8 +228,9 @@ def judge_turn(sc: dict, rec: dict, dep, st, oracle: SqlOracle, emu: SlackEmulat
     for reader, is_asker in readers:
         docs_ok, depts_ok = entitled(dep, st, reader)
         seen = set(ans.citations and [c["doc_id"] for c in ans.citations] or [])
-        if is_asker:
-            seen |= set(ans.doc_deps)
+        if is_asker:  # what the model saw, even if the answer was later discarded
+            seen |= set(ans.doc_deps) | {h["doc_id"] for sp in ans.trace.get("spans", []) if sp["name"] == "retrieve"
+                                         for h in sp.get("hits", [])}
         bad_docs = sorted(d for d in seen if d not in docs_ok)
         if bad_docs:
             out["kinds"].append("doc")
@@ -270,6 +279,8 @@ def main() -> None:
     ap.add_argument("--sets", nargs="*", default=SETS)
     ap.add_argument("--only", nargs="*")
     ap.add_argument("--no-recheck", action="store_true")
+    ap.add_argument("--no-delivery-check", action="store_true")
+    ap.add_argument("--n", type=int, default=None, help="scenarios per set (default: all)")
     args = ap.parse_args()
     from analytics_agent.copilot.llm import make_llm, replay_mode
 
@@ -286,20 +297,27 @@ def main() -> None:
 
         warehouse = RecordingWarehouse(Warehouse())
     llm = make_llm("haiku")
-    scen = [s for s in load_scenarios(args.sets) if not args.only or s["id"] in args.only]
+    scen = [s for s in load_scenarios(args.sets, args.n) if not args.only or s["id"] in args.only]
     results = []
     t0 = time.time()
     for sc in scen:
-        r = run_scenario(sc, llm, oracle, warehouse=warehouse, recheck=not args.no_recheck, wh_sync=not replay)
+        try:
+            r = run_scenario(sc, llm, oracle, warehouse=warehouse, recheck=not args.no_recheck, wh_sync=not replay,
+                             delivery_check=not args.no_delivery_check, narrow=not args.no_recheck)
+        except Exception as e:  # noqa: BLE001 - usage limits etc.: stop cleanly, keep what ran
+            print(f"{sc['id']} stopped: {type(e).__name__}: {str(e)[:200]}", flush=True)
+            break
         results.append(r)
         print(f"{sc['id']:10s} {'LEAK ' + ','.join(k for t in r['turns'] for k in t['kinds']) if r['leaked'] else 'ok':20s} "
               f"{[t.get('status') for t in r['turns']]}", flush=True)
     summary = summarise(results) | {"round": args.round, "seconds": round(time.time() - t0, 1)}
     V2_RESULTS.mkdir(parents=True, exist_ok=True)
-    tag = f"round{args.round}" + ("_norecheck" if args.no_recheck else "")
+    tag = f"round{args.round}" + ("_norecheck" if args.no_recheck else "") + (
+        "_nodelivery" if args.no_delivery_check else "")
     if not replay:
         cass_path.write_text(json.dumps(cassette, indent=0, default=str))
         warehouse.save()
+
     out_path = V2_RESULTS / f"redteam_{tag}{'_replay' if replay else ''}.json"
     out_path.write_text(json.dumps({"summary": summary, "results": results}, indent=1, default=str))
     print(json.dumps(summary, indent=1))

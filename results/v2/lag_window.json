@@ -1,0 +1,433 @@
+{
+ "summary": {
+  "lag_s": 300.0,
+  "delays_s": [
+   0,
+   60,
+   299,
+   301
+  ],
+  "cases": 5,
+  "probes_per_mode": 20,
+  "recheck_on": {
+   "doc_leaks": 0,
+   "sql_leaks": 0
+  },
+  "recheck_off": {
+   "doc_leaks": 15,
+   "sql_leaks": 15
+  },
+  "inside_window_probes_per_mode": 15,
+  "off_leaks_inside_window": 15,
+  "off_leaks_after_window": 0
+ },
+ "probes": [
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 0,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 0,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-7as2-ds3y",
+    "portal-euee-qccq",
+    "portal-phrs-x2nm",
+    "portal-sbt5-2ec8",
+    "portal-vfmv-4fbs"
+   ],
+   "leaked_rows": 386106
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 60,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 60,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-7as2-ds3y",
+    "portal-euee-qccq",
+    "portal-phrs-x2nm",
+    "portal-sbt5-2ec8",
+    "portal-vfmv-4fbs"
+   ],
+   "leaked_rows": 386106
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 299,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 299,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-7as2-ds3y",
+    "portal-euee-qccq",
+    "portal-phrs-x2nm",
+    "portal-sbt5-2ec8",
+    "portal-vfmv-4fbs"
+   ],
+   "leaked_rows": 386106
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 301,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "maria",
+   "removed": "maria from dept-cdot",
+   "delay_s": 301,
+   "recheck": "off",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 0,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 0,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 60,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 60,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 299,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 299,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 301,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "dev",
+   "removed": "dev from dept-dss",
+   "delay_s": 301,
+   "recheck": "off",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 0,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 0,
+   "recheck": "off",
+   "leaked_docs": [
+    "web-depts-water-provdrs-supply",
+    "web-depts-water-supp-info-consumer-confidencereports",
+    "web-depts-water-supp-info-water-quality"
+   ],
+   "leaked_rows": 175131
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 60,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 60,
+   "recheck": "off",
+   "leaked_docs": [
+    "web-depts-water-provdrs-supply",
+    "web-depts-water-supp-info-consumer-confidencereports",
+    "web-depts-water-supp-info-water-quality"
+   ],
+   "leaked_rows": 175131
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 299,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 299,
+   "recheck": "off",
+   "leaked_docs": [
+    "web-depts-water-provdrs-supply",
+    "web-depts-water-supp-info-consumer-confidencereports",
+    "web-depts-water-supp-info-water-quality"
+   ],
+   "leaked_rows": 175131
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 301,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "priya",
+   "removed": "priya from dept-dwm",
+   "delay_s": 301,
+   "recheck": "off",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 0,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 0,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 60,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 60,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 299,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 299,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-97t6-zrhs",
+    "portal-ga2y-gwbs",
+    "portal-hwpp-nx6b",
+    "portal-nfhf-cbk5",
+    "web-depts-streets-provdrs-rodent"
+   ],
+   "leaked_rows": 1052018
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 301,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "rosa",
+   "removed": "dss-forestry from dept-dss",
+   "delay_s": 301,
+   "recheck": "off",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 0,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 0,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-4ygs-9x34",
+    "portal-7ray-xvet",
+    "portal-emvs-38e6",
+    "portal-ijdy-a94t",
+    "portal-uxj2-up34",
+    "portal-z2qz-687z"
+   ],
+   "leaked_rows": 83908
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 60,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 60,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-4ygs-9x34",
+    "portal-7ray-xvet",
+    "portal-emvs-38e6",
+    "portal-ijdy-a94t",
+    "portal-uxj2-up34",
+    "portal-z2qz-687z"
+   ],
+   "leaked_rows": 83908
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 299,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 299,
+   "recheck": "off",
+   "leaked_docs": [
+    "portal-4ygs-9x34",
+    "portal-7ray-xvet",
+    "portal-emvs-38e6",
+    "portal-ijdy-a94t",
+    "portal-uxj2-up34",
+    "portal-z2qz-687z"
+   ],
+   "leaked_rows": 83908
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 301,
+   "recheck": "on",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  },
+  {
+   "user": "sam",
+   "removed": "sam from dept-dob",
+   "delay_s": 301,
+   "recheck": "off",
+   "leaked_docs": [],
+   "leaked_rows": 0
+  }
+ ]
+}
