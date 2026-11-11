@@ -70,11 +70,16 @@ with status Completed", which no selector phrase matches), 2 computed the right 
 correct. cx-q44 is a judge error (adjudicated below); cx-q42 missed one key fact (the equity framing).
 
 ## Judge calibration (`results/v2/judge_calibration.json`)
-Second grader ChatGPT (codex, read-only, blind to the first grader) on 10 copilot answers (the 2 the judge did
-not mark correct + the first 8 it did). Agreement 9/10, Cohen's kappa 0.615. The disagreement (cx-q44) is
-adjudicated "correct": the answer has both key facts and the judge's own reason lists none missing.
-Adjudicated copilot accuracy would be 29/30; the headline keeps the pre-registered judge verdicts.
-Caveat: 10 items, 8 of one class: kappa is unstable at this n.
+- **Current (n = 30, stratified).** 10 answers the judge called correct, 10 partially correct, 10 incorrect, drawn at
+  random (fixed seed) from the judged answers of all three systems. Second grader: ChatGPT via codex, read-only, blind
+  to the first grader and to which system wrote the answer. Agreement 20/30, **Cohen's kappa 0.5** (3 classes);
+  correct-vs-not agreement 24/30, kappa 0.609.
+- Where they disagree: 6 answers the judge called partially correct were correct for the second grader; 3 partially
+  correct vs incorrect; 1 incorrect vs partially correct. The judge (Claude Haiku 5.5) is the stricter grader, so the
+  docs/mixed accuracies are more likely understated than overstated. Disagreements were not adjudicated one by one
+  this round.
+- **Earlier (n = 10).** 9/10 agreement, kappa 0.615, but 8 of the 10 were answers the judge called correct, which makes
+  the number unstable; superseded by the stratified sample.
 
 ## Permission red team (`results/v2/redteam_round*.json`)
 - **Round 1 (before any red-team-driven fix): 0/40 leaks** (0/20 author, 0/20 codex-blind).

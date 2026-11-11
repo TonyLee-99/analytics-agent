@@ -1,85 +1,106 @@
 {
- "n": 10,
- "grader_1": "claude-haiku-5-5 (the pipeline's judge)",
- "grader_2": "ChatGPT via codex exec (read-only, blind to grader 1)",
- "sample": "10 copilot docs/mixed answers: the 2 the judge did not mark correct + the first 8 it marked correct (deterministic)",
- "agreement": 0.9,
- "cohen_kappa": 0.615,
- "labels": [
-  "correct",
-  "partially_correct",
-  "incorrect"
- ],
- "items": [
-  {
-   "id": "au-q01",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "Gives the correct alternate number, 312.744.5000."
-  },
-  {
-   "id": "au-q02",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "States January 1999, the one-stop service purpose, and replacement of smaller call centers and an outdated mainframe system."
-  },
-  {
-   "id": "au-q03",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "States approximately 2.8 million calls and translation in more than 100 languages."
-  },
-  {
-   "id": "au-q04",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "Gives CHICAGO and 311311 and accurately lists all five menu options."
-  },
-  {
-   "id": "au-q41",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "States the pothole repair target is within 7 days; database numbers are evaluated separately."
-  },
-  {
-   "id": "au-q42",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "States the rodent baiting response target is within 7 days; database numbers are evaluated separately."
-  },
-  {
-   "id": "au-q43",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "Describes baking soda blast trucks and paint trucks accurately; database counts are evaluated separately."
-  },
-  {
-   "id": "au-q44",
-   "judge": "correct",
-   "codex": "correct",
-   "codex_reason": "Confirms free residential water testing and describes both a DWM sampling visit and self-collected test kit options."
-  },
-  {
-   "id": "cx-q42",
-   "judge": "partially_correct",
-   "codex": "partially_correct",
-   "codex_reason": "States the 75,000-tree goal and requests through 311 or the CHI311 app, but omits the equitable approach across neighborhoods."
-  },
-  {
-   "id": "cx-q44",
-   "judge": "partially_correct",
-   "codex": "correct",
-   "codex_reason": "States complaints can be filed through 311 or the CHI311 website and gives 312.744.5000 for callers outside Chicago."
-  }
- ],
+ "n": 30,
+ "grader_1": "claude-haiku-5-5 (pipeline judge)",
+ "grader_2": "ChatGPT via codex exec (read-only, blind to grader 1 and to which system wrote the answer)",
+ "sample": "stratified by judge verdict: 10 correct, 10 partially_correct, 10 incorrect, drawn at random (seed 20261111) from judged answers of all three systems",
+ "agreement": 0.667,
+ "cohen_kappa": 0.5,
+ "agreement_correct_vs_not": 0.8,
+ "cohen_kappa_correct_vs_not": 0.609,
+ "confusion": {
+  "correct|correct": 10,
+  "incorrect|incorrect": 9,
+  "incorrect|partially_correct": 1,
+  "partially_correct|correct": 6,
+  "partially_correct|incorrect": 3,
+  "partially_correct|partially_correct": 1
+ },
  "disagreements": [
   {
-   "id": "cx-q44",
+   "item": 8,
+   "system": "docs_only",
+   "id": "au-q46",
    "judge": "partially_correct",
    "codex": "correct",
-   "adjudication": "correct",
-   "why": "The answer states both key facts (311 or CHI311 website; 312.744.5000 from outside Chicago). The judge's own reason lists no missing fact, so its partial verdict is a judge error."
+   "codex_reason": "Correctly describes parkway planting, trimming, insect and disease management, and emergency response; database counts are assessed separately."
+  },
+  {
+   "item": 9,
+   "system": "v1_sql",
+   "id": "au-q50",
+   "judge": "partially_correct",
+   "codex": "incorrect",
+   "codex_reason": "Does not state that owners must register and maintain vacant buildings."
+  },
+  {
+   "item": 11,
+   "system": "v1_sql",
+   "id": "cx-q51",
+   "judge": "partially_correct",
+   "codex": "incorrect",
+   "codex_reason": "Omits the archived three-day target and examples of overflowing dumpsters and garbage in alleys."
+  },
+  {
+   "item": 16,
+   "system": "docs_only",
+   "id": "au-q42",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "Correctly states the seven-day target; database-derived medians are assessed separately."
+  },
+  {
+   "item": 20,
+   "system": "docs_only",
+   "id": "au-q52",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "Describes food establishment inspections and approximately 16,000 licensed establishments; database counts are assessed separately."
+  },
+  {
+   "item": 24,
+   "system": "v1_sql",
+   "id": "hx-q02",
+   "judge": "incorrect",
+   "codex": "partially_correct",
+   "codex_reason": "Identifies free kit and visit request types but omits collection procedures, kit contents, and DWM pickup."
+  },
+  {
+   "item": 25,
+   "system": "v1_sql",
+   "id": "au-q44",
+   "judge": "partially_correct",
+   "codex": "incorrect",
+   "codex_reason": "Does not confirm free residential testing or describe the kit and visit options."
+  },
+  {
+   "item": 26,
+   "system": "docs_only",
+   "id": "au-q51",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "Correctly explains checking status using the service request number or address and online options; database counts are assessed separately."
+  },
+  {
+   "item": 29,
+   "system": "copilot",
+   "id": "au-q14",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "States almost one billion gallons daily to Chicago and 120 suburbs, while distinguishing another source's figure."
+  },
+  {
+   "item": 30,
+   "system": "docs_only",
+   "id": "au-q43",
+   "judge": "partially_correct",
+   "codex": "correct",
+   "codex_reason": "Correctly describes baking-soda blast trucks and paint trucks; database counts are assessed separately."
   }
  ],
- "note": "Headline accuracy uses the judge's verdicts as pre-registered; the adjudicated verdict is reported separately."
+ "previous_round": {
+  "n": 10,
+  "agreement": 0.9,
+  "cohen_kappa": 0.615,
+  "note": "10 answers, 8 judged correct: unstable"
+ }
 }
