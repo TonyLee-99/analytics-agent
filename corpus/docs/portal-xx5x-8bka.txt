@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - Ethics - Statements Of Financial Interests Filed
+Portal ID: xx5x-8bka
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-04-16
+
+Description:
+Number Of Annual Statements Of Financial Interests Filed, Reviewed And Posted Online
+
+Columns:
+- Week (text)
+- Number of Employees who have Filed (number)
+- Compliance Percentage (number)
+- Target (text)
+
+Tags: performance metrics, ethics, personnel

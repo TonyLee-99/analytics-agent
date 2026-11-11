@@ -1,0 +1,19 @@
+Dataset: Performance Metrics - Public Health - Lead Inspections Performed
+Portal ID: 3mg2-a24n
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-04-16
+
+Description:
+To combat lead poisoning through the Childhood Lead Poisoning Prevention and Healthy Homes Program, the Chicago Department of Public Health (CDPH) works to enforce city and state laws regarding lead paint by dispatching building inspectors to identify lead hazards in homes and apartments and hold property owners accountable for making repairs required by law. This metric tracks the total number of initial lead inspections CDPH performs per month. The performance goal is 100 inspections per month. For more information about CDPH’s lead poisoning prevention programs, or to report elevated blood lead levels, see the Environmental Health Division at http://www.cityofchicago.org/city/en/depts/cdph/provdrs/environ_health.html
+
+Columns:
+- Date (text)
+- Total Number of Initial Lead Inspections Completed Per Month (number)
+- Monthly Target (number)
+- Cumulative Lead Inspections Completed (number)
+- Cumulative Target (number)
+- Months Target Was Achieved (number)
+- Months Target Was Not Achieved (number)
+
+Tags: performance metrics, service delivery, cdph, health, lead

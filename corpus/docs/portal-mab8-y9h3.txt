@@ -1,0 +1,38 @@
+Dataset: 311 Service Requests - Tree Debris - Historical
+Portal ID: mab8-y9h3
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2019-03-06
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All open tree debris removal requests made to 311 and all requests completed since January 1, 2011. Large piles of branches or bushes may be picked up by the Department of Streets and Sanitation. 
+311 sometimes creates duplicate requests for tree debris removal. When there is an open tree debris request, a duplicate request is created when the exact same address and the exact same service request type are used. Streets and Sanitation responds to the initial request opened and closes the duplicates. A forestry "Clam" is the name of the vehicle the Forestry Bureau deploys to collect tree debris. 
+Data Owner: Streets and Sanitation (http://www.cityofchicago.org/content/city/en/depts/streets.html). 
+Time Period: January 1, 2011 to present. 
+Frequency: Data is updated daily. 
+Related Applications: 311 Service Request Status Inquiry (https://servicerequest.cityofchicago.org/web_intake_chic/Controller?op=createsrquery2) and 
+ Request Tree Debris Removal (https://servicerequest.cityofchicago.org/web_intake_chic/Controller?op=locform&invSRType=SEL&invSRDesc=Tree%20Debris&locreq=Y).
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- If Yes, where is the debris located? (text)
+- Current Activity (text)
+- Most Recent Action (text)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- Latitude (number)
+- Longitude (number)
+- Location (location)
+
+Tags: trees, historical, service requests, 311

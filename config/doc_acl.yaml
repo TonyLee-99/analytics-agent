@@ -1,0 +1,13 @@
+# Simulated document ACL assignment. The documents are real public City of Chicago documents; who may
+# read which of them inside this demo org is invented configuration (as if some had been internal).
+# First matching rule wins. Principals: group:<id> or user:<id> (see config/org.yaml).
+simulated: true
+default: [group:all-staff]
+rules:
+  - {match: {title: "Performance Metrics - Streets & Sanitation*"}, acl: [group:dept-dss, group:perf-office]}
+  - {match: {title: "Performance Metrics - Transportation*"},       acl: [group:dept-cdot, group:perf-office]}
+  - {match: {title: "Performance Metrics - Buildings*"},            acl: [group:dept-dob, group:perf-office]}
+  - {match: {title: "Performance Metrics - Public Health*"},        acl: [group:dept-cdph, group:perf-office]}
+  - {match: {title: ["Performance Metrics - 311*", "Performance Metrics - Innovation & Technology - 311*"]}, acl: [group:dept-311, group:perf-office]}
+  - {match: {source_type: web_page, dept_hint: DWM}, acl: [group:dept-dwm, group:perf-office]}
+  - {match: {source_type: web_page, dept_hint: OBM}, acl: [group:budget-office, group:perf-office]}

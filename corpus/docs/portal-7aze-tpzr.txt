@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Innovation & Technology - Map Chicago Website Availability
+Portal ID: 7aze-tpzr
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2011-09-27
+
+Description:
+The Map Chicago Website allows users to view neighborhoods, communities, political boundaries and points of interest throughout the city of Chicago. The percentage of the Map Chicago website uptime, the amount of time the site was available, and the target uptime for each week are available by mousing over columns. The target availability for this site is 99.5%.
+
+Columns:
+- Week (text)
+- Total Downtime (minutes) (number)
+- Map Chicago Site Uptime (%) (number)
+- Target Uptime (%) (number)
+- Weeks Target Was Achieved (number)
+- Weeks Target Was Not Achieved (number)
+
+Tags: performance metrics, service delivery, technology

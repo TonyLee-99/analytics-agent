@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Innovation & Technology - City Website Availability
+Portal ID: icwn-eia9
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2011-09-27
+
+Description:
+The City's Internet site allows residents to access City services online, learn more about the City of Chicago, and find other pertinent information. The percentage of the City’s Internet website uptime, the amount of time the site was available, and the target uptime for each week are available by mousing over columns. The target availability for this site is 99.5%.
+
+Columns:
+- Week (text)
+- Total Downtime (minutes) (number)
+- City Website Uptime (%) (number)
+- Target Uptime (%) (number)
+- Weeks Target Was Achieved (number)
+- Weeks Target Was Not Achieved (number)
+
+Tags: performance metrics, service delivery, technology

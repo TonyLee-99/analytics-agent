@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Chicago Park District - Natural Resources Recycling
+Portal ID: kes6-wskt
+Category: Administration & Finance
+Attribution: Chicago Park District
+Rows last updated: 2012-07-19
+
+Description:
+The Department of Natural Resources (CDNR) was created in 2001 and is responsible for ensuring the quality of the district's 7,300 acres of land. Through enhanced landscape management, staff training and constant high quality maintenance, the department is quickly becoming the benchmark by which many municipal organizations measure the quality of their landscape and gardening. The Department also manages the contract that the Park District uses for garbage and recycling pick-ups. The data displayed below represents the monthly gross recycling tonnage that is collected compared to 2010.
+
+Columns:
+- Month (text)
+- 2010 (number)
+- 2011 (number)
+- 2012 (number)
+- Target (number)
+
+Tags: performance metrics, parks, sustainability

@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - Streets & Sanitation - Rodent Baiting
+Portal ID: ga2y-gwbs
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-07-13
+
+Description:
+In addition to performing regular scheduled preventative rodent control, the Department of Streets & Sanitation (DSS) responds to site-specific customer rat complaints logged through 311’s Customer Service Requests (CSR) system. This metric tracks the average number of days the DSS takes to complete rodent baiting requests per week. Median days to complete requests as well as total number of requests fulfilled per week are available by mousing over columns. The target response time for rodent baiting requests is within 7 days. For more information on open rat complaints, see https://data.cityofchicago.org/Government/311-Service-Requests-Rodent-Baiting-2011-/97t6-zrhs
+
+Columns:
+- Week (text)
+- Average Days to Complete Rodent Baiting / Rat Complaint Requests (number)
+- Median Days to Repond to Rodent Baiting Request (number)
+- Target Response Time (Days) (number)
+
+Tags: performance metrics, service delivery, rodents, rats

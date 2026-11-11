@@ -15,6 +15,12 @@ dependencies = [
     "pyyaml==6.0.3",
     "matplotlib==3.11.2",
     "numpy==2.5.4",
+    "psycopg[binary]==3.3.8",
+    "fastembed==0.9.1",
+    "slack-bolt==1.30.0",
+    "slack-sdk==3.46.0",
+    "beautifulsoup4==4.15.0",
+    "pypdf==7.0.1",
 ]
 
 [project.optional-dependencies]

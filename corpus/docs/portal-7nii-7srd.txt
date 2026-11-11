@@ -1,0 +1,37 @@
+Dataset: 311 Service Requests - Vacant and Abandoned Buildings Reported - Historical
+Portal ID: 7nii-7srd
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2019-03-06
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All 311 calls for open and vacant buildings reported to the City of Chicago since January 1, 2010. The information is updated daily with the previous day's calls added to the records. The data set provides the date of the 311 service request and the unique Service Request # attached to each request. For each request, the following information (as reported by the 311 caller) is available: address location of building; whether building is vacant or occupied; whether the building is open or boarded; entry point if building is open; whether non-residents are occupying or using the building, if the building appears dangerous or hazardous and if the building is vacant due to a fire.
+
+Columns:
+- SERVICE REQUEST TYPE (text): Service Request Type
+- SERVICE REQUEST NUMBER (text): Service Request Number
+- DATE SERVICE REQUEST WAS RECEIVED (calendar_date): Date Service Request Was Received
+- LOCATION OF BUILDING ON THE LOT (IF GARAGE, CHANGE TYPE CODE TO BGD). (text): Location of Building on the Lot
+- IS THE BUILDING DANGEROUS OR HAZARDOUS? (text): is the Building Dangerous or Hazardous?
+- IS BUILDING OPEN OR BOARDED? (text): Is Building Open or Boarded?
+- IF THE BUILDING IS OPEN, WHERE IS THE ENTRY POINT? (text): If the Building is Open, Where is the Entry Point?
+- IS THE BUILDING CURRENTLY VACANT OR OCCUPIED? (text): Is the Building Currently Vacant or Occupied?
+- IS THE BUILDING VACANT DUE TO FIRE? (checkbox): Is the Building Vacant Due to Fire?
+- ANY PEOPLE USING PROPERTY? (HOMELESS, CHILDEN, GANGS) (checkbox): Any People Using Property (e.g., Homeless, Children, Gangs)?
+- ADDRESS STREET NUMBER (text): Address Street Number
+- ADDRESS STREET DIRECTION (text): Address Street Direction
+- ADDRESS STREET NAME (text): Address Street Name
+- ADDRESS STREET SUFFIX (text): Address Street Suffix
+- ZIP CODE (number)
+- X COORDINATE (number)
+- Y COORDINATE (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- LATITUDE (number)
+- LONGITUDE (number)
+- Location (location)
+
+Tags: buildings, historical, service requests, 311

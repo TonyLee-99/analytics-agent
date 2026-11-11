@@ -1,0 +1,15 @@
+Dataset: Performance Metrics - Chicago Park District - Comptroller Accounts Payable Aging
+Portal ID: q93p-dagd
+Category: Administration & Finance
+Attribution: Chicago Park District
+Rows last updated: 2012-07-03
+
+Description:
+The Office of the Comptroller consists of four divisions that provide financial services to the Parks: General Accounting, Accounts Payable, Accounts Receivable, Payroll and Quality Control. The data displayed below is in relation to the Accounts Payable division and represents the percentage of invoices that are paid to vendors within 60 days of invoice data.
+
+Columns:
+- Month (text)
+- % of Invoices Paid within Target (number)
+- Target (number)
+
+Tags: performance metrics, parks

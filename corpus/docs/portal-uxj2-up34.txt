@@ -1,0 +1,20 @@
+Dataset: Performance Metrics - Business Affairs & Consumer Protection - Retail Food Licenses
+Portal ID: uxj2-up34
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2011-10-19
+
+Description:
+All restaurants and food stores selling perishable items are required to apply for a Retail Food License (RFL). This metric tracks the average number of days the Department of Business Affairs and Consumer Protection (BACP) takes to issue RFLs. The target response time for processing is within 15 days.
+
+Columns:
+- Week (text)
+- Total Licenses Issued (number)
+- Average Days to Issue License (number)
+- Median Days to Issue License (number)
+- Target Days to Issue License (number)
+- Quarter (text)
+- Weeks Target Was Achieved (number)
+- Weeks Target Was Not Achieved (number)
+
+Tags: performance metrics, service delivery, business, licenses

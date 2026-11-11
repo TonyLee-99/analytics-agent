@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Family & Support Services - Workforce Services Monthly Utilization
+Portal ID: uava-8jbh
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2016-09-30
+
+Description:
+This metric tracks workforce employment services including basic services, skills training and job placement per month. DFSS provides workforce development services to low income adults, dislocated workers and ex-offenders. These services include job readiness training, vocational training, job placement, supportive services and post-placement retention services. 
+The Chicago-Cook Workforce Partnership, a newly created agency designed to reform and revitalize workforce development in the greater Chicagoland area, took over operation of DFSS’s Workforce Investment Act funding and delegate agency contracts on July 1, 2012. http://www.workforceboard.org
+
+Columns:
+- Month (text)
+- Year (text)
+- Newly Enrolled in Program (number)
+- Entering Skills Training (number)
+- Placed in Employment (number)
+
+Tags: performance metrics, service delivery, human services

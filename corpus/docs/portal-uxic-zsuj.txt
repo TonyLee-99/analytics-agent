@@ -1,0 +1,30 @@
+Dataset: 311 Service Requests - Tree Trims - Historical
+Portal ID: uxic-zsuj
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2019-03-06
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All open and completed tree trim requests made to 311 since January 1, 2011. The Department of Streets and Sanitation maintains all trees growing in the public way and performs regular maintenance trimming in response to 311 requests. Crisis trimming is performed on an emergency basis in response to hazardous conditions such as broken or hanging branches. Requests that have been labeled as Duplicates are in the same geographic area and have been entered into 311’s Customer Service Requests (CSR) system at around the same time as a previous request. Duplicate requests are labeled as such in the Status field, as either "Open - Dup" or "Completed - Dup." Data is updated daily.
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- Location of Trees (text)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- Latitude (number)
+- Longitude (number)
+- Location (location)
+
+Tags: trees, historical, service requests, 311

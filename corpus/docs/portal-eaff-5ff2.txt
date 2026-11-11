@@ -1,0 +1,19 @@
+Dataset: Performance Metrics - Transportation
+Portal ID: eaff-5ff2
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2019-04-05
+
+Description:
+This dataset contains performance metrics tracked by the Chicago Department of Transportation (CDOT). Thirty-five different performance metrics are tracked in this dataset, which reports the performance target, actual performance, and number of requests completed for a given metric. These metrics are based on data calculated from the city's 311 system. Individual breakout of each performance metric are also available under the "More Views" button.
+
+Columns:
+- Activity (text): Activity measured
+- Period Start (calendar_date): Starting date of the performance period
+- Period Length (text): Length of the performance measurement period
+- Target Response Days (number): The target number of days to perform this activity, from request to completion.
+- Average Days to Complete Activity (number): Average days between creation of request for service and completion of that service, for activities completed in this period.
+- Total Completed Requests (number)
+- Period (text): The dates of the period covered.
+
+Tags: service requests, pothole, performance metrics, streets, pavement

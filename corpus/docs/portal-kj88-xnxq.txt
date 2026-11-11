@@ -1,0 +1,35 @@
+Dataset: Performance Metrics - 311 Call Center
+Portal ID: kj88-xnxq
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2016-08-09
+
+Description:
+To make 311 effective for residents, visitors, and business owners, 311 representatives must respond to calls in a timely and accurate manner.
+
+Columns:
+- Sort (number): Column to sort by
+- Dates (text)
+- Average Number of Operators, Mon-Fri, (7:00AM-3:00PM) (number)
+- Average Number of Operators, Mon-Fri, (3:00PM-11:00PM) (number)
+- Average Number of Operators, Mon-Fri, (11:00PM-7:00AM) (number)
+- Average Number of Operators, Sat-Sun, (7:00AM-3:00PM) (number)
+- Average Number of Operators, Sat-Sun, (3:00PM-11:00PM) (number)
+- Average Number of Operators, Sat-Sun, (11:00PM-7:00AM) (number)
+- Call Volume (7:00AM-3:00PM) (number)
+- Call Volume (3:00PM-11:00PM) (number)
+- Call Volume (11:00PM-7:00AM) (number)
+- Efficiency (7:00AM-3:00PM) (number)
+- Efficiency (3:00PM-11:00PM) (number)
+- Efficiency (11:00PM-7:00AM) (number)
+- Utilization (7:00AM-3:00PM) (number)
+- Utilization (3:00PM-11:00PM) (number)
+- Utilization (11:00PM-7:00AM) (number)
+- Abandoned (7:00AM-3:00PM) (number)
+- Abandoned (3:00PM-11:00PM) (number)
+- Abandoned (11:00PM-7:00AM) (number)
+- Average Wait Time (seconds): 7:00AM-3:00PM (number)
+- Average Wait Time (seconds): 3:00PM-11:00PM (number)
+- Average Wait Time (seconds): 11:00PM-7:00AM (number)
+
+Tags: performance metrics, service delivery

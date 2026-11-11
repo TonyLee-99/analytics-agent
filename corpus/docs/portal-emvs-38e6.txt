@@ -1,0 +1,19 @@
+Dataset: Performance Metrics - Business Affairs & Consumer Protection - Business Licenses
+Portal ID: emvs-38e6
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2025-10-06
+
+Description:
+Business licenses and building permits are required to operate a business in Chicago or to ensure that a building construction project conforms to the minimum standards of the Chicago Building Code. Currently the performance target for processing most business license types is approximately 15 days.
+
+Columns:
+- LICENCE CODE (number)
+- LICENSE DESCRIPTION (text)
+- YEAR (number)
+- WEEK (text)
+- AVERAGE DAYS TO ISSUE LICENSE (number)
+- MEDIAN DAYS TO ISSUE LICENSE (number)
+- TOTAL LICENSES ISSUED (number)
+
+Tags: performance metrics, service delivery, business, licenses

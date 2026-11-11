@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Streets & Sanitation - Graffiti Removal
+Portal ID: qcfn-tiw7
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-07-16
+
+Description:
+The Department of Streets & Sanitation's (DSS) Graffiti Blasters crews offer a vandalism removal service to private property owners. This metric tracks the average number of days DSS takes to complete graffiti removal requests per week. Median days to complete requests as well as total number of requests fulfilled per week are available by mousing over columns. Currently the performance target for completing a graffiti removal request is 10 days. For more information on graffiti removal requests, see https://data.cityofchicago.org/d/hec5-y4x5
+
+Columns:
+- Week (text)
+- Average Days to Complete Graffiti Removal (number)
+- Total Completed Requests (number)
+- Median Days to Complete Graffiti Removal Request (number)
+- Target Response Time (Days) (number)
+
+Tags: performance metrics, service delivery, graffiti

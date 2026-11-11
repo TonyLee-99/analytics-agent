@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Ethics - Lobbyists Registrations and Activity Reports Received, Reviewed and Made Available for Public Inspection
+Portal ID: myh9-inim
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-04-16
+
+Description:
+Number Of Lobbyist Registrations And Activity Reports Received, Reviewed And Made Available For Public Inspection
+
+Columns:
+- Week (text)
+- Registration Year (text)
+- Number of lobbyist registrations and activity reports (number)
+- Total Number of Registered Lobbyists (Target: 600 by Dec 31) (number)
+- Total Fees Collected (number)
+- Target Registration (text)
+
+Tags: performance metrics, ethics, lobbyists

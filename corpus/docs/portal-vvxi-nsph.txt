@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - City Colleges of Chicago - Graduation Rates
+Portal ID: vvxi-nsph
+Category: Administration & Finance
+Attribution: City Colleges of Chicago
+Rows last updated: 2011-12-07
+
+Description:
+The U.S. Department of Education’s graduation rate, which is reported through the Integrated Postsecondary Education Data System (IPEDS), is a nationally recognized and commonly used metric in higher education. Graduation rate is calculated as the percentage of first‐time, full‐time, degree/certificate seeking students that complete a CCC program within 150% of the estimated time it takes to complete the program.
+
+Columns:
+- Cohort Year (text)
+- Number of Completers within 150% Normal Completion Time (Numerator) (number)
+- Cohort Size (Denominator) (number)
+- Graduation Rate (number)
+
+Tags: performance metrics, education

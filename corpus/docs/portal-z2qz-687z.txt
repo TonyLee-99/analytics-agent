@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - Buildings - Time To Issue Green Permits
+Portal ID: z2qz-687z
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2014-08-04
+
+Description:
+As part of the City’s sustainability program, the Department of Buildings (DOB) offers expedited permitting for residential, commercial and industrial building projects that meet certain criteria. In addition to fast-tracking, projects achieving exceptional sustainability may be eligible for a fee waiver up to $25,000. Projects that include green technologies (green roofs, rainwater harvesting, solar panels, solar thermal panels, wind turbine and geothermal systems) are required to be submitted through the Green Permit Program. This metric tracks the average number of days DOB takes to process individual Green Permits, grouped by the week the permit was processed. The target average process time is within 71 days.
+
+Columns:
+- Week (calendar_date)
+- Week - Text (text)
+- Average Days to Permit (number)
+- Target (number)
+
+Tags: performance metrics, buildings, permits, service delivery, sustainability

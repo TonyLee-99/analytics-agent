@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Ethics - Mandatory Annual Ethics Training
+Portal ID: u2nq-s7gg
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-04-04
+
+Description:
+Number Of City Employees And Officials Completing Mandatory Annual Ethics Training
+
+Columns:
+- Week (text)
+- Number Completing Mandatory Annual Ethics Training (number)
+- Total Trained (number)
+- Percent Completing Mandatory Annual Ethics Training (Target: 100% by Dec 31) (number)
+- Target (text)
+
+Tags: performance metrics, ethics, personnel

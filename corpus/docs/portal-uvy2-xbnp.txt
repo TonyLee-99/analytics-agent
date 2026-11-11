@@ -1,0 +1,20 @@
+Dataset: Performance Metrics - Public Health - School-Based Oral Health Programming
+Portal ID: uvy2-xbnp
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-02-22
+
+Description:
+The Chicago Department of Public Health contracts with licensed dentists to provide and the Chicago Public Schools' students a dental exam/screening, a dental cleaning, a fluoride varnish treatment and apply dental sealant(s) as needed at no cost to students or their families in school. This metric tracks the number of students served by the program per month during the school year. The annual performance goal is to serve 96,000 students per school year.
+
+Columns:
+- months (text)
+- New Students Examined Per Month (number)
+- Cumulative Students Examined Per School Year (number)
+- Students Receiving Dental Sealants (number)
+- Percent Students Receiving Sealants (number)
+- Months Target Was Achieved (number)
+- Months Target Was Not Achieved (number)
+- Annual Target (number)
+
+Tags: performance metrics, service delivery, cdph, cps, oral health, dentist

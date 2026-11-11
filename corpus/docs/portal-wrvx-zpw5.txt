@@ -1,0 +1,14 @@
+Dataset: Performance Metrics - Chicago Park District - Park Security Checks
+Portal ID: wrvx-zpw5
+Category: Administration & Finance
+Attribution: Chicago Park District
+Rows last updated: 2012-08-03
+
+Description:
+The Security Department ensures the safety and security of patrons, employees and facilities in Chicago’s Parks. The data that is displayed below represents the total number of security checks that staff made during the previous week.
+
+Columns:
+- Week (text)
+- Park Checks (number)
+
+Tags: performance metrics, parks

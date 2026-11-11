@@ -1,0 +1,75 @@
+## ChiTEXT Overview
+ChiTEXT, Chicago’s Short Message Service (SMS) Text Messaging application, has been expanded to include more options.  Not only can users have information sent directly to their mobile phone for commonly asked questions, but they can now request a city service and opt-in for various city alerts.
+Enhanced ChiTEXT features include the following...
+Self-service mobile phone functionality
+Additional channel to request City Services, information and events
+Increased access to check status of Service Requests
+Decreased 311 Call Center call volume and customer wait times
+Constituent satisfaction
+Users can select an option from a menu of information and receive responses in the form of text messages from the City of Chicago.  To begin, users can text the command keyword CHICAGO to short code 311311.  The requester will receive an automated response with a menu offering five (5) possible options:
+OPTION A : CONTACT INFORMATION (government agency, public utility, etc.)
+OPTION B : LOCATION SEARCH (ward/alderman, police beat/district information)
+OPTION C : TOWED/RELOCATED VEHICLE (find a towed or relocated vehicle)
+OPTION D : CITY ALERTS (Opt-In to receive preferred city information alerts)
+OPTION E : REQUEST SERVICES (request a city service from a select list)
+How To Use ChiTEXT Instructions provide step-by-step instructions .
+The ChiTEXT video below provides an audio and visual overview.
+Text "STOP” to ‘311311’ to cancel subscription.
+Message and data rates may apply.
+Text "HELP" to '311311' for SMS usage information or send email to: CITYFEEDBACK@cityofchicago.org.
+## Supporting Information Facts
+311 City Services
+## Additional Information
+Using ChiTEXT: How To Get Started
+## I Want To
+Bid Job Opportunities
+Building Permit (online)
+Chicago Housing Authority (CHA) Housing
+Internships and Volunteer Programs
+Job Opportunities at City of Chicago
+More services
+Abandoned Vehicle Complaint
+Building Violations
+HomeMod - My Application status
+Parking, Red Light, or Speed Ticket(s)
+Permit for Business ID and Advertising Signs
+Service Request for Street Light Out
+More services
+Auto Pound Locations
+Bids, RFP, RFQ, RFI, Small Order
+Chicago Construction Codes
+Vital Records from the Cook County Clerk's Office
+More services
+Administrative Hearing Fines
+Business Taxes
+Calculate the Cost of a Building Permit
+Other City Debt Payments
+Parking, Red Light, or Speed Ticket(s)
+Surplus, Vehicles, Auctions
+Utility Bill
+View Automated Speed Enforcement Video
+More services
+Dog Registration
+For Park District Programs
+Register a Cottage Food Operation
+Vacant Building
+More services
+AIC (Annual Inspection Certification) Inspections
+Abandoned Vehicle
+Discrimination Complaint
+Economic Disclosure, Affidavit, Online EDS
+Pothole in the Street
+Stray Animals and Lost Pets
+More services
+Building Inspection
+Garbage Cart
+Graffiti Removal Services
+Parking Ticket Photos
+Residential Garbage Collection
+View Red Light Video
+More services
+Alerts from NotifyChicago
+Community Emergency Response Team (CERT)
+Internships and Volunteer Programs
+Voluntary Disclosure
+More services

@@ -1,0 +1,34 @@
+Dataset: 311 Service Requests - Garbage Carts - Historical
+Portal ID: 9ksk-na4q
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2019-03-06
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All open garbage cart requests made to 311 and all requests completed since January 1, 2011. The City of Chicago provides heavy-duty plastic 96-gallon garbage carts to single-family residences and apartment buildings of four units or less. Residents may request new carts when none are present, or replacement carts for ones which have gone missing or been damaged. 
+311 sometimes receives duplicate requests for garbage carts. Requests that have been labeled as Duplicates are in the same geographic area and have been entered into 311’s Customer Service Requests (CSR) system at around the same time as a previous request. Duplicate reports/requests are labeled as such in the Status field, as either "Open - Dup" or "Completed - Dup." Data is updated daily.
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- Number of Black Carts Delivered (number)
+- Current Activity (text)
+- Most Recent Action (text)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- SSA (text): Special Service Areas are local tax districts that fund expanded services and programs, to foster commercial and economic development, through a localized property tax. In other cities these areas are sometimes called Business Improvement Districts (BIDs). This portal contains a map of all Chicago SSAs
+- Latitude (number)
+- Longitude (number)
+- Location (location)
+
+Tags: garbage, historical, service requests, 311

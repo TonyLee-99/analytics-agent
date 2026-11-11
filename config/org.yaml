@@ -1,0 +1,30 @@
+# Simulated org chart for the demo deployment (NOT real City of Chicago staff or structure).
+# Departments and their data are real (311 owner departments); people, groups and who-may-see-what
+# are invented configuration for testing permission enforcement.
+simulated: true
+groups:
+  all-staff:      {description: "Everyone with a city account (Simulated)", members: [dept-311, dept-cdot, dept-dss, dept-dwm, dept-dob, dept-cdph, perf-office, budget-office]}
+  dept-311:       {description: "311 City Services", data: ["311"]}
+  dept-cdot:      {description: "Transportation (CDOT)", data: [CDOT]}
+  dept-dss:       {description: "Streets and Sanitation", data: [DSS], members: [dss-forestry]}
+  dss-forestry:   {description: "Bureau of Forestry, nested in Streets and Sanitation"}
+  dept-dwm:       {description: "Water Management", data: [DWM]}
+  dept-dob:       {description: "Buildings", data: [DOB]}
+  dept-cdph:      {description: "Public Health", data: [CDPH]}
+  perf-office:    {description: "City-wide performance management office", data: ["*"]}
+  budget-office:  {description: "Office of Budget and Management analysts (documents only, no warehouse rows)"}
+users:
+  - {id: jules,  name: Jules Romero,  email: jules.romero@cityops.example,  title: "311 analytics lead",           groups: [dept-311, perf-office]}
+  - {id: maria,  name: Maria Chen,    email: maria.chen@cityops.example,    title: "CDOT performance analyst",     groups: [dept-cdot]}
+  - {id: dev,    name: Dev Patel,     email: dev.patel@cityops.example,     title: "Sanitation analyst",           groups: [dept-dss]}
+  - {id: rosa,   name: Rosa Alvarez,  email: rosa.alvarez@cityops.example,  title: "Forestry analyst",             groups: [dss-forestry]}
+  - {id: priya,  name: Priya Nair,    email: priya.nair@cityops.example,    title: "Water Management analyst",     groups: [dept-dwm]}
+  - {id: sam,    name: Sam Okafor,    email: sam.okafor@cityops.example,    title: "Buildings analyst",            groups: [dept-dob]}
+  - {id: grace,  name: Grace Kim,     email: grace.kim@cityops.example,     title: "Public Health analyst",        groups: [dept-cdph]}
+  - {id: lena,   name: Lena Fischer,  email: lena.fischer@cityops.example,  title: "Performance office analyst",   groups: [perf-office]}
+  - {id: omar,   name: Omar Haddad,   email: omar.haddad@cityops.example,   title: "Budget analyst",               groups: [budget-office]}
+  - {id: nina,   name: Nina Ross,     email: nina.ross@cityops.example,     title: "Joint CDOT/DSS program analyst", groups: [dept-cdot, dept-dss]}
+  - {id: alex,   name: Alex Rivera,   email: alex.rivera@cityops.example,   aliases: [arivera@cityops.example], title: "311 analyst", groups: [dept-311]}
+  - {id: tom,    name: Tom Walsh,     email: tom.walsh@cityops.example,     title: "Former contractor (deactivated)", groups: [dept-cdot], active: false}
+  - {id: pat1,   name: Pat Lee,       email: pat.lee@cityops.example,       title: "DWM analyst",                  groups: [dept-dwm]}
+  - {id: pat2,   name: Pat Lee (rehire), email: pat.lee@cityops.example,    title: "DOB analyst",                  groups: [dept-dob]}

@@ -1,0 +1,19 @@
+Dataset: Performance Metrics - Housing & Economic Development - Single Family Homes
+Portal ID: mvrj-qzai
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-09-19
+
+Description:
+Single family programs that support repairs or improvements to existing affordable single family units. Units are counted when projects are approved for payment by HED. Unit totals are adjusted to account for units receiving benefits from multiple HED programs.
+
+Columns:
+- Month (text)
+- Year (text)
+- Repaired/Improve Homes (number)
+- Total Spending (number)
+- Target Homes (number)
+- Progress to Target Homes (number)
+- Spending Target (number)
+
+Tags: performance metrics, housing

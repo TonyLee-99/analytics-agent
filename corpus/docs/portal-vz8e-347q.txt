@@ -1,0 +1,26 @@
+Dataset: Performance Metrics - City Colleges of Chicago - Course Success Rates
+Portal ID: vz8e-347q
+Category: Administration & Finance
+Attribution: City Colleges of Chicago
+Rows last updated: 2012-07-09
+
+Description:
+Course Success rate is the percent of students obtaining grades A‐C and P out of the total number of students enrolled at the beginning of the term. 
+Course success is the building block toward student program completion. Without successful completion of courses, City Colleges of Chicago students will not be able to earn credits toward a degree or certificate, nor will they progress from remedial to college-level coursework.
+
+Columns:
+- Sort (number)
+- Year (text)
+- Term (text)
+- Remedial Number Successfully Completing Courses (number)
+- Remedial Total Enrollment (number)
+- Remedial Course Success Rate (number)
+- Occupational/Workforce Number Successfully Completing Courses (number)
+- Occupational/Workforce Total Enrollment (number)
+- Occupational/Workforce Course Success Rate (number)
+- Baccalaureate/Transfer Number Successfully Completing Courses (number)
+- Baccalaureate/Transfer Total Enrollment (number)
+- Baccalaureate/Transfer Course Success Rate (number)
+- Row Order (number)
+
+Tags: performance metrics, education

@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Housing & Economic Development - Small Business Improvement Fund (SBIF)
+Portal ID: 2w3t-v2um
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2019-03-21
+
+Description:
+The Small Business Improvement Fund (SBIF) program uses Tax Increment Financing (TIF) revenues to help owners of commercial and industrial properties within specific TIF districts to repair or remodel their facilities for their own business or on behalf of tenants. Spending is counted in the month in which the project was completed.
+
+Columns:
+- Month (text)
+- Year (number)
+- Grant Amount (number)
+- Leveraged Resources (number)
+- Month - Numeric (number): The month in number form for sorting, chart labels, and similar uses.
+- Year-Month (text): The year and month in combined form for sorting, chart labels, and similar uses.
+
+Tags: performance metrics, business, sbif

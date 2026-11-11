@@ -52,6 +52,12 @@ class ClaudeCLIClient:
             return LLMResponse(**{**hit, "cached": True})
         if strict_replay():
             raise ReplayMiss(f"{self.model}: prompt not in cache (key {key[:12]}) under AA_STRICT_REPLAY")
+        resp = self._invoke(system, prompt, tag)
+        self.cache.put(key, resp.to_dict())
+        return resp
+
+    def _invoke(self, system: str, prompt: str, tag: str = "") -> LLMResponse:
+        """One live CLI call with retries; no caching (callers cache under their own keys)."""
         self.ledger.reserve(self.backend)
         SANDBOX.mkdir(exist_ok=True)
         last_err = ""
@@ -80,7 +86,6 @@ class ClaudeCLIClient:
                 d = resp.to_dict()
                 self.ledger.record(self.backend, self.model, tag, {k: d[k] for k in (
                     "input_tokens", "output_tokens", "cost_usd", "latency_s")} | {"attempts": attempt + 1})
-                self.cache.put(key, d)
                 return resp
             if out:
                 last_err = f"is_error={out.get('is_error')} status={out.get('api_error_status')} " \

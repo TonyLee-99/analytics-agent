@@ -1,0 +1,125 @@
+# Governed metric layer for the Chicago 311 warehouse (Postgres, schema wh). Compiled by compiler.py.
+#
+# The formulas are written against the real data. Who "owns" a definition (and the fact that two
+# departments define time-to-close and SLA attainment differently) is Simulated configuration for the
+# demo org; the two variants of each family are both defensible readings of the City's data.
+#
+# Conventions
+# - Closed = closed_at is set (status Completed or Canceled). Resolved = status Completed.
+# - Work = non-duplicate requests (a duplicate's work is carried by its parent).
+# - Time dimension of every metric = created_at. Data runs to the source build's last observation, 2026-11-03.
+# - Benchmark = the City's published median days to close per request type (dataset u6fz-87ei); request
+#   types with a 0-day benchmark (information-only calls) are excluded from SLA metrics.
+
+version: 1
+owner: 311 analytics (Simulated)
+
+models:
+  requests:
+    grain: one row per service request
+    time_column: created_at
+    sql: |
+      SELECT r.sr_number, r.sr_type, r.dept_code, d.department, r.origin, r.status, r.is_open, r.is_canceled,
+             r.is_duplicate, r.created_at, r.closed_at, r.community_area, ca.community_area_name,
+             ca.population_acs, r.ward,
+             EXTRACT(EPOCH FROM (r.closed_at - r.created_at)) / 86400.0 AS days_to_close,
+             b.benchmark_days
+      FROM wh.service_request r
+      JOIN wh.department d ON d.dept_code = r.dept_code
+      LEFT JOIN wh.community_area ca ON ca.community_area = r.community_area
+      LEFT JOIN wh.request_benchmark b ON b.sr_type = upper(r.sr_type)
+
+dimensions:
+  department: {description: "Owner department name as published by the City (e.g. 'Streets and Sanitation', 'CDOT - Department of Transportation')"}
+  dept_code: {description: "Short department code: CDOT, DSS (Streets and Sanitation), DWM (Water Management), DOB (Buildings), CDPH (Health), 311 (311 City Services), AVI, CACC, BACP, ..."}
+  sr_type: {description: "Service request type, e.g. 'Pothole in Street Complaint', 'Rodent Baiting/Rat Complaint', 'Graffiti Removal Request', 'Street Light Out Complaint', 'Tree Trim Request'"}
+  status: {description: "Open, Completed or Canceled"}
+  origin: {description: "How the request was opened (Phone Call, Mobile Device, Internet, Generated In House, ...)"}
+  community_area_name: {description: "One of Chicago's 77 community areas (e.g. 'AUSTIN', 'LOOP', 'NEAR WEST SIDE'), upper case"}
+  ward: {description: "City council ward number, 1-50"}
+
+metrics:
+  requests:
+    label: Requests created
+    model: requests
+    type: count
+    description: Number of service requests created in the period, duplicates included (what the City's portal counts).
+  work_requests:
+    label: Work requests created
+    model: requests
+    type: count
+    filter: NOT is_duplicate
+    description: Requests created in the period excluding duplicates.
+  open_backlog:
+    label: Open backlog
+    model: requests
+    type: count
+    filter: is_open AND NOT is_duplicate
+    description: Non-duplicate requests created in the period that were still open at the last refresh (2026-11-03).
+  median_days_to_close_completed:
+    label: Median days to close (completed only)
+    family: time_to_close
+    owner: CDOT performance team (Simulated)
+    selectors: ["completed only", "completed requests", "excluding canceled", "excluding cancelled", "resolved requests", "time to complete", "to resolve", "completed-only"]
+    model: requests
+    type: median
+    expr: days_to_close
+    filter: status = 'Completed' AND closed_at IS NOT NULL
+    description: Median days from creation to closure, requests closed as Completed only.
+  median_days_to_close_all_closed:
+    label: Median days to close (all closed, incl. canceled)
+    family: time_to_close
+    owner: Streets and Sanitation analytics (Simulated)
+    selectors: ["including canceled", "including cancelled", "incl. canceled", "all closed", "any closure", "closed or canceled", "all-closed"]
+    model: requests
+    type: median
+    expr: days_to_close
+    filter: closed_at IS NOT NULL
+    description: Median days from creation to closure over every closed request, Completed or Canceled.
+  sla_attainment_resolved:
+    label: SLA attainment (share of resolved requests within benchmark)
+    family: sla_attainment
+    owner: 311 City Services (Simulated)
+    selectors: ["of resolved", "of completed", "resolved requests within", "completed requests within", "resolved-basis", "among resolved", "among completed"]
+    model: requests
+    type: ratio
+    numerator: count(*) FILTER (WHERE days_to_close <= benchmark_days)
+    denominator: count(*)
+    filter: status = 'Completed' AND NOT is_duplicate AND benchmark_days > 0
+    description: Of non-duplicate requests resolved (Completed), the share closed within the City's benchmark days for their type.
+  sla_attainment_all_requests:
+    label: SLA attainment (share of all requests within benchmark)
+    family: sla_attainment
+    owner: Performance management office (Simulated)
+    selectors: ["of all requests", "all requests within", "including open", "including unresolved", "all-requests basis", "among all requests"]
+    model: requests
+    type: ratio
+    numerator: count(*) FILTER (WHERE status = 'Completed' AND days_to_close <= benchmark_days)
+    denominator: count(*)
+    filter: NOT is_duplicate AND benchmark_days > 0
+    description: Of all non-duplicate requests created, the share completed within the benchmark days for their type; open, canceled and late requests all count as misses.
+  duplicate_rate:
+    label: Repeat (duplicate) request rate
+    model: requests
+    type: ratio
+    numerator: count(*) FILTER (WHERE is_duplicate)
+    denominator: count(*)
+    description: Share of requests the City flagged as duplicates of an earlier open request (repeat reports of the same problem).
+  cancellation_rate:
+    label: Cancellation rate
+    model: requests
+    type: ratio
+    numerator: count(*) FILTER (WHERE is_canceled)
+    denominator: count(*)
+    filter: NOT is_duplicate
+    description: Share of non-duplicate requests that ended Canceled.
+  requests_per_1k_residents:
+    label: Requests per 1,000 residents
+    model: requests
+    type: ratio
+    numerator: count(*) * 1000.0
+    denominator: max(population_acs)
+    filter: community_area_name IS NOT NULL
+    allowed_dimensions: [community_area_name]
+    required_dimensions: [community_area_name]
+    description: Requests created per 1,000 residents of the community area (ACS population); needs the community_area_name dimension.

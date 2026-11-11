@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Procurement Services - City Auctions
+Portal ID: s9wg-6is6
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2026-10-28
+
+Description:
+The City of Chicago auctions surplus equipment, vehicles, furniture, office equipment, and other goods and materials online in order to raise funds. The below graph provides weekly updates on progress toward the fundraising target of $4.6 million.
+
+Columns:
+- Week (text)
+- Year (text)
+- Revenue from City Auctions (Year to Date ($)) (number)
+- Percent Toward Yearly Goal (number)
+- Yearly Goal ($) (number)
+
+Tags: performance metrics, revenue, procurement

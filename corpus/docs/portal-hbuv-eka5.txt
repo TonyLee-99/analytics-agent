@@ -1,0 +1,15 @@
+Dataset: Performance Metrics - Family & Support Services - Domestic Violence Service Help Line Monthly Utilization
+Portal ID: hbuv-eka5
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2016-11-09
+
+Description:
+This metric tracks the number of domestic violence service calls received by the Domestic Violence Help Line per month. The city has developed a multi-layered response to the domestic violence crisis, including the Help Line, services provided by delegate agencies and services provided by advocates at our Community Service Centers. DFSS funds approximately 30 community based delegate agencies under the Family Violence Prevention Initiative to serve domestic violence victims and their children at programs located throughout Chicago.
+
+Columns:
+- Month (text)
+- Year (text)
+- Number of Calls (number)
+
+Tags: performance metrics, service delivery, human services

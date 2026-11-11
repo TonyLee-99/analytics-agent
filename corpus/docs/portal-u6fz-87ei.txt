@@ -1,0 +1,16 @@
+Dataset: 311 Service Requests - Median Response Time
+Portal ID: u6fz-87ei
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2026-09-20
+
+Description:
+For requests completed in the past 12 months to date, this dataset displays the median number of days between request creation and request closure. 
+
+Some service requests have been removed from the calculations in this dataset so that the median response time better reflects how long a resident can expect a service request to take. Specifically, the following are excluded: 1) any service request labeled as a duplicate, 2) service requests that are created by City departments, and 3) service requests that do not originate from a phone call to 311 or submission through the Chi 311 app, website or API.
+
+Columns:
+- Type (text): Type of 311 service request
+- Median Response Time (number): Median number of days between request creation and request closure
+
+Tags: service requests, 311, performance metric

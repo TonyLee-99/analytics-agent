@@ -1,0 +1,18 @@
+Dataset: Performance Metrics - Chicago Park District - Natural Resources Trees and Shrubs
+Portal ID: cnj6-r3qn
+Category: Administration & Finance
+Attribution: Chicago Park District
+Rows last updated: 2012-08-03
+
+Description:
+The Department of Natural Resources (CDNR) was created in 2001 and is responsible for ensuring the quality of the district's 7,300 acres of land. Through enhanced landscape management, staff training and constant high quality maintenance, the department is quickly becoming the benchmark by which many municipal organizations measure the quality of their landscape and gardening. The data below represents the number of trees that were removed District-wide as well as the number of shrubs and trees that were pruned.
+
+Columns:
+- Date (text)
+- Removal & Stumping (number)
+- # Tree's Removed (number)
+- # Tree's Pruned (number)
+- Shrub Pruning (number)
+- # Tree's and Shrubs Pruned (number)
+
+Tags: performance metrics, parks, sustainability

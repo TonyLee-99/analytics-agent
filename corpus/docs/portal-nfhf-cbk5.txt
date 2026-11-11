@@ -1,0 +1,21 @@
+Dataset: Performance Metrics - Procurement Services - Task Order Request (TOR)
+Portal ID: nfhf-cbk5
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2026-10-28
+
+Description:
+The Department of Procurement (DPS) approves Task Order Requests (TOR), contracts for specific tasks or services to be provided to the City. The below graph displays the average time it takes the Department of Procurement to approve a TOR. The current target for approval time is within 7 days.
+
+Columns:
+- Week (text)
+- Year (text)
+- Average of Amount of Task Order (number)
+- Total Dollar Amount of Task Order Requests (number)
+- Median Cost of Task Order Requests (number)
+- Average Number of Days to Approve Task Order Request (TOR) (number)
+- Median Number of Days Receipt to Approval (number)
+- Total Tasks Order Request (number)
+- Target Response Time (Days) (number)
+
+Tags: performance metrics, procurement

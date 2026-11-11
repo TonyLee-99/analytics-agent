@@ -144,6 +144,9 @@ def compile_query(q: dict[str, Any], layer: SemanticLayer | None = None) -> str:
         bad = [d for d in dims if d not in allowed]
         if bad:
             raise SemanticError(f"metric '{name}' cannot be broken down by {bad}; allowed: {sorted(allowed)}")
+        need = [d for d in m.get("required_dimensions", []) if d not in dims]
+        if need:
+            raise SemanticError(f"metric '{name}' needs dimension(s) {need}")
         model = layer.models[m["model"]]
         tcol = model["time_column"]
         where = []
@@ -161,6 +164,10 @@ def compile_query(q: dict[str, Any], layer: SemanticLayer | None = None) -> str:
             agg = f"avg({m['expr']})"
         elif m["type"] == "count_distinct":
             agg = f"count(DISTINCT {m['expr']})"
+        elif m["type"] == "count":
+            agg = "count(*)"
+        elif m["type"] == "median":  # v2 (311 layer); valid in Postgres and DuckDB
+            agg = f"percentile_cont(0.5) WITHIN GROUP (ORDER BY {m['expr']})"
         elif m["type"] == "ratio":
             agg = f"({m['numerator']}) * 1.0 / nullif({m['denominator']}, 0)"
         else:

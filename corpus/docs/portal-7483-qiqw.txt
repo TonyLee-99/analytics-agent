@@ -1,0 +1,20 @@
+Dataset: Performance Metrics - Business Affairs & Consumer Protection - Limited Business Licenses
+Portal ID: 7483-qiqw
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2011-10-19
+
+Description:
+Limited Business Licenses (LBLs) are required for all Chicago businesses not specifically exempt from licensing requirements. This includes all business that provide services, or engage in office operations or general sales. Currently the performance target for processing Limited Business Licenses is 3 days.
+
+Columns:
+- Week (text)
+- Total Licenses Issued (number)
+- Average Days to Issue License (number)
+- Median Days to Issue License (number)
+- Target Days to Issue License (number)
+- Quarter (text)
+- Weeks Target Was Achieved (number)
+- Weeks Target Was Not Achieved (number)
+
+Tags: performance metrics, service delivery, business, licenses

@@ -1,0 +1,35 @@
+Dataset: 311 Service Requests - Sanitation Code Complaints - Historical
+Portal ID: me59-5fac
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2019-03-06
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All open sanitation code complaints made to 311 and all requests completed since January 1, 2011. The Department of Streets and Sanitation investigates and remedies reported violations of Chicago’s sanitation code. Residents may request service for violations such as overflowing dumpsters and garbage in the alley. 
+311 sometimes receives duplicate sanitation code complaints. Requests that have been labeled as duplicates are in the same geographic area as a previous request and have been entered into 311’s Customer Service Request (CSR) system at around the same time. Duplicate complaints are labeled as such in the status field, as either "Open - Dup" or "Completed - Dup." 
+Data Owner: Streets and Sanitation (http://www.cityofchicago.org/content/city/en/depts/streets.html). 
+Time Period: January 1, 2011 to present. 
+Frequency: Data is updated daily. 
+Related Applications: 311 Service Request Status Inquiry (https://servicerequest.cityofchicago.org/web_intake_chic/Controller?op=createsrquery2) and Report Sanitation Code Complaint (https://servicerequest.cityofchicago.org/web_intake_chic/Controller?op=locform&invSRType=SCB&invSRDesc=Sanitation%20Code%20Violation&locreq=Y&stnumreqd=Y).
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- What is the Nature of this Code Violation? (text)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- Latitude (number)
+- Longitude (number)
+- Location (location)
+
+Tags: garbage, sanitation, complaints, historical, service requests, 311

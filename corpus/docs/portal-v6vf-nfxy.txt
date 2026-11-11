@@ -1,0 +1,53 @@
+Dataset: 311 Service Requests
+Portal ID: v6vf-nfxy
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2026-11-11
+
+Description:
+311 Service Requests received by the City of Chicago. This dataset includes requests created after the launch of the new 311 system on 12/18/2018 and some records from the previous system, indicated in the LEGACY_RECORD column. 
+
+For purposes of all columns indicating geographic areas or locations, please note that requests of the type 311 INFORMATION ONLY CALL often are entered with the address of the City's 311 Center.
+
+Columns:
+- SR_NUMBER (text)
+- SR_TYPE (text)
+- SR_SHORT_CODE (text): An internal code corresponding to the Service Request Type. This code allows for searching and filtering more easily than using the full SR_TYPE value.
+- CREATED_DEPARTMENT (text): The department, if any, that created the service request.
+- OWNER_DEPARTMENT (text): The department with initial responsibility for the service request.
+- STATUS (text)
+- ORIGIN (text): How the request was opened. Some values, such as Generated In House and Mass Entry result from the City's own operations.
+- CREATED_DATE (calendar_date)
+- LAST_MODIFIED_DATE (calendar_date)
+- CLOSED_DATE (calendar_date)
+- STREET_ADDRESS (text)
+- CITY (text)
+- STATE (text)
+- ZIP_CODE (text)
+- STREET_NUMBER (text)
+- STREET_DIRECTION (text)
+- STREET_NAME (text)
+- STREET_TYPE (text)
+- DUPLICATE (checkbox): Is this request a duplicate of another request?
+- LEGACY_RECORD (checkbox): Did this request originate in the previous 311 system?
+- LEGACY_SR_NUMBER (text): If this request originated in the previous 311 system, the original Service Request Number.
+- PARENT_SR_NUMBER (text): Parent Service Request of the record if applicable. If the current Service Request record has been identified as a duplicate request, the record will be created as a child of the original request.
+- COMMUNITY_AREA (number)
+- WARD (number)
+- ELECTRICAL_DISTRICT (text)
+- ELECTRICITY_GRID (text)
+- POLICE_SECTOR (text)
+- POLICE_DISTRICT (text)
+- POLICE_BEAT (text)
+- PRECINCT (text)
+- SANITATION_DIVISION_DAYS (text)
+- CREATED_HOUR (number): The hour of the day component of CREATED_DATE.
+- CREATED_DAY_OF_WEEK (number): The day of the week component of CREATED_DATE. Sunday=1
+- CREATED_MONTH (number): The month component of CREATED_DATE
+- X_COORDINATE (number): The x coordinate of the location in State Plane Illinois East NAD 1983 projection.
+- Y_COORDINATE (number): The y coordinate of the location in State Plane Illinois East NAD 1983 projection.
+- LATITUDE (number): The latitude of the location.
+- LONGITUDE (number): The longitude of the location.
+- LOCATION (location): The location in a format that allows for creation of maps and other geographic operations on this data portal.
+
+Tags: service requests, 311

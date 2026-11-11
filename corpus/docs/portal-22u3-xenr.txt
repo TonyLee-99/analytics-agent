@@ -1,0 +1,40 @@
+Dataset: Building Violations
+Portal ID: 22u3-xenr
+Category: Buildings
+Attribution: City of Chicago
+Rows last updated: 2026-11-11
+
+Description:
+Violations issued by the Department of Buildings from 2006 to the present. Lenders and title companies, please note: These data are historical in nature and should not be relied upon for real estate transactions. For transactional purposes such as closings, please consult the title commitment for outstanding enforcement actions in the Circuit Court of Cook County or the Chicago Department of Administrative Hearings. Violations are always associated to an inspection and there can be multiple violation records to one inspection record. Related Applications: Building Data Warehouse http://www.cityofchicago.org/city/en/depts/bldgs/provdrs/inspect/svcs/building_violationsonline.html. The information presented on this website is informational only and does not necessarily reflect the current condition of the building or property. The dataset contains cases where a respondent has been found to be liable as well as cases where the respondent has been found to be not liable.
+
+Columns:
+- ID (text)
+- VIOLATION LAST MODIFIED DATE (calendar_date)
+- VIOLATION DATE (calendar_date): The date the violation was cited.
+- VIOLATION CODE (text): The Violation Code. See Violation Description for the description of what the code means.
+- VIOLATION STATUS (text): Complied = Violations have been addressed;
+Open = Violations are open;
+No Entry = Inspector could not gain access to the premise to conduct an inspection.
+- VIOLATION STATUS DATE (calendar_date)
+- VIOLATION DESCRIPTION (text): The description of the violation corresponding to the Violation Code value.
+- VIOLATION LOCATION (text)
+- VIOLATION INSPECTOR COMMENTS (text)
+- VIOLATION ORDINANCE (text)
+- INSPECTOR ID (text)
+- INSPECTION NUMBER (number)
+- INSPECTION STATUS (text)
+- INSPECTION WAIVED (text)
+- INSPECTION CATEGORY (text): Inspections are categorized by one of the following: COMPLAINT – Inspection is a result of a 311 Complaint. PERIODIC – Inspection is a result of recurring inspection (typically on an annual cycle). PERMIT – Inspection is a result of a permit. REGISTRATION – Inspection is a result of a Registration (typically Vacant Building Registration).
+- DEPARTMENT BUREAU (text)
+- ADDRESS (text)
+- STREET NUMBER (number)
+- STREET DIRECTION (text)
+- STREET NAME (text)
+- STREET TYPE (text)
+- PROPERTY GROUP (number): Properties (lots) in the City of Chicago can typically have multiple point addresses, range addresses and buildings. Examples are corner lots, large lots, lots with front and rear buildings, etc. As a result, inspections (and their associated violations), permits and complaints related to a single property could have different addresses. This problem can be reconciled by using Property Group. All point and range addresses for a property are assigned the same Property Group key.
+- SSA (text): Special Service Areas are local tax districts that fund expanded services and programs, to foster commercial and economic development, through a localized property tax. In other cities these areas are sometimes called Business Improvement Districts (BIDs). This portal contains a map of all Chicago SSAs
+- LATITUDE (number)
+- LONGITUDE (number)
+- LOCATION (location)
+
+Tags: violations, inspections

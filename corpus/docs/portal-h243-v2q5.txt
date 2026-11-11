@@ -1,0 +1,23 @@
+Dataset: Warming Centers
+Portal ID: h243-v2q5
+Category: Health & Human Services
+Attribution: City of Chicago
+Rows last updated: 2026-03-17
+
+Description:
+Warming Centers offer residents warming refuge from oppressive winter cold. The Chicago Department of Family and Support Services operates six Warming 
+Centers during the winter months. Additional facilities are opened as needed in libraries, Park District buildings, senior centers and other community venues. 
+You may call 311 to locate a Warming Center in your area, or go to http://bit.ly/kIhHPj for more information.
+
+Columns:
+- SITE TYPE (text)
+- SITE NAME (text)
+- HOURS OF OPERATION (text)
+- ADDRESS (text)
+- CITY (text)
+- STATE (text)
+- ZIP (number)
+- PHONE (text)
+- LOCATION (point)
+
+Tags: weather relief, sustainability, warming centers, human services, family and support services

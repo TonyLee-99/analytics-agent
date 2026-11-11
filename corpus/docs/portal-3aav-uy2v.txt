@@ -1,0 +1,29 @@
+Dataset: 311 Service Requests - Street Lights - One Out - Historical
+Portal ID: 3aav-uy2v
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2020-03-30
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+This dataset contains all open 311 reports of one or two lights out on metal poles on a residential or arterial street and all completed requests since January 1, 2011. Whenever CDOT receives a report of a street light outage, the electrician assigned to make the repair looks at all the lights in a group (circuit) to make sure that they are working properly. If two requests regarding the same group are made within 30 calendar days of each other, the newest CSR is automatically given the status of “Duplicate (Open).” Since the electrician will be looking at all the lights in a group to verify that they are all working the “Duplicate (Open)” address will also be observed and repaired. Once the street lights are repaired, the CSR status will read “Completed” for the original request and “Duplicate (Closed)” for any duplicate requests. Data is updated daily.
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- Latitude (number)
+- Longitude (number)
+- Location (point)
+
+Tags: streets, lights, historical, service requests, 311

@@ -1,0 +1,19 @@
+Dataset: Performance Metrics - Housing & Economic Development - Affordable Multi Family Homes
+Portal ID: dsvs-yfj6
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-09-19
+
+Description:
+Multi-family programs that support the creation of new affordable multi-family housing units or the preservation of existing affordable units. Units are counted when financial commitments are approved by the City Council.
+
+Columns:
+- Month (text)
+- Year (text)
+- Created/Preserved Multi-Family Units (number)
+- Target Homes (number)
+- Progress to Target Homes (number)
+- Total Spending (number)
+- Spending Target (number)
+
+Tags: performance metrics, housing

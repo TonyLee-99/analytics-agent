@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - Transportation - Traffic Lights Out
+Portal ID: vfmv-4fbs
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2014-05-01
+
+Description:
+The Chicago Department of Transportation (CDOT) receives reports from 311’s Customer Service Requests (CSR) system of traffic light outages. This metric tracks the average number of days CDOT takes to complete traffic light repair requests. Total number of requests fulfilled per week is also available by mousing over columns Due to the public safety importance of traffic signals, the target time to respond to traffic light outages is within 1 day.
+
+Columns:
+- week (text)
+- Average Days to Complete Traffic Light Out Requests (number)
+- Total Completed Requests (number)
+- Target Response Time (Days) (number)
+
+Tags: performance metrics, service delivery, traffic light, outage

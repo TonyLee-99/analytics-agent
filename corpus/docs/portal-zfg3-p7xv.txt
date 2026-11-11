@@ -1,0 +1,16 @@
+Dataset: Performance Metrics - Innovation & Technology - Site Availability
+Portal ID: zfg3-p7xv
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2015-03-16
+
+Description:
+The website availability metrics below are derived from an automated monitor that sends a request every two minutes to each website. The website is considered unavailable if the response to any request takes longer than a pre-defined wait time. The monitors run continuously and are not normally disabled during scheduled maintenance or downtime, so the reported metrics incorporate both planned and unplanned downtime.
+
+Columns:
+- Week (text)
+- Site Name (text)
+- Total Downtime (Minutes) (number)
+- Site Uptime (%) (number)
+
+Tags: performance metrics, technology

@@ -1,0 +1,83 @@
+## Chicago 311 History
+In 1997, Chicago took a hard look at how its residents requested city services and how departments responded to those requests. The City realized that although its system was considered one of the best in the country, there was opportunity for improvement.
+The system was dependent on outdated software that was not Y2K compliant, and was unable to produce work orders or generate the management information necessary to enhance the efficiency of City departments that deliver basic city services. In addition, due to a proliferation of phone numbers used to market different City programs and services and an area code split which required even more 10-digit dialing, residents were finding it increasingly difficult to access the services to which they were entitled.
+The City culminated more than one year of research and planning for replacing its outdated mainframe system with a modern PC-based system that would improve communication among departments, reduce response time to residents' requests, and generate management reports to ensure a more efficient service delivery system for all departments.
+In January 1999, the City implemented the 311 system as a "one-stop-shopping" center for access to all city services and non-emergency police services, eliminating a number of smaller call centers.
+Chicago residents can now call 311 - 24 hours a day, 7 days a week - to report service needs, check the status of previous service requests, obtain information regarding City programs or events and file police reports. By combining one easy-to-remember number, a staff of highly trained operators and an enterprise-wide software that automatically routes service requests to the proper department, Chicago has worked to make city government work effectively in several ways.
+A simplified and shortened time between a resident reporting a problem and its resolution.
+The system has become an effective management tool, generating real-time reports that help departments manage staff, track trends, highlight and monitor performance, target efficiency needs and maximize its resources.
+Service requests can also be submitted to the City utilizing several other discrete channels: Aldermanic offices, community policing offices within each police district, the Internet, and remote City department facilities.
+311 has helped to make our 911 Emergency System more efficient by diverting non-emergency calls that could impede the City's emergency response.
+Accomplishments & Recognitions
+1999 – 2002
+1999 - Instituted the three-digit 311 capability in Chicago; became a consolidated center for residents to access information, City services and non-emergency police services; and handled a record call volume of 2.8 million calls.
+2001 - Introduced the web-enabled version of SunTRACK, making it possible to enter service requests via the internet.  Also, completed the build out of the existing 311 Call Center.
+2003 – 2006
+2003 - Received the "Innovations in American Government Award" from the Ash Institute for Democratic Governance and Innovation at Harvard University's John F. Kennedy School of Government.
+2004 - Awarded the National Public Service Excellence Award conferred by the Public Employees Roundtable.
+2005 - Featured on The Visionaries , a nationally syndicated PBS program.
+2006 - Consolidated Call Center Operations with the Department of Aviation, responsible for providing information for O’Hare International Airport and Midway International Airport. With over 60 million travelers annually, 311 provides general customer service information regarding terminal locations, concessions, lost & found  and ground transportation among other inquiries.
+2007 – 2012
+2009 - Upgraded the computer system from a client-server application to a web-based application to help accommodate the  growing popularity of 311 and the increased number of requests from Chicago residents as well as visitors.
+2010 - Upgraded to the AT&T Vesta Phone System with an expanded auto-attendant designed to help manage the increased call volume as well as additional channels for information-only calls.  Also, the method used to enter service requests was expanded to include the use of mobile devices by several City departments -- workers can input service requests directly into the system while in the field.
+2011 - Launched ChiTEXT, a short message services (SMS) text application, which allows residents and visitors to receive frequently requested information via authentic text messages directly through their mobile phones.
+September 2012 - Launch of Open311 -- a public interface with the current 311 System.  Developed to modernize and improve service efficiencies, the Open311 standard will open access to web and mobile applications to simplify the way requests for service are reported and provide a tool to easily track the status of requests.  In addition, City departments will be able to monitor and respond to these requests more efficiently.
+2017 - Present
+The City of Chicago is working to replace the Customer Service Request (CSR) System with a modernized Customer Request Management (CRM) System. The new CRM will offer new developments in technology and functionality including social media, work order management and dashboard reporting.
+Last year 311 City Services took approximately 2.8 million calls, and continues to be a model for effective city government working to enhance the quality of life for all those who live, work, and visit the City of Chicago.
+311 is a division within the Office of Emergency Management and Communications (OEMC).
+## Supporting Information Facts
+311 City Services
+## Additional Information
+## I Want To
+Bid Job Opportunities
+Building Permit (online)
+Chicago Housing Authority (CHA) Housing
+Internships and Volunteer Programs
+Job Opportunities at City of Chicago
+More services
+Abandoned Vehicle Complaint
+Building Violations
+HomeMod - My Application status
+Parking, Red Light, or Speed Ticket(s)
+Permit for Business ID and Advertising Signs
+Service Request for Street Light Out
+More services
+Auto Pound Locations
+Bids, RFP, RFQ, RFI, Small Order
+Chicago Construction Codes
+Vital Records from the Cook County Clerk's Office
+More services
+Administrative Hearing Fines
+Business Taxes
+Calculate the Cost of a Building Permit
+Other City Debt Payments
+Parking, Red Light, or Speed Ticket(s)
+Surplus, Vehicles, Auctions
+Utility Bill
+View Automated Speed Enforcement Video
+More services
+Dog Registration
+For Park District Programs
+Register a Cottage Food Operation
+Vacant Building
+More services
+AIC (Annual Inspection Certification) Inspections
+Abandoned Vehicle
+Discrimination Complaint
+Economic Disclosure, Affidavit, Online EDS
+Pothole in the Street
+Stray Animals and Lost Pets
+More services
+Building Inspection
+Garbage Cart
+Graffiti Removal Services
+Parking Ticket Photos
+Residential Garbage Collection
+View Red Light Video
+More services
+Alerts from NotifyChicago
+Community Emergency Response Team (CERT)
+Internships and Volunteer Programs
+Voluntary Disclosure
+More services

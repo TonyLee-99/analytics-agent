@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Housing & Economic Development - Landmark Permitting Review
+Portal ID: 2wk4-c5se
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2014-10-03
+
+Description:
+With a goal of reviewing landmark permits in one-day, the department strives to meet this goal no less than 95% of the time. 
+The Historic Preservation Division staffs the Commission on Chicago Landmarks and reviews all permit applications for work involving designated and proposed Chicago landmarks and landmark districts.
+
+Columns:
+- Month (text)
+- Year (text)
+- Permit applications reviewed (number)
+- Permit applications reviewed within one day (number)
+
+Tags: performance metrics, permits, landmarks

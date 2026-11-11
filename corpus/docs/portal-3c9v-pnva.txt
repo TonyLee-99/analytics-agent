@@ -1,0 +1,44 @@
+Dataset: 311 Service Requests - Abandoned Vehicles - Historical
+Portal ID: 3c9v-pnva
+Category: Service Requests
+Attribution: City of Chicago
+Rows last updated: 2020-07-24
+
+Description:
+As described in https://data.cityofchicago.org/stories/s/311-Dataset-Changes-12-11-2018/d7nq-5g7t, the function of this dataset was replaced by https://data.cityofchicago.org/d/v6vf-nfxy. This dataset is historical-only. 
+
+All open abandoned vehicle complaints made to 311 and all requests completed since January 1, 2011. A vehicle can be classified as abandoned if it meets one or more of the following criteria:All open abandoned vehicle complaints made to 311 and all requests completed since January 1, 2011. 
+
+A vehicle can be classified as abandoned if it meets one or more of the following criteria: 1) On a public way in a state of disrepair as to be incapable of being driven in its present condition. 2) Has not been moved or used for more than seven consecutive days and is apparently deserted. 3) Has been left on the public way without state registration or a temporary state registration placard for two or more days. 4) Is a hazardous dilapidated vehicle left in full view of the general public, whether on public or private property. 
+
+For some Open service requests, the vehicle has been towed but further action is required before the request may be closed. 311 sometimes receives duplicate abandoned vehicle complaints. 
+
+If a vehicle is towed it remains as open, work in progress until it is redeemed, transferred or disposed of. The service request is not closed until there is a final disposition for the vehicle. 
+
+Requests that have been labeled as Duplicates are in the same geographic area and have been entered into 311 Customer Service Requests (CSR) system at around the same time as a previous request. Duplicate reports/requests are labeled as such in the Status field, as either "Open - Dup" or "Completed - Dup." Data is updated daily.
+
+Columns:
+- Creation Date (calendar_date)
+- Status (text)
+- Completion Date (calendar_date)
+- Service Request Number (text)
+- Type of Service Request (text)
+- License Plate (text)
+- Vehicle Make/Model (text)
+- Vehicle Color (text)
+- Current Activity (text)
+- Most Recent Action (text)
+- How Many Days Has the Vehicle Been Reported as Parked? (number)
+- Street Address (text)
+- ZIP Code (number)
+- X Coordinate (number)
+- Y Coordinate (number)
+- Ward (number)
+- Police District (number)
+- Community Area (number)
+- SSA (text): Special Service Areas are local tax districts that fund expanded services and programs, to foster commercial and economic development, through a localized property tax. In other cities these areas are sometimes called Business Improvement Districts (BIDs). This portal contains a map of all Chicago SSAs
+- Latitude (number)
+- Longitude (number)
+- Location (location)
+
+Tags: streets, vehicles, historical, service requests, 311

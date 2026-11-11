@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Public Health - Immunization Program - Monthly Vaccine Distribution
+Portal ID: 7g62-yrf5
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2017-06-12
+
+Description:
+Vaccines have been touted as one of the 10 great public health achievements of the last decade. Currently, 18 diseases can be prevented by vaccines. The current childhood vaccination schedule is estimated to prevent 42,000 deaths and 20 million cases of disease. CDPH distributes vaccine to nearly 470 healthcare facilities throughout the city of Chicago that are enrolled in the Vaccines for Children (VFC) program. This metric provides the number of doses of vaccine distributed each month. For more information about CDPH’s Immunization Program, see https://www.cityofchicago.org/city/en/depts/cdph/provdrs/health_protection/svcs/immunization1.html
+
+Columns:
+- Month (text)
+- Doses Distributed Per Month (number)
+- Cumulative Doses Distributed Annually (number)
+- Annual Performance Target (number)
+- Year (text)
+
+Tags: performance metrics, service delivery, cdph, health, immunization, vaccination

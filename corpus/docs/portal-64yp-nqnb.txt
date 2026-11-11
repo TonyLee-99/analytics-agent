@@ -1,0 +1,17 @@
+Dataset: Performance Metrics - Streets & Sanitation - Sanitation Code Complaints
+Portal ID: 64yp-nqnb
+Category: Administration & Finance
+Attribution: City of Chicago
+Rows last updated: 2012-07-26
+
+Description:
+The Department of Streets and Sanitation (DSS) investigates and remedies reported violations of Chicago’s sanitation code. Residents may request service for violations such as overflowing dumpsters and garbage in the alley. This metric tracks the average number of days the DSS takes to complete sanitation code violation requests per week. Median days to complete requests as well as total number of requests fulfilled per week are available by mousing over columns. Currently the performance target for completing sanitation code violation requests is 3 days. For more information on sanitation code complaints, see https://data.cityofchicago.org/d/me59-5fac
+
+Columns:
+- Week (text)
+- Average Days to Complete Sanitation Code Requests (number)
+- Total Completed Requests (number)
+- Median Days to Repond to Sanitation Code Complaint Request (number)
+- Target Response Time (Days) (number)
+
+Tags: performance metrics, service delivery, garbage, sanitation, complaints
