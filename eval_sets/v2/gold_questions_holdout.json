@@ -1,0 +1,420 @@
+{
+ "set": "questions_holdout",
+ "sha256": "d22537fe6b149c18c73237f7d34a6af3e5ce7fc8275df9f982ba48955162da80",
+ "items": {
+  "hx-q06": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     "Water Lead Test Kit Request",
+     4297
+    ],
+    [
+     "Water On Street Complaint",
+     3390
+    ],
+    [
+     "Sewer Cleaning Inspection Request",
+     2997
+    ],
+    [
+     "Water in Basement Complaint",
+     2685
+    ],
+    [
+     "Check for Leak",
+     1985
+    ]
+   ],
+   "depts": [
+    "DWM"
+   ]
+  },
+  "hx-q07": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "created_month",
+    "work_requests",
+    "cancellation_rate_pct"
+   ],
+   "rows": [
+    [
+     "2026-01-01",
+     3384,
+     0.0
+    ],
+    [
+     "2026-02-01",
+     2726,
+     0.0
+    ],
+    [
+     "2026-03-01",
+     3215,
+     0.0
+    ],
+    [
+     "2026-04-01",
+     3622,
+     0.0
+    ],
+    [
+     "2026-05-01",
+     3468,
+     0.0
+    ],
+    [
+     "2026-06-01",
+     3630,
+     0.0
+    ]
+   ],
+   "depts": [
+    "DOB"
+   ]
+  },
+  "hx-q08": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "origin",
+    "requests",
+    "duplicate_rate_pct"
+   ],
+   "rows": [
+    [
+     "Internet",
+     1460,
+     9.383562
+    ],
+    [
+     "Phone Call",
+     1356,
+     0.221239
+    ],
+    [
+     "Mobile Device",
+     725,
+     8.275862
+    ],
+    [
+     "E-Mail",
+     125,
+     0.0
+    ],
+    [
+     "Alderman's Office",
+     37,
+     0.0
+    ],
+    [
+     "City Department",
+     20,
+     0.0
+    ],
+    [
+     "State Representatives",
+     5,
+     0.0
+    ],
+    [
+     "Salesforce Mobile App",
+     2,
+     0.0
+    ],
+    [
+     "HealthProfessionals",
+     1,
+     0.0
+    ],
+    [
+     "Open311 Interface",
+     1,
+     0.0
+    ]
+   ],
+   "depts": [
+    "CDPH"
+   ]
+  },
+  "hx-q09": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "community_area",
+    "community_area_name",
+    "requests",
+    "requests_per_1k_residents"
+   ],
+   "rows": [
+    [
+     76,
+     "Ohare",
+     367757,
+     22588.108839
+    ],
+    [
+     28,
+     "Near West Side",
+     682862,
+     10446.106777
+    ],
+    [
+     37,
+     "Fuller Park",
+     1826,
+     835.315645
+    ],
+    [
+     67,
+     "West Englewood",
+     15858,
+     610.604135
+    ],
+    [
+     48,
+     "Calumet Heights",
+     7060,
+     584.533863
+    ],
+    [
+     47,
+     "Burnside",
+     1284,
+     576.043069
+    ],
+    [
+     68,
+     "Englewood",
+     11852,
+     555.467029
+    ],
+    [
+     57,
+     "Archer Heights",
+     7632,
+     550.054054
+    ],
+    [
+     53,
+     "West Pullman",
+     13623,
+     541.476211
+    ],
+    [
+     51,
+     "South Deering",
+     8025,
+     531.456954
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  },
+  "hx-q10": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "sr_type",
+    "open_backlog"
+   ],
+   "rows": [
+    [
+     "Sidewalk Inspection Request",
+     6387
+    ],
+    [
+     "Sign Repair Request - All Other Signs",
+     4691
+    ],
+    [
+     "Pothole in Street Complaint",
+     3795
+    ],
+    [
+     "Inspect Public Way Request",
+     2013
+    ],
+    [
+     "Shared Cost Sidewalk Program Request",
+     1901
+    ],
+    [
+     "Alley Pothole Complaint",
+     1836
+    ],
+    [
+     "Traffic Signal Out Complaint",
+     895
+    ],
+    [
+     "Street Light Out Complaint",
+     825
+    ],
+    [
+     "Street Light Pole Damage Complaint",
+     542
+    ],
+    [
+     "Bicycle Request/Complaint",
+     350
+    ]
+   ],
+   "depts": [
+    "CDOT"
+   ]
+  },
+  "hx-q11": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "requests"
+   ],
+   "rows": [
+    [
+     29907
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "hx-q12": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "created_month",
+    "requests"
+   ],
+   "rows": [
+    [
+     "2026-01-01",
+     433
+    ],
+    [
+     "2026-02-01",
+     407
+    ],
+    [
+     "2026-03-01",
+     511
+    ]
+   ],
+   "depts": [
+    "CDOT",
+    "DSS"
+   ]
+  },
+  "hx-q13": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "ward",
+    "work_requests"
+   ],
+   "rows": [
+    [
+     28,
+     835
+    ],
+    [
+     6,
+     619
+    ],
+    [
+     21,
+     557
+    ],
+    [
+     9,
+     514
+    ],
+    [
+     1,
+     513
+    ]
+   ],
+   "depts": [
+    "DSS"
+   ]
+  },
+  "hx-q15": {
+   "ok": true,
+   "error": "",
+   "columns": [
+    "eligible_work_requests",
+    "completed_within_benchmark",
+    "sla_attainment_all_requests_pct"
+   ],
+   "rows": [
+    [
+     35231,
+     13797,
+     39.161534
+    ]
+   ],
+   "depts": [
+    "311",
+    "ALD",
+    "AVI",
+    "BACP",
+    "CACC",
+    "CCHR",
+    "CDOT",
+    "CDPH",
+    "CFD",
+    "CLERK",
+    "CPD",
+    "CSR",
+    "CTA",
+    "DFSS",
+    "DOAH",
+    "DOB",
+    "DOE",
+    "DOH",
+    "DOIT",
+    "DPD",
+    "DSS",
+    "DWM",
+    "EWN",
+    "FIN",
+    "MOPD",
+    "OUT",
+    "UNK"
+   ]
+  }
+ }
+}

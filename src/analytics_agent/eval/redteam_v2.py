@@ -37,7 +37,7 @@ from analytics_agent.copilot.slack_app import SlackCopilot
 from analytics_agent.copilot.slack_emulator import SlackEmulator
 
 LAG_S = 300.0
-SETS = ["redteam_author", "redteam_codex"]
+SETS = ["redteam_author", "redteam_codex", "redteam_holdout"]
 
 
 _DEPS: list = []

@@ -31,7 +31,7 @@ from typing import Any
 
 from analytics_agent.copilot.settings import V2_EVAL_SETS, V2_RESULTS
 
-SETS = ["questions_author", "questions_codex"]
+SETS = ["questions_author", "questions_codex", "questions_holdout"]
 RUNS = V2_RESULTS / "runs"
 EXPECTED_ROUTE = {"docs": "docs", "sql": "sql", "mixed": "both", "clarify": "clarify"}
 
@@ -373,7 +373,11 @@ def score(systems: list[str] = ("copilot", "docs_only", "v1_sql"), write: bool =
         per_sys_correct[s] = [r["correct"] for r in rows]
         summ: dict[str, Any] = {}
         for label, sel in [("all", rows), ("author", [r for r in rows if r["set"] == "questions_author"]),
-                           ("codex_blind", [r for r in rows if r["set"] == "questions_codex"])]:
+                           ("codex_blind", [r for r in rows if r["set"] == "questions_codex"]),
+                           ("codex_blind_holdout", [r for r in rows if r["set"] == "questions_holdout"]),
+                           ("original_120", [r for r in rows if r["set"] != "questions_holdout"])]:
+            if not sel:
+                continue
             k = sum(r["correct"] for r in sel)
             kk_ = sum(r["correct_key_value"] for r in sel)
             block = {"n": len(sel), "correct": k, "accuracy": round(k / max(1, len(sel)), 4), "ci95": wilson(k, len(sel)),
@@ -413,7 +417,7 @@ def score(systems: list[str] = ("copilot", "docs_only", "v1_sql"), write: bool =
 
 
 # items whose question names one governed definition explicitly (controls for the conflict check)
-EXPLICIT_DEFINITION_IDS = {"au-q57", "au-q58", "au-q59", "au-q60", "cx-q57", "cx-q58", "cx-q59", "cx-q60"}
+EXPLICIT_DEFINITION_IDS = {"au-q57", "au-q58", "au-q59", "au-q60", "cx-q57", "cx-q58", "cx-q59", "cx-q60", "hx-q15"}
 
 
 def _count(it) -> dict:
