@@ -139,3 +139,21 @@ def test_revocation_during_audience_lookup_discards(bot):
     send(app, emu, ev, "Ev10")
     assert core.log[-1]["delivery"] == "discarded"
     assert all("crews" not in m["text"] for m in emu.posted)
+
+
+def test_dm_reply_is_top_level_and_channel_reply_is_threaded(bot):
+    emu, core, app, _ = bot
+    send(app, emu, dm("UMARIA", "how are potholes fixed?", ts="7.1"), "Ev11")
+    assert [m for m in emu.posted if m["kind"] == "message"][-1]["thread_ts"] is None
+    emu.channels["C6"] = ["UMARIA"]
+    ev = {"type": "app_mention", "channel": "C6", "user": "UMARIA", "text": "<@U0BOT> potholes?", "ts": "8.1"}
+    send(app, emu, ev, "Ev12")
+    assert [m for m in emu.posted if m["kind"] == "message"][-1]["thread_ts"] == "8.1"
+
+
+def test_markdown_is_converted_to_slack_mrkdwn():
+    from analytics_agent.copilot.slack_app import to_mrkdwn
+
+    out = to_mrkdwn("## Result\n**4,211** (*street* 3,183), see [portal](https://x.test/d)\n- a\n`**raw**`")
+    assert out == "*Result*\n*4,211* (_street_ 3,183), see <https://x.test/d|portal>\n• a\n`**raw**`"
+    assert "**" not in to_mrkdwn("**a** and __b__")

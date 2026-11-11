@@ -96,7 +96,8 @@ class SlackCopilot:
         if event.get("bot_id") or event.get("subtype"):
             return {"delivery": "ignored"}
         slack_user, channel = event.get("user", ""), event.get("channel", "")
-        thread = event.get("thread_ts") or event.get("ts")
+        # channels: answer in the thread of the mention; DMs: reply top-level unless the user is already in a thread
+        thread = event.get("thread_ts") or (None if channel.startswith("D") else event.get("ts"))
         text = _strip_mention(event.get("text", ""))
         try:
             user_id = self.directory_user(team_id, slack_user)
@@ -105,7 +106,7 @@ class SlackCopilot:
             rec = {"delivery": "denied", "reason": str(e), "slack_user": slack_user}
             self.log.append(rec)
             return rec
-        key = (channel, thread)
+        key = (channel, thread or "dm")
         if event.get("thread_ts") and key in self.pending_clarify:
             text = f"{self.pending_clarify.pop(key)} ({text})"
         ans = self.copilot.ask(user_id, text, slack_user=slack_user)
@@ -127,11 +128,11 @@ class SlackCopilot:
             return rec
         blocks = render_blocks(ans)
         if public:
-            r = self.client.chat_postMessage(channel=channel, thread_ts=thread, text=ans.text, blocks=blocks)
+            r = self.client.chat_postMessage(channel=channel, thread_ts=thread, text=to_mrkdwn(ans.text), blocks=blocks)
             delivery = "public" if not channel.startswith("D") else "dm"
             ts = r.get("ts")
         else:
-            r = self.client.chat_postEphemeral(channel=channel, user=slack_user, thread_ts=thread, text=ans.text,
+            r = self.client.chat_postEphemeral(channel=channel, user=slack_user, thread_ts=thread, text=to_mrkdwn(ans.text),
                                                blocks=blocks)
             delivery, ts = "ephemeral", r.get("message_ts")
         rec = {"delivery": delivery, "user_id": user_id, "answer": ans, "ts": ts, "audience": audience}
@@ -158,8 +159,25 @@ def _strip_mention(text: str) -> str:
     return re.sub(r"<@[A-Z0-9]+>", "", text or "").strip()
 
 
+def to_mrkdwn(md: str) -> str:
+    """Model Markdown -> Slack mrkdwn: **b** / __b__ -> *b*, single *i* -> _i_, [t](u) -> <u|t>,
+    headings -> bold lines, "- " / "* " bullets -> "• ". Code spans and blocks are left alone."""
+    import re
+
+    parts = re.split(r"(```.*?```|`[^`\n]*`)", md or "", flags=re.S)
+    for i in range(0, len(parts), 2):  # even indexes are outside code
+        t = parts[i]
+        t = re.sub(r"(?m)^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$", r"**\1**", t)
+        t = re.sub(r"(?m)^(\s*)[-*]\s+", r"\1• ", t)
+        t = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r"<\2|\1>", t)
+        t = re.sub(r"(?<![*\w])\*(?!\*)([^*\n]+?)\*(?![*\w])", r"_\1_", t)  # *italic* before bold
+        t = re.sub(r"\*\*(.+?)\*\*|__(.+?)__", lambda m: "*" + (m.group(1) or m.group(2)) + "*", t)
+        parts[i] = t
+    return "".join(parts)
+
+
 def render_blocks(ans: Answer) -> list[dict[str, Any]]:
-    blocks: list[dict[str, Any]] = [{"type": "section", "text": {"type": "mrkdwn", "text": ans.text[:2900] or "(empty)"}}]
+    blocks: list[dict[str, Any]] = [{"type": "section", "text": {"type": "mrkdwn", "text": to_mrkdwn(ans.text)[:2900] or "(empty)"}}]
     if ans.notices:
         blocks.append({"type": "context", "elements": [{"type": "mrkdwn", "text": "⚠️ " + " ".join(ans.notices)[:2900]}]})
     if ans.citations:
