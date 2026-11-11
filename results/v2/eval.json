@@ -11,11 +11,11 @@
      0.865
     ],
     "accuracy_key_value": 0.8519,
-    "docs_accuracy": 0.9111,
+    "docs_accuracy": 0.9333,
     "docs_n": 45,
     "sql_accuracy": 0.6852,
     "sql_n": 54,
-    "mixed_accuracy": 0.8148,
+    "mixed_accuracy": 0.7778,
     "mixed_n": 27,
     "clarify_accuracy": 1.0,
     "clarify_n": 9
@@ -40,14 +40,14 @@
    },
    "codex_blind": {
     "n": 60,
-    "correct": 39,
-    "accuracy": 0.65,
+    "correct": 40,
+    "accuracy": 0.6667,
     "ci95": [
-     0.5236,
-     0.7583
+     0.5406,
+     0.7727
     ],
-    "accuracy_key_value": 0.75,
-    "docs_accuracy": 0.85,
+    "accuracy_key_value": 0.7667,
+    "docs_accuracy": 0.9,
     "docs_n": 20,
     "sql_accuracy": 0.4167,
     "sql_n": 24,
@@ -58,32 +58,32 @@
    },
    "codex_blind_holdout": {
     "n": 15,
-    "correct": 11,
-    "accuracy": 0.7333,
+    "correct": 10,
+    "accuracy": 0.6667,
     "ci95": [
-     0.4805,
-     0.891
+     0.4171,
+     0.8482
     ],
-    "accuracy_key_value": 0.7333,
+    "accuracy_key_value": 0.6667,
     "docs_accuracy": 1.0,
     "docs_n": 5,
     "sql_accuracy": 0.5,
     "sql_n": 6,
-    "mixed_accuracy": 0.6667,
+    "mixed_accuracy": 0.3333,
     "mixed_n": 3,
     "clarify_accuracy": 1.0,
     "clarify_n": 1
    },
    "original_120": {
     "n": 120,
-    "correct": 98,
-    "accuracy": 0.8167,
+    "correct": 99,
+    "accuracy": 0.825,
     "ci95": [
-     0.738,
-     0.8757
+     0.7472,
+     0.8826
     ],
-    "accuracy_key_value": 0.8667,
-    "docs_accuracy": 0.9,
+    "accuracy_key_value": 0.875,
+    "docs_accuracy": 0.925,
     "docs_n": 40,
     "sql_accuracy": 0.7083,
     "sql_n": 48,
@@ -107,6 +107,7 @@
     "answered": 126,
     "clarify": 9
    },
+   "answers_with_internal_labels": 0,
    "items": [
     {
      "id": "au-q01",
@@ -121,7 +122,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q02",
@@ -136,7 +138,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q03",
@@ -148,10 +151,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q04",
@@ -166,7 +170,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q05",
@@ -178,10 +183,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q06",
@@ -196,7 +202,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q07",
@@ -208,10 +215,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q08",
@@ -223,10 +231,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q09",
@@ -241,7 +250,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q10",
@@ -253,10 +263,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q11",
@@ -271,7 +282,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q12",
@@ -286,7 +298,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q13",
@@ -298,10 +311,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q14",
@@ -316,7 +330,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q15",
@@ -328,10 +343,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q16",
@@ -346,7 +362,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q17",
@@ -358,10 +375,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q18",
@@ -373,10 +391,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q19",
@@ -391,7 +410,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q20",
@@ -403,10 +423,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q21",
@@ -421,7 +442,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q22",
@@ -436,7 +458,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q23",
@@ -451,7 +474,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q24",
@@ -466,7 +490,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q25",
@@ -481,7 +506,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q26",
@@ -496,7 +522,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q27",
@@ -511,7 +538,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q28",
@@ -526,7 +554,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q29",
@@ -541,7 +570,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q30",
@@ -556,7 +586,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q31",
@@ -571,7 +602,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q32",
@@ -586,7 +618,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q33",
@@ -601,7 +634,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q34",
@@ -616,7 +650,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q35",
@@ -631,7 +666,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q36",
@@ -646,7 +682,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q37",
@@ -661,7 +698,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q38",
@@ -676,7 +714,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q39",
@@ -691,7 +730,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q40",
@@ -706,7 +746,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q41",
@@ -718,10 +759,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q42",
@@ -736,7 +778,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q43",
@@ -748,10 +791,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 4,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q44",
@@ -766,7 +810,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q45",
@@ -778,10 +823,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q46",
@@ -793,10 +839,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q47",
@@ -811,7 +858,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q48",
@@ -826,7 +874,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q49",
@@ -841,7 +890,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q50",
@@ -856,7 +906,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q51",
@@ -871,7 +922,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q52",
@@ -883,10 +935,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 1,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q53",
@@ -901,7 +954,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q54",
@@ -916,7 +970,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q55",
@@ -931,7 +986,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q56",
@@ -946,7 +1002,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q57",
@@ -961,7 +1018,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q58",
@@ -976,7 +1034,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q59",
@@ -991,7 +1050,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q60",
@@ -1006,7 +1066,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q01",
@@ -1018,10 +1079,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q02",
@@ -1036,7 +1098,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q03",
@@ -1048,10 +1111,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q04",
@@ -1066,7 +1130,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q05",
@@ -1081,7 +1146,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q06",
@@ -1093,25 +1159,27 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q07",
      "set": "questions_codex",
      "type": "docs",
-     "correct": true,
-     "correct_key_value": true,
+     "correct": false,
+     "correct_key_value": false,
      "route_ok": true,
      "sql_ok": null,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q08",
@@ -1123,40 +1191,43 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 4,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q09",
      "set": "questions_codex",
      "type": "docs",
-     "correct": false,
-     "correct_key_value": false,
+     "correct": true,
+     "correct_key_value": true,
      "route_ok": true,
      "sql_ok": null,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q10",
      "set": "questions_codex",
      "type": "docs",
-     "correct": false,
-     "correct_key_value": false,
+     "correct": true,
+     "correct_key_value": true,
      "route_ok": true,
      "sql_ok": null,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q11",
@@ -1171,7 +1242,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q12",
@@ -1186,7 +1258,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q13",
@@ -1201,7 +1274,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q14",
@@ -1216,7 +1290,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q15",
@@ -1231,7 +1306,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q16",
@@ -1243,10 +1319,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q17",
@@ -1261,7 +1338,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q18",
@@ -1276,7 +1354,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q19",
@@ -1288,10 +1367,11 @@
      "sql_ok": null,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q20",
@@ -1303,10 +1383,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 1,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q21",
@@ -1321,7 +1402,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q22",
@@ -1336,7 +1418,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q23",
@@ -1351,7 +1434,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q24",
@@ -1366,7 +1450,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q25",
@@ -1381,7 +1466,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q26",
@@ -1396,7 +1482,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q27",
@@ -1411,7 +1498,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q28",
@@ -1426,7 +1514,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q29",
@@ -1441,7 +1530,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q30",
@@ -1456,7 +1546,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q31",
@@ -1471,7 +1562,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q32",
@@ -1486,7 +1578,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q33",
@@ -1501,7 +1594,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q34",
@@ -1516,7 +1610,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q35",
@@ -1531,7 +1626,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q36",
@@ -1546,7 +1642,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q37",
@@ -1561,7 +1658,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q38",
@@ -1576,7 +1674,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q39",
@@ -1591,7 +1690,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q40",
@@ -1606,7 +1706,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q41",
@@ -1621,7 +1722,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q42",
@@ -1636,7 +1738,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q43",
@@ -1651,22 +1754,24 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q44",
      "set": "questions_codex",
      "type": "mixed",
-     "correct": false,
-     "correct_key_value": false,
+     "correct": true,
+     "correct_key_value": true,
      "route_ok": true,
      "sql_ok": true,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q45",
@@ -1681,7 +1786,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q46",
@@ -1693,10 +1799,11 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q47",
@@ -1711,7 +1818,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q48",
@@ -1726,7 +1834,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q49",
@@ -1741,7 +1850,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q50",
@@ -1756,7 +1866,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q51",
@@ -1771,22 +1882,24 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q52",
      "set": "questions_codex",
      "type": "mixed",
-     "correct": true,
-     "correct_key_value": true,
+     "correct": false,
+     "correct_key_value": false,
      "route_ok": true,
      "sql_ok": true,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q53",
@@ -1801,7 +1914,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q54",
@@ -1816,7 +1930,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q55",
@@ -1831,7 +1946,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q56",
@@ -1846,7 +1962,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q57",
@@ -1861,7 +1978,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q58",
@@ -1876,7 +1994,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q59",
@@ -1891,7 +2010,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q60",
@@ -1906,7 +2026,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q01",
@@ -1921,7 +2042,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q02",
@@ -1936,7 +2058,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q03",
@@ -1951,7 +2074,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q04",
@@ -1966,7 +2090,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q05",
@@ -1981,7 +2106,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q06",
@@ -1996,7 +2122,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q07",
@@ -2011,7 +2138,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q08",
@@ -2026,7 +2154,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q09",
@@ -2041,7 +2170,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q10",
@@ -2056,7 +2186,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q11",
@@ -2068,25 +2199,27 @@
      "sql_ok": true,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q12",
      "set": "questions_holdout",
      "type": "mixed",
-     "correct": true,
-     "correct_key_value": true,
+     "correct": false,
+     "correct_key_value": false,
      "route_ok": true,
      "sql_ok": true,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q13",
@@ -2098,10 +2231,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q14",
@@ -2116,7 +2250,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q15",
@@ -2131,21 +2266,22 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     }
    ]
   },
   "docs_only": {
    "all": {
     "n": 135,
-    "correct": 40,
-    "accuracy": 0.2963,
+    "correct": 42,
+    "accuracy": 0.3111,
     "ci95": [
-     0.2258,
-     0.3781
+     0.2392,
+     0.3935
     ],
-    "accuracy_key_value": 0.2963,
-    "docs_accuracy": 0.8889,
+    "accuracy_key_value": 0.3111,
+    "docs_accuracy": 0.9333,
     "docs_n": 45,
     "sql_accuracy": 0.0,
     "sql_n": 54,
@@ -2174,14 +2310,14 @@
    },
    "codex_blind": {
     "n": 60,
-    "correct": 16,
-    "accuracy": 0.2667,
+    "correct": 18,
+    "accuracy": 0.3,
     "ci95": [
-     0.1713,
-     0.3901
+     0.199,
+     0.4251
     ],
-    "accuracy_key_value": 0.2667,
-    "docs_accuracy": 0.8,
+    "accuracy_key_value": 0.3,
+    "docs_accuracy": 0.9,
     "docs_n": 20,
     "sql_accuracy": 0.0,
     "sql_n": 24,
@@ -2210,14 +2346,14 @@
    },
    "original_120": {
     "n": 120,
-    "correct": 35,
-    "accuracy": 0.2917,
+    "correct": 37,
+    "accuracy": 0.3083,
     "ci95": [
-     0.2178,
-     0.3784
+     0.2327,
+     0.3958
     ],
-    "accuracy_key_value": 0.2917,
-    "docs_accuracy": 0.875,
+    "accuracy_key_value": 0.3083,
+    "docs_accuracy": 0.925,
     "docs_n": 40,
     "sql_accuracy": 0.0,
     "sql_n": 48,
@@ -2240,6 +2376,7 @@
    "statuses": {
     "answered": 135
    },
+   "answers_with_internal_labels": 0,
    "items": [
     {
      "id": "au-q01",
@@ -2254,7 +2391,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q02",
@@ -2269,7 +2407,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q03",
@@ -2281,10 +2420,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q04",
@@ -2299,7 +2439,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q05",
@@ -2311,10 +2452,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q06",
@@ -2329,7 +2471,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q07",
@@ -2341,10 +2484,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q08",
@@ -2356,10 +2500,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q09",
@@ -2374,7 +2519,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q10",
@@ -2386,10 +2532,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q11",
@@ -2404,7 +2551,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q12",
@@ -2419,7 +2567,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q13",
@@ -2431,10 +2580,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q14",
@@ -2449,7 +2599,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q15",
@@ -2461,10 +2612,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q16",
@@ -2479,7 +2631,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q17",
@@ -2491,10 +2644,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q18",
@@ -2506,10 +2660,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q19",
@@ -2524,7 +2679,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q20",
@@ -2539,7 +2695,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q21",
@@ -2551,10 +2708,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q22",
@@ -2569,7 +2727,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q23",
@@ -2581,10 +2740,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q24",
@@ -2599,7 +2759,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q25",
@@ -2611,10 +2772,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q26",
@@ -2629,7 +2791,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q27",
@@ -2641,10 +2804,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q28",
@@ -2659,7 +2823,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q29",
@@ -2671,10 +2836,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q30",
@@ -2686,10 +2852,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q31",
@@ -2704,7 +2871,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q32",
@@ -2716,10 +2884,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q33",
@@ -2731,10 +2900,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q34",
@@ -2749,7 +2919,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q35",
@@ -2761,10 +2932,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q36",
@@ -2779,7 +2951,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q37",
@@ -2794,7 +2967,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q38",
@@ -2806,10 +2980,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q39",
@@ -2824,7 +2999,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q40",
@@ -2836,10 +3012,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q41",
@@ -2854,7 +3031,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q42",
@@ -2869,7 +3047,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q43",
@@ -2881,10 +3060,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 4,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q44",
@@ -2894,12 +3074,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q45",
@@ -2911,10 +3092,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q46",
@@ -2929,7 +3111,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q47",
@@ -2941,10 +3124,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q48",
@@ -2959,7 +3143,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q49",
@@ -2974,7 +3159,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q50",
@@ -2986,10 +3172,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q51",
@@ -3001,10 +3188,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q52",
@@ -3019,7 +3207,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q53",
@@ -3034,7 +3223,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q54",
@@ -3049,7 +3239,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q55",
@@ -3061,10 +3252,11 @@
      "sql_ok": null,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q56",
@@ -3079,7 +3271,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q57",
@@ -3091,10 +3284,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q58",
@@ -3109,7 +3303,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q59",
@@ -3124,7 +3319,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q60",
@@ -3136,10 +3332,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q01",
@@ -3151,10 +3348,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q02",
@@ -3169,7 +3367,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q03",
@@ -3181,10 +3380,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q04",
@@ -3199,7 +3399,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q05",
@@ -3214,7 +3415,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q06",
@@ -3226,10 +3428,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q07",
@@ -3244,7 +3447,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q08",
@@ -3256,10 +3460,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 4,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q09",
@@ -3274,22 +3479,24 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q10",
      "set": "questions_codex",
      "type": "docs",
-     "correct": false,
-     "correct_key_value": false,
+     "correct": true,
+     "correct_key_value": true,
      "route_ok": true,
      "sql_ok": null,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q11",
@@ -3304,7 +3511,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q12",
@@ -3319,7 +3527,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q13",
@@ -3334,22 +3543,24 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q14",
      "set": "questions_codex",
      "type": "docs",
-     "correct": false,
-     "correct_key_value": false,
+     "correct": true,
+     "correct_key_value": true,
      "route_ok": true,
      "sql_ok": null,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q15",
@@ -3364,7 +3575,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q16",
@@ -3376,10 +3588,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q17",
@@ -3394,7 +3607,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q18",
@@ -3409,7 +3623,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q19",
@@ -3421,10 +3636,11 @@
      "sql_ok": null,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q20",
@@ -3436,10 +3652,11 @@
      "sql_ok": null,
      "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 1,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q21",
@@ -3451,10 +3668,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q22",
@@ -3466,10 +3684,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 4,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q23",
@@ -3481,10 +3700,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q24",
@@ -3496,10 +3716,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q25",
@@ -3511,10 +3732,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q26",
@@ -3526,10 +3748,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q27",
@@ -3541,10 +3764,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 4,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q28",
@@ -3556,10 +3780,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q29",
@@ -3571,10 +3796,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q30",
@@ -3586,10 +3812,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q31",
@@ -3601,10 +3828,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q32",
@@ -3616,10 +3844,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q33",
@@ -3631,10 +3860,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q34",
@@ -3646,10 +3876,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q35",
@@ -3661,10 +3892,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q36",
@@ -3676,10 +3908,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q37",
@@ -3691,10 +3924,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q38",
@@ -3706,10 +3940,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 4,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q39",
@@ -3721,10 +3956,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q40",
@@ -3736,10 +3972,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 4,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q41",
@@ -3751,10 +3988,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 4,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q42",
@@ -3769,7 +4007,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q43",
@@ -3784,7 +4023,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q44",
@@ -3794,12 +4034,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q45",
@@ -3814,7 +4055,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q46",
@@ -3826,10 +4068,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q47",
@@ -3844,7 +4087,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q48",
@@ -3854,12 +4098,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q49",
@@ -3871,10 +4116,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q50",
@@ -3886,10 +4132,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q51",
@@ -3899,12 +4146,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": true,
+     "judge_ok": false,
      "recall5": 1.0,
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q52",
@@ -3914,12 +4162,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q53",
@@ -3931,10 +4180,11 @@
      "sql_ok": null,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q54",
@@ -3946,10 +4196,11 @@
      "sql_ok": null,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q55",
@@ -3961,10 +4212,11 @@
      "sql_ok": null,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 1,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q56",
@@ -3976,10 +4228,11 @@
      "sql_ok": null,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q57",
@@ -3991,10 +4244,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q58",
@@ -4006,10 +4260,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q59",
@@ -4021,10 +4276,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q60",
@@ -4036,10 +4292,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 3,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q01",
@@ -4054,7 +4311,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q02",
@@ -4069,7 +4327,8 @@
      "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q03",
@@ -4084,7 +4343,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q04",
@@ -4099,7 +4359,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q05",
@@ -4114,7 +4375,8 @@
      "n_citations": 3,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q06",
@@ -4126,10 +4388,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q07",
@@ -4141,10 +4404,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 6,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q08",
@@ -4156,10 +4420,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q09",
@@ -4171,10 +4436,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 5,
+     "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q10",
@@ -4186,10 +4452,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 4,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q11",
@@ -4199,12 +4466,13 @@
      "correct_key_value": false,
      "route_ok": false,
      "sql_ok": false,
-     "judge_ok": false,
+     "judge_ok": true,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q12",
@@ -4219,7 +4487,8 @@
      "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q13",
@@ -4231,10 +4500,11 @@
      "sql_ok": false,
      "judge_ok": false,
      "recall5": 1.0,
-     "n_citations": 3,
+     "n_citations": 2,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q14",
@@ -4249,7 +4519,8 @@
      "n_citations": 4,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q15",
@@ -4261,10 +4532,11 @@
      "sql_ok": false,
      "judge_ok": null,
      "recall5": null,
-     "n_citations": 2,
+     "n_citations": 1,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     }
    ]
   },
@@ -4375,6 +4647,7 @@
     "clarify": 22,
     "failed": 5
    },
+   "answers_with_internal_labels": 0,
    "items": [
     {
      "id": "au-q01",
@@ -4389,7 +4662,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q02",
@@ -4404,7 +4678,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q03",
@@ -4419,7 +4694,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q04",
@@ -4434,7 +4710,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q05",
@@ -4449,7 +4726,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q06",
@@ -4464,7 +4742,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "failed",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q07",
@@ -4479,7 +4758,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q08",
@@ -4494,7 +4774,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q09",
@@ -4509,7 +4790,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q10",
@@ -4524,7 +4806,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q11",
@@ -4539,7 +4822,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q12",
@@ -4554,7 +4838,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q13",
@@ -4569,7 +4854,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q14",
@@ -4584,7 +4870,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q15",
@@ -4599,7 +4886,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q16",
@@ -4614,7 +4902,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q17",
@@ -4629,7 +4918,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q18",
@@ -4644,7 +4934,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q19",
@@ -4659,7 +4950,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "failed",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q20",
@@ -4674,7 +4966,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q21",
@@ -4689,7 +4982,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q22",
@@ -4704,7 +4998,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q23",
@@ -4719,7 +5014,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q24",
@@ -4734,7 +5030,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q25",
@@ -4749,7 +5046,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q26",
@@ -4764,7 +5062,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q27",
@@ -4779,7 +5078,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q28",
@@ -4794,7 +5094,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q29",
@@ -4809,7 +5110,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q30",
@@ -4824,7 +5126,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q31",
@@ -4839,7 +5142,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q32",
@@ -4854,7 +5158,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q33",
@@ -4869,7 +5174,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q34",
@@ -4884,7 +5190,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q35",
@@ -4899,7 +5206,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q36",
@@ -4914,7 +5222,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q37",
@@ -4929,7 +5238,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q38",
@@ -4944,7 +5254,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q39",
@@ -4959,7 +5270,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q40",
@@ -4974,7 +5286,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q41",
@@ -4989,7 +5302,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q42",
@@ -5004,7 +5318,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q43",
@@ -5019,7 +5334,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q44",
@@ -5034,7 +5350,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q45",
@@ -5049,7 +5366,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q46",
@@ -5064,7 +5382,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q47",
@@ -5079,7 +5398,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q48",
@@ -5094,7 +5414,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q49",
@@ -5109,7 +5430,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q50",
@@ -5124,7 +5446,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q51",
@@ -5139,7 +5462,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "au-q52",
@@ -5154,7 +5478,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q53",
@@ -5169,7 +5494,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q54",
@@ -5184,7 +5510,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q55",
@@ -5199,7 +5526,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q56",
@@ -5214,7 +5542,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q57",
@@ -5229,7 +5558,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q58",
@@ -5244,7 +5574,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q59",
@@ -5259,7 +5590,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "au-q60",
@@ -5274,7 +5606,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q01",
@@ -5289,7 +5622,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q02",
@@ -5304,7 +5638,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q03",
@@ -5319,7 +5654,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q04",
@@ -5334,7 +5670,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "failed",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q05",
@@ -5349,7 +5686,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q06",
@@ -5364,7 +5702,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q07",
@@ -5379,7 +5718,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q08",
@@ -5394,7 +5734,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q09",
@@ -5409,7 +5750,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q10",
@@ -5424,7 +5766,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q11",
@@ -5439,7 +5782,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q12",
@@ -5454,7 +5798,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "failed",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q13",
@@ -5469,7 +5814,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q14",
@@ -5484,7 +5830,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q15",
@@ -5499,7 +5846,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q16",
@@ -5514,7 +5862,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q17",
@@ -5529,7 +5878,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q18",
@@ -5544,7 +5894,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q19",
@@ -5559,7 +5910,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q20",
@@ -5574,7 +5926,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q21",
@@ -5589,7 +5942,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q22",
@@ -5604,7 +5958,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q23",
@@ -5619,7 +5974,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q24",
@@ -5634,7 +5990,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q25",
@@ -5649,7 +6006,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q26",
@@ -5664,7 +6022,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q27",
@@ -5679,7 +6038,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q28",
@@ -5694,7 +6054,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q29",
@@ -5709,7 +6070,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q30",
@@ -5724,7 +6086,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q31",
@@ -5739,7 +6102,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q32",
@@ -5754,7 +6118,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q33",
@@ -5769,7 +6134,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q34",
@@ -5784,7 +6150,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q35",
@@ -5799,7 +6166,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q36",
@@ -5814,7 +6182,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q37",
@@ -5829,7 +6198,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q38",
@@ -5844,7 +6214,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q39",
@@ -5859,7 +6230,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q40",
@@ -5874,7 +6246,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q41",
@@ -5889,7 +6262,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q42",
@@ -5904,7 +6278,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q43",
@@ -5919,7 +6294,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q44",
@@ -5934,7 +6310,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "cx-q45",
@@ -5949,7 +6326,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q46",
@@ -5964,7 +6342,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q47",
@@ -5979,7 +6358,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q48",
@@ -5994,7 +6374,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q49",
@@ -6009,7 +6390,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q50",
@@ -6024,7 +6406,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q51",
@@ -6039,7 +6422,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q52",
@@ -6054,7 +6438,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q53",
@@ -6069,7 +6454,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q54",
@@ -6084,7 +6470,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q55",
@@ -6099,7 +6486,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q56",
@@ -6114,7 +6502,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q57",
@@ -6129,7 +6518,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q58",
@@ -6144,7 +6534,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q59",
@@ -6159,7 +6550,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "cx-q60",
@@ -6174,7 +6566,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q01",
@@ -6189,7 +6582,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q02",
@@ -6204,7 +6598,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q03",
@@ -6219,7 +6614,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "failed",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q04",
@@ -6234,7 +6630,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q05",
@@ -6249,7 +6646,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "clarify",
-     "false_clarify": true
+     "false_clarify": true,
+     "internal_labels": false
     },
     {
      "id": "hx-q06",
@@ -6264,7 +6662,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q07",
@@ -6279,7 +6678,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q08",
@@ -6294,7 +6694,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q09",
@@ -6309,7 +6710,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q10",
@@ -6324,7 +6726,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q11",
@@ -6339,7 +6742,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q12",
@@ -6354,7 +6758,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q13",
@@ -6369,7 +6774,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q14",
@@ -6384,7 +6790,8 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     },
     {
      "id": "hx-q15",
@@ -6399,15 +6806,16 @@
      "n_citations": 0,
      "citations_valid": true,
      "status": "answered",
-     "false_clarify": false
+     "false_clarify": false,
+     "internal_labels": false
     }
    ]
   }
  },
  "paired": {
   "copilot_vs_docs_only": {
-   "a_only": 70,
-   "b_only": 1,
+   "a_only": 67,
+   "b_only": 0,
    "p_exact": 0.0
   },
   "copilot_vs_v1_sql": {

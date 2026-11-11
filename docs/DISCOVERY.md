@@ -32,3 +32,14 @@ data stays on city infrastructure; answers must show sources.
   metric-family conflict detection that asks instead of choosing (pain 3).
 - Moved down: dense retrieval tuning and rerank (nice to have; measured, off by default).
 - Dropped: write actions (create/close requests) — read path first.
+
+## Real pilot notes
+**2026-11-11, first live session.** 1 user: the repo owner, in his own Slack workspace, mapped to the demo CDOT
+analyst through the local identity override (so the department access is still Simulated; the person, the
+messages and the bot are real).
+- Asked in a DM: how many pothole complaints CDOT got last month. The bot answered correctly in about 15 s
+  (4,211: 3,183 street + 1,028 alley).
+- What broke (his findings): (1) the reply was threaded inside the DM, so he first thought the bot had not answered;
+  (2) Markdown bold showed literally as `**...**`; (3) the answer contained a note about prompt internals
+  ("No SOURCES were provided ..."). All three are in INCIDENTS I-8 and FEEDBACK_TO_PRODUCT.
+- Scope change: none to the permission model; delivery formatting and the answer output contract were added.

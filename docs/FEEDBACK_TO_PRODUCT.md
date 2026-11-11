@@ -13,3 +13,12 @@
    private and offer "share to people who can see it".
 5. **Data-portal metadata is uneven.** Many performance-metric datasets were last updated 2012–2016 and
    still state targets; answers should surface the "rows last updated" date with any target they quote.
+
+## From the first real user (2026-11-11, the owner, live Slack)
+6. **DMs are not channels.** Threading every reply is right in a busy channel and wrong in a DM, where a
+   threaded reply looks like no reply. Delivery rules differ per surface and need their own tests.
+7. **Model Markdown is not Slack mrkdwn.** Every chat surface needs a formatting adapter at the delivery layer;
+   the model's output format should not be trusted to match the surface.
+8. **Prompt scaffolding leaks into answers.** Section names in the prompt ("SOURCES", "DATA") showed up in 57 of 135
+   recorded eval answers, and nobody noticed because the judge and the tests only checked facts. An answer output
+   contract (what may never appear in user-facing text) deserves a mechanical check, like citations do.

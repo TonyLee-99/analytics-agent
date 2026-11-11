@@ -3,7 +3,7 @@
 [![ci](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.12-blue) ![postgres](https://img.shields.io/badge/postgres-16%20RLS-336791) ![license](https://img.shields.io/badge/license-MIT-green)
 
-**A Slack copilot over 4.0M real Chicago 311 requests and 157 City documents that showed nobody data they may not see: 0 leaks across a 60-attack red team (20 written blind after the fixes), while the same checker finds 8 of 10 revocation scenarios leaking with the defences switched off; 81% of 135 questions answered correctly vs 30% for docs-only RAG.**
+**A Slack copilot over 4.0M real Chicago 311 requests and 157 City documents that showed nobody data they may not see: 0 leaks across a 60-attack red team (20 written blind after the fixes), while the same checker finds 8 of 10 revocation scenarios leaking with the defences switched off; 81% of 135 questions answered correctly vs 31% for docs-only RAG.**
 
 ![demo](docs/img/demo.png)
 
@@ -11,7 +11,7 @@
 |---|---|
 | **Business problem** | City department analysts ask Slack for "what does the city say about X" and "what are the numbers for Y". Documents and warehouse rows are restricted by department, people change teams all the time, and two departments define "time to close" differently. A copilot is only usable if nobody ever sees what they may not, and the numbers use the right definition. |
 | **What I built** | Ingest (4,033,015 real 311 requests into Postgres 16, 157 real City documents, polite fetcher) → index with ACLs (BM25 + local bge-small embeddings) → permission-aware retrieval (filter before ranking, live recheck) and SQL under each user's own Postgres role with row-level security → planner/router + v1's governed metric compiler with conflict detection → answer with span citations, re-authorised at delivery → Slack bot (Bolt; emulator for tests) + MCP + FastAPI → per-answer traces → eval gate in CI → static demo page. |
-| **Measured results** | Red team: 0/40 leaks in round 1, 0/60 after the fixes, including 0/20 for a fresh batch written blind after the fixes; with the defences switched off the same oracle finds 8/10 revocation scenarios leaking. Lag window: 0 leaks with recheck vs 15/15 without. Answers on all 135 questions: 81% (98% author half, 65% codex-blind half, 73% blind holdout) vs 30% docs-only RAG and 25% for the v1 SQL agent; router 99%, recall@5 100%; asks back on 100% of ambiguous metric questions and on 0% of questions that already state the definition. Judge vs second grader: kappa 0.615 on 10. |
+| **Measured results** | Red team: 0/40 leaks in round 1, 0/60 after the fixes, including 0/20 for a fresh batch written blind after the fixes; with the defences switched off the same oracle finds 8/10 revocation scenarios leaking. Lag window: 0 leaks with recheck vs 15/15 without. Answers on all 135 questions: 81% (98% author half, 67% codex-blind half, 67% blind holdout) vs 31% docs-only RAG and 25% for the v1 SQL agent; router 99%, recall@5 100%; asks back on 100% of ambiguous metric questions and on 0% of questions that already state the definition. Judge vs second grader: kappa 0.615 on 10. |
 
 **Simulated vs real.** Real: the 311 service requests (City of Chicago Data Portal, via the read-only
 [chicago-311-warehouse](https://github.com/TonyLee-99/chicago-311-warehouse) build), the documents (chicago.gov and
@@ -58,10 +58,10 @@ after the fixes (holdout).
 
 | correct | copilot | docs-only RAG | v1 SQL agent |
 |---|---|---|---|
-| all 135 | **81%** (CI 73–87%) | 30% | 25% |
+| all 135 | **81%** (CI 73–87%) | 31% | 25% |
 | author half (60; used for development) | 98% | 32% | 27% |
-| codex-blind half (60) | 65% | 27% | 25% |
-| codex-blind holdout (15, written after the fixes) | 73% | 33% | 20% |
+| codex-blind half (60) | 67% | 30% | 25% |
+| codex-blind holdout (15, written after the fixes) | 67% | 33% | 20% |
 | router accuracy | 99% | — | — |
 
 | Permission test | Result |
@@ -74,13 +74,15 @@ after the fixes (holdout).
 | Postgres copy vs source, per department | 4,033,015 rows, 0 mismatches |
 
 **What did not work / limits.**
-- The blind halves are much harder than the author half (65% vs 98%; the author half was used for development).
+- The blind halves are much harder than the author half (67% vs 98%; the author half was used for development).
   Most blind misses are SQL shape: the right figure without the helper columns asked for, or a different row
-  breakdown (strict SQL 42% on the codex half; codex-half accuracy is 75% when only the key value of each SQL answer is checked).
+  breakdown (strict SQL 42% on the codex half; codex-half accuracy is 77% when only the key value of each SQL answer is checked).
 - 3 of 9 questions that state a metric definition return the right figure in the wrong shape.
 - The red team missed two delivery leaks that the independent acceptance review found (channel members past the
   first page; a revocation during the member lookup). Both fixed with tests (docs/INCIDENTS.md I-4, I-5).
 - Judge calibration is 10 answers only.
+- The first real user (the owner, live Slack) found that 57 of 135 recorded answers mentioned the prompt's own
+  section names; fixed with an output contract, now 0 of 135 (docs/INCIDENTS.md I-8). Numbers above are after the fix.
 - The v1 baseline is a historical reference (no permissions, no documents), not a fair rival.
 - Over-denial: after the recheck drops restricted chunks, some in-scope sub-questions get "no sources".
 

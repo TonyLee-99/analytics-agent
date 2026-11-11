@@ -70,6 +70,32 @@ fix and prevention. v1's security findings are in `docs/v1/security.md`.
 - **Check.** 14 paraphrases written for the test and absent from every eval set (`test_definition_signals.py`);
   on the full question set 0 of 9 explicit-definition questions were asked back and all 9 ambiguous ones still were.
 
+## I-8. First real user: threaded DM replies, literal Markdown, prompt internals in answers (found in live Slack)
+- **Symptom (2026-11-11, owner, first live DM).** The answer was correct but (1) posted as a thread reply inside the DM,
+  so it looked unanswered; (2) `**bold**` showed literally; (3) it contained a note about the prompt's own sections
+  ("No SOURCES were provided ...").
+- **Scale of (3).** Checking the recorded runs: 57 of 135 copilot eval answers and 88 of 135 docs-only answers
+  mentioned a prompt section name (SOURCES / DATA / NOTICES), as did 200 of 1,002 cached model responses. The judge
+  and every test checked facts and citations, not what else the text said, so it was never caught.
+- **Root cause.** (1) The thread rule for channels was applied to DMs. (2) The model writes Markdown; Slack renders
+  mrkdwn. (3) The answer prompt named its input sections in capitals and asked the model to "say which metric
+  definition was used" even when no numbers were given, which invited meta sentences about missing inputs.
+- **Fix.** DMs get top-level replies (threads stay for channel mentions); a Markdown-to-mrkdwn adapter runs at the
+  Slack delivery layer; the prompt no longer names its sections to the model as things to talk about, and a
+  deterministic output contract (`scrub_internal`) removes any sentence that still names a prompt section and
+  records what it removed in the trace.
+- **Prevention.** `test_output_contract.py`, the DM/threading and mrkdwn tests in `test_slack.py`, and the eval now
+  reports how many delivered answers still contain internal labels (should be 0).
+
+## I-9. Two concurrent eval runs overwrote each other's cached answers (found by the replay gate)
+- **Symptom.** After re-recording, `make check` failed: replaying au-q01 from the cache gave a different (equally
+  correct) answer than the recorded run.
+- **Root cause.** For a docs-only question the copilot and the docs-only baseline send byte-identical answer
+  prompts, so they share a cache key. Both ran at the same time, both missed, both called the model, and the
+  later write won.
+- **Fix.** Both systems were re-run from the cache so the recordings match it (scores unchanged); the replay gate
+  is what caught it. Prevention: run systems that share prompts sequentially, or cache with write-if-absent.
+
 ## Postmortem: I-1 (multi-statement execution through the gateway)
 **Summary.** A design assumption about the database driver was false: the gateway would execute a string with
 several statements. It was caught by a smoke test on day one, before any evaluation, and never reached a user.

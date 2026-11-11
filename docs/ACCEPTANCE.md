@@ -26,11 +26,11 @@ at the end.
 ## Q. Answer quality (120 questions, 60 author + 60 codex-blind, reported separately)
 | ID | Criterion | Verify | Result |
 |----|-----------|--------|--------|
-| Q1 | Overall answer correctness (deterministic for SQL, LLM judge for docs/mixed, calibrated in Q7) >= 70%, and >= 50% in every route stratum | `make eval-v2` -> `results/v2/eval.json` | PASS on all 135: 81% (CI 73-87%); author 98%, codex-blind 65%, holdout 73%; strata docs 91%, sql 69%, mixed 81%, clarify 100% (codex-half sql alone is 42%) |
+| Q1 | Overall answer correctness (deterministic for SQL, LLM judge for docs/mixed, calibrated in Q7) >= 70%, and >= 50% in every route stratum | `make eval-v2` -> `results/v2/eval.json` | PASS on all 135: 81% (CI 73-87%); author 98%, codex-blind 67%, holdout 67%; strata docs 93%, sql 69%, mixed 78%, clarify 100% (codex-half sql alone is 42%) |
 | Q2 | Router accuracy (docs / sql / both / clarify) >= 85% | same | PASS: 99% (135) |
 | Q3 | 100% of citations that reach the user point to a chunk that was in the allowed context, and >= 90% of answered docs/mixed questions carry at least one valid citation | same | PASS: 100% of citations in the allowed context; 100% of answered docs/mixed answers cite (135) |
 | Q4 | Doc retrieval recall@5 (share of gold docs in top 5, averaged per question) >= 0.80 on doc and mixed questions | same | PASS: recall@5 100% (135) |
-| Q5 | The copilot beats the docs-only RAG baseline (same authorised evidence) and the v1 SQL-only agent (historical reference, no permissions) on overall correctness, paired test reported | same | PASS: 81% vs docs-only 30% (70/1) and v1 25% (84/9), p<0.001 |
+| Q5 | The copilot beats the docs-only RAG baseline (same authorised evidence) and the v1 SQL-only agent (historical reference, no permissions) on overall correctness, paired test reported | same | PASS: 81% vs docs-only 31% (67/0) and v1 25% (84/9), p<0.001 |
 | Q6 | Conflicting metric definitions: asks on >= 80% of the conflict questions (no selector phrase), false clarification <= 10% on clear controls (selector phrase present) | same | PASS (round 2): asks on 9/9 conflict questions; 0/9 false clarifications on questions that state the definition (was 1/8 = 12.5% FAIL in round 1; general fix I-7) |
 | Q7 | Judge calibration: second independent grader (codex) on 30 answers; Cohen's kappa reported with every disagreement adjudicated | `results/v2/judge_calibration.json` | PASS (reported): n=10 (criterion said 30), agreement 9/10, kappa 0.615, 1 disagreement adjudicated |
 

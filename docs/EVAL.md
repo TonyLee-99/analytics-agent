@@ -27,16 +27,20 @@ The codex half was not used for development; the author half was (one bug, INCID
 
 ## Results, full run (round 2: all 135 questions, after the fixes)
 `make eval-v2 N=all`. The author half was used for development; the two codex halves were not.
+Re-recorded after the answer output-contract fix (INCIDENTS I-8): before it, 57/135 copilot and 88/135 docs-only
+answers mentioned a prompt section name (SOURCES / DATA / NOTICES); after it, 0/135 for every system. Accuracy
+before -> after: copilot 81% -> 81%, codex half 65% -> 67%, holdout 73% -> 67%, docs-only 30% -> 31%.
+Red team re-run on the new answers (round 3): 0/60 leaks, holdout 0/20.
 
 | System | All 135 | Author (60) | Codex-blind (60) | Blind holdout (15) | docs | sql | mixed | clarify | Route |
 |---|---|---|---|---|---|---|---|---|---|
-| **copilot** | **81%** (CI 73–87%) | 98% | 65% | 73% | 91% | 69% | 81% | 100% | 99% |
-| docs-only RAG | 30% | 32% | 27% | 33% | 89% | 0% | 0% | 0% | 33% |
+| **copilot** | **81%** (CI 73–87%) | 98% | 67% | 67% | 93% | 69% | 78% | 100% | 99% |
+| docs-only RAG | 31% | 32% | 30% | 33% | 93% | 0% | 0% | 0% | 33% |
 | v1 SQL agent (reference) | 25% | 27% | 25% | 20% | 0% | 63% | 0% | 0% | 39% |
 
-- Paired exact McNemar: copilot vs docs-only 70 wins / 1 loss; vs v1 84 / 9; both p < 0.001.
-- Copilot on the codex half by type: docs 85%, sql 42%, mixed 67%, clarify 100%. Counting only the key value of
-  each SQL answer, the codex half is 75%. SQL/mixed misses on all 135: 6 right key value without the requested
+- Paired exact McNemar: copilot vs docs-only 67 wins / 0 losses; vs v1 84 / 9; both p < 0.001.
+- Copilot on the codex half by type: docs 90%, sql 42%, mixed 67%, clarify 100%. Counting only the key value of
+  each SQL answer, the codex half is 77%. SQL/mixed misses on all 135: 6 right key value without the requested
   helper columns, 6 different row breakdown, 4 different values, 4 no rows (not expressible), 2 document part
   judged incomplete.
 - Recall@5 100%; delivered citations 100% within the allowed context; every answered docs/mixed question cites.

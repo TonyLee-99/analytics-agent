@@ -338,7 +338,8 @@ def score_item(q: dict, r: dict, j: dict | None) -> dict[str, Any]:
     cite_valid = all(c["doc_id"] in ctx for c in cites)
     return {"id": q["id"], "set": q["set"], "type": t, "correct": correct, "correct_key_value": correct_key, "route_ok": route_ok, "sql_ok": sql_ok,
             "judge_ok": judge_ok, "recall5": recall5, "n_citations": len(cites), "citations_valid": cite_valid,
-            "status": status, "false_clarify": t != "clarify" and status == "clarify"}
+            "status": status, "false_clarify": t != "clarify" and status == "clarify",
+            "internal_labels": bool(re.search(r"\b(SOURCES|DATA|NOTICES)\b", r.get("text") or ""))}
 
 
 def mcnemar(a: list[bool], b: list[bool]) -> dict:
@@ -406,6 +407,7 @@ def score(systems: list[str] = ("copilot", "docs_only", "v1_sql"), write: bool =
             sum(r["false_clarify"] for r in explicit) / max(1, len(explicit)), 4) if explicit else None
         summ["false_clarify_rate_all"] = round(sum(r["false_clarify"] for r in nonclar) / max(1, len(nonclar)), 4)
         summ["statuses"] = _count(r["status"] for r in rows)
+        summ["answers_with_internal_labels"] = sum(r["internal_labels"] for r in rows)
         summ["items"] = rows
         out["systems"][s] = summ
     if "copilot" in per_sys_correct:
