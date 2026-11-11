@@ -37,6 +37,7 @@ def runs(name):
 
 def main():
     ev, rt, lag = load("eval.json"), load("redteam_round1.json"), load("lag_window.json")
+    rf = load("redteam_roundfinal.json")
     abl = load("redteam_roundablation_norecheck_nodelivery.json")
     cal = load("judge_calibration.json")
     items = {}
@@ -96,12 +97,12 @@ pre{{white-space:pre-wrap;font-size:12px;background:#111827;color:#e5e7eb;paddin
 <p>Permission-aware answers over 157 real City documents and 4,033,015 real 311 service requests (Postgres, row-level security). Every number below comes from recorded runs in <code>results/v2/</code>.</p></header><main>
 <div class="sim"><b>Simulated:</b> the org chart (analysts, departments, groups) and which documents are restricted to whom. <b>Real:</b> the service requests, the documents, every model output and every measurement.</div>
 <section><h2>Headline</h2><div class="kpis">
-<div class="kpi"><b>{rt['summary']['leaked']}/{rt['summary']['scenarios']}</b><span>permission leaks, first red-team round (half written blind by ChatGPT)</span></div>
+<div class="kpi"><b>{cp['codex_blind']['accuracy']:.0%}</b><span>correct on {cp['codex_blind']['n']} questions written blind by another model ({cp['codex_blind_holdout']['accuracy']:.0%} on a {cp['codex_blind_holdout']['n']}-question holdout written after the fixes)</span></div>
+<div class="kpi"><b>{rf['summary']['leaked']}/{rf['summary']['scenarios']}</b><span>red-team leaks after the fixes; an independent review had found 2 delivery leaks the red team missed (fixed)</span></div>
 <div class="kpi"><b>{ls['recheck_on']['doc_leaks'] + ls['recheck_on']['sql_leaks']} vs {ls['off_leaks_inside_window']}</b><span>leaks inside the 300 s revocation-lag window, recheck on vs off ({ls['inside_window_probes_per_mode']} probes)</span></div>
-<div class="kpi"><b>{cp['all']['accuracy']:.0%}</b><span>answers correct on {cp['all']['n']} questions ({cp['author']['accuracy']:.0%} author / {cp['codex_blind']['accuracy']:.0%} blind half)</span></div>
-<div class="kpi"><b>{cp['clarify_rate_on_conflicts']:.0%}</b><span>asks back when a metric has two governed definitions</span></div></div></section>
-<section><h2>Quality vs baselines</h2><table><tr><th>system</th><th>all</th><th>author half</th><th>codex-blind half</th><th>route acc.</th></tr>{sysrows}</table>
-<p class="meta">{esc(cal_line)} Small sample (N={cp['all']['n']}); scale up with <code>make eval-v2 N=all</code>.</p></section>
+<div class="kpi"><b>{cp['all']['accuracy']:.0%}</b><span>all {cp['all']['n']} questions, including {cp['author']['n']} development questions ({cp['author']['accuracy']:.0%})</span></div></div></section>
+<section><h2>Quality vs baselines</h2><table><tr><th>system</th><th>all 135</th><th>author (dev)</th><th>codex-blind</th><th>route acc.</th></tr>{sysrows}</table>
+<p class="meta">{esc(cal_line)} N={cp['all']['n']}.</p></section>
 <section><h2>Recorded conversations</h2>{''.join(convo)}</section>
 <section><h2>Red team (recorded)</h2><table><tr><th>id</th><th>category</th><th>delivery</th><th>chunks dropped by recheck</th><th>oracle</th><th>answer</th></tr>{''.join(rtrows)}</table>
 <p class="meta">{esc(abl_line)}</p></section>
