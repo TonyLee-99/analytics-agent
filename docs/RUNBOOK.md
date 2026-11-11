@@ -35,3 +35,19 @@ the live source is right.
 Same Bolt app and WebClient; the emulator skips OAuth/signing, rate-limit tiers (faults are injected),
 pagination and Block Kit validation. The live Socket Mode path has not been run (needs the owner's
 Slack app tokens).
+
+## Going live on Slack (owner steps)
+1. Create the app from `docs/slack_manifest.yaml` (api.slack.com/apps -> From a manifest). Scopes and why:
+   `app_mentions:read` + `app_mention` (channel questions), `im:history` + `message.im` (DMs), `chat:write`
+   (answers and ephemeral replies), `users:read` + `users:read.email` (identity mapping by verified email),
+   `channels:read` / `groups:read` / `mpim:read` / `im:read` (`conversations.members` for the audience check),
+   interactivity on (feedback buttons arrive over Socket Mode). No channel-history scope: in channels, follow-up
+   replies in a thread must @mention the bot (least privilege).
+2. Create an app-level token with `connections:write` (Socket Mode), install the app, then store both tokens in
+   the keychain: `security add-generic-password -s slack-bot-token -a copilot -w` and the same for
+   `slack-app-token` (each prompts for the value; nothing is written to a file).
+3. Identity: your Slack email is not in the Simulated directory. Copy `config/local_identity.example.yaml` to
+   `config/local_identity.yaml` (gitignored), set your email and a demo user (`maria` = CDOT, `dev` = Streets and
+   Sanitation, `priya` = Water, `lena` = all departments); restart to switch. The override refuses an email that
+   already belongs to another directory user.
+4. `make pg-start` then `make slack-live`. DM the bot, or invite it to a channel and @mention it.

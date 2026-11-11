@@ -1,0 +1,6 @@
+# Copy to config/local_identity.yaml (gitignored) to test the live Slack bot as a Simulated directory user.
+# Your real Slack email is added as an alias of ONE demo user; change `as_user` and restart to act as
+# another department. Loaded only by `make slack-live` (never by tests or evaluations).
+mappings:
+  - slack_email: you@example.com   # the email on your Slack profile
+    as_user: maria                 # an id from config/org.yaml: maria (CDOT), dev (DSS), priya (DWM), lena (all departments)

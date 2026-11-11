@@ -157,6 +157,25 @@ class Directory:
         return self.emit("user_deactivate", {"id": user_id})
 
 
+def apply_local_identity(d: Directory, path: Path) -> list[str]:
+    """Dev-only override (config/local_identity.yaml): add a real email as an alias of a demo user.
+
+    Refuses an email that already belongs to someone else, so it can never create an ambiguous mapping."""
+    cfg = yaml.safe_load(Path(path).read_text()) or {}
+    done = []
+    for m in cfg.get("mappings", []):
+        email, uid = str(m["slack_email"]).strip().lower(), m["as_user"]
+        u = d.state.users.get(uid)
+        if u is None:
+            raise ValueError(f"local identity: unknown directory user {uid!r}")
+        if any(x["id"] != uid for x in d.state.users_by_email(email)):
+            raise ValueError(f"local identity: {email} already belongs to another directory user")
+        d.emit("user_upsert", {**{k: u[k] for k in ("id", "name", "email", "title", "active")},
+                               "aliases": sorted(set(u["aliases"]) | {email})})
+        done.append(f"{email} -> {uid}")
+    return done
+
+
 class DirectoryReplica:
     """A lagged copy of the directory: applies only events older than `lag_s` when synced."""
 

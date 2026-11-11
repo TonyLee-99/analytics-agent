@@ -3,7 +3,7 @@
 UV ?= uv
 PY = $(UV) run python
 
-.PHONY: init check verify pg-start pg-stop pg-load pg-verify corpus index eval-v2 redteam-v2 lag-experiment judge-v2 site pack-v2 unpack-v2 unpack pack reproduce-results setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
+.PHONY: slack-live init check verify pg-start pg-stop pg-load pg-verify corpus index eval-v2 redteam-v2 lag-experiment judge-v2 site pack-v2 unpack-v2 unpack pack reproduce-results setup data bird olist verify-data retrieval eval-small eval-full eval-qwen semantic ambiguity \
         abstention routing frontier redteam traces report test lint gate record-regression all reproduce clean-runs
 
 setup:            ## create the py3.12 venv with pinned deps (uv.lock)
@@ -157,5 +157,10 @@ lag-experiment:
 site:             ## static demo page from recorded runs + Playwright screenshots
 	$(PY) scripts/v2/build_site.py
 	node scripts/v2/screenshot.cjs   # needs the playwright npm package (set NODE_PATH to its node_modules)
+
+slack-live:       ## live Slack (Socket Mode); tokens come from the macOS keychain, never from files
+	@SLACK_BOT_TOKEN="$$(security find-generic-password -s slack-bot-token -w)" \
+	 SLACK_APP_TOKEN="$$(security find-generic-password -s slack-app-token -w)" \
+	 AA_LOCAL_IDENTITY=config/local_identity.yaml $(PY) -m analytics_agent.copilot.slack_app
 
 reproduce: pg-load corpus index eval-v2 redteam-v2 lag-experiment site   ## live v2 path end to end

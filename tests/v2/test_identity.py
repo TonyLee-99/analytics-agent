@@ -72,3 +72,15 @@ def test_replica_lags_then_catches_up():
     assert "dept-cdot" in r.state.effective_groups("maria")  # stale inside the window
     r.sync(now=t[0] + 301)
     assert "dept-cdot" not in r.state.effective_groups("maria")
+
+
+def test_local_identity_override(tmp_path, d):
+    from analytics_agent.copilot.identity import apply_local_identity
+
+    p = tmp_path / "li.yaml"
+    p.write_text("mappings:\n  - {slack_email: Owner@Real.example, as_user: priya}\n")
+    apply_local_identity(d, p)
+    assert resolve_slack_user(prof("owner@real.example"), d.state).user_id == "priya"
+    p.write_text("mappings:\n  - {slack_email: maria.chen@cityops.example, as_user: priya}\n")
+    with pytest.raises(ValueError):
+        apply_local_identity(d, p)

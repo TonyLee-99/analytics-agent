@@ -229,10 +229,20 @@ def main() -> None:  # pragma: no cover - needs the owner's Slack app tokens
 
     from analytics_agent.copilot.copilot import build_deployment
 
-    bot_token, app_token = os.environ["SLACK_BOT_TOKEN"], os.environ["SLACK_APP_TOKEN"]
+    from analytics_agent.copilot.identity import apply_local_identity
+
+    bot_token, app_token = os.environ.get("SLACK_BOT_TOKEN", ""), os.environ.get("SLACK_APP_TOKEN", "")
+    if not bot_token.startswith("xoxb-") or not app_token.startswith("xapp-"):
+        raise SystemExit("need SLACK_BOT_TOKEN (xoxb-...) and SLACK_APP_TOKEN (xapp-..., connections:write); "
+                         "`make slack-live` reads them from the keychain")
     client = WebClient(token=bot_token)
     team = client.auth_test()["team_id"]
     dep = build_deployment()
+    local = os.environ.get("AA_LOCAL_IDENTITY", "")
+    if local and Path(local).exists():
+        for line in apply_local_identity(dep.directory, Path(local)):
+            print("local identity override:", line)
+        dep.index.sync(now=dep.clock() + dep.index.lag_s)  # make the alias visible to the index replica too
     dep.index.persist_purges = True
     core = SlackCopilot(Copilot(dep, purge_llm_on_delete=True), client, team)
     SocketModeHandler(build_app(core, bot_token, client), app_token).start()

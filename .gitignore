@@ -24,3 +24,4 @@ cache/v2_sql/
 cache/embed_raw/
 .fastembed_cache/
 node_modules/
+config/local_identity.yaml
