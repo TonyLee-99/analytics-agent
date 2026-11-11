@@ -134,7 +134,7 @@ JSONL with OTel-shaped spans. A static viewer (no server) renders recorded trace
 `LLMClient` interface (v1): `claude-cli` (claude -p, subscription), `anthropic` (only if
 ANTHROPIC_API_KEY), `replay` (strict cache, zero calls, used by `make check` and CI). Every live call
 is cached by hash of model + system + prompt + version and logged to a ledger with list-price cost.
-Models: agent = Claude Haiku 5.5; LLM judge = Claude Sonnet 5.5; second grader = ChatGPT via codex.
+Models: agent = Claude Haiku 5.5 (same as v1); LLM judge = Claude Haiku 5.5 (owner cost policy: subscription only, bulk passes on Haiku); second grader = ChatGPT via codex.
 The SQL cassette (role + live departments + SQL -> rows) recorded from the live Postgres runs lets
 the full pipeline replay in CI; RLS itself is tested in CI on a small committed sample of real rows
 against a Postgres service container.
@@ -155,3 +155,51 @@ against a Postgres service container.
 ## 5. Non-goals
 Terraform, Okta/SCIM, multiple connectors, an Onyx PR, real pilot users (the design's pilot is
 replaced by a Simulated org; real feedback would replace DISCOVERY notes later).
+
+## 6. Review changes (independent design review before coding)
+An independent review of this design (ChatGPT via codex, read-only) raised 17 points. Accepted:
+1. **Audience, not just asker.** In a channel, an answer is posted publicly only if every member of the
+   channel is entitled to every source and department it used; otherwise it is sent ephemerally to the
+   asker. Threads and retries go through the same check.
+2. **Corrected claim.** Forging `app.live_depts` could restore the *stale synced* ceiling during the lag
+   window (not widen beyond it). The setting is therefore protected on its own: each query is one
+   statement over the extended protocol, `set_config` EXECUTE is revoked from PUBLIC, and the validator
+   uses a function *allowlist*. A forged-setting test runs with the validator bypassed.
+3. **Caller binding.** No SECURITY DEFINER lookup (inside one, `current_user` is the owner). The policy
+   reads `acl.role_departments` in the invoker's context, and that table has its own RLS
+   (`role_name = current_user`), so a user role sees only its own mapping rows.
+4. **Gateway memberships** are granted `WITH INHERIT FALSE, SET TRUE`; role names come only from the
+   directory id through a strict pattern; tests cover cross-user `SET ROLE`, reset after errors and
+   connection reuse. A compromised gateway crosses user boundaries; that is stated in the runbook.
+5. **Consistency boundary.** Ordering rule: an answer is delivered only if, *at delivery time*, the live
+   directory and live document source still grant every dependency (docs and departments) it used.
+   The check runs after synthesis and on every cache hit; a failure discards the answer.
+6. **Named relations.** The SQL allowlist is four named relations (`wh.service_request` with RLS; three
+   non-sensitive dimension tables). A test inspects actual privileges and policies in the catalog.
+7. **Cache reauthorisation** on every hit: live fingerprint (active, groups, departments, policy version)
+   and live ACL + existence of every document dependency.
+8. **Secondary copies.** Inventory (index, embedding cache, answer cache, LLM response cache, traces,
+   SQL cassette, demo site) in the runbook. Traces store chunk ids and spans, never chunk text. Deletion
+   denies access immediately (recheck) and purges index, embedding cache, answer cache and the LLM
+   responses that depended on the doc; committed eval caches only ever contain public-source text.
+9. **Identity per adapter.** Slack identity = (team id, user id) -> verified email; the API trusts the
+   identity header only with the proxy's HMAC; MCP identity is fixed by server config.
+10. **Reject, don't strip.** An answer with any citation outside the allowed context is regenerated
+    once and otherwise replaced by a refusal; document answers need at least one valid citation.
+11. **Postgres guard** is a v2 module: fully qualified relation allowlist and a function allowlist,
+    with Postgres-specific tests (quoting, casts, schema qualification).
+12. **Independent oracle.** Expected visibility comes from the policy model (directory state ->
+    departments), executed as the owner with an explicit `dept_code IN (...)` rewrite of the agent's
+    SQL (sqlglot), not through RLS. Over-denial is reported separately from leaks.
+13. **Holdout.** Question and attack files are hashed and frozen before the first scored run; after
+    fixes, 10 fresh attacks written blind by codex are run once as a holdout.
+14. **Strata.** Correctness is reported per route type with a minimum; the docs-only baseline gets the
+    same authorised evidence; the v1 agent is reported as a historical reference, not a fair rival.
+15. **Replay is not security evidence.** CI runs the Postgres integration tests against a real
+    Postgres service with no skips (`AA_REQUIRE_PG=1`); cassettes are bound to schema/policy/prompt
+    versions and fail on a miss; a test proves the gate fails on a degraded recording.
+16. **Sharper criteria**: positive authorised-row assertions, window boundary checks, explicit
+    selector phrases for metric variants, multi-document evidence coverage.
+
+Rejected: (17) cutting dense retrieval, caching, the Slack emulator, MCP/API and the viewer. They are
+in the required scope; the mitigation is that each of them is covered by the same permission tests.
