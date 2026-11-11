@@ -156,6 +156,6 @@ lag-experiment:
 
 site:             ## static demo page from recorded runs + Playwright screenshots
 	$(PY) scripts/v2/build_site.py
-	cd site && npx --yes playwright@1 screenshot --viewport-size=1280,900 --full-page index.html ../docs/img/demo.png
+	node scripts/v2/screenshot.cjs   # needs the playwright npm package (set NODE_PATH to its node_modules)
 
 reproduce: pg-load corpus index eval-v2 redteam-v2 lag-experiment site   ## live v2 path end to end

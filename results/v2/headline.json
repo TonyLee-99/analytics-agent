@@ -1,0 +1,19 @@
+{
+ "rows": "4,033,015",
+ "rt_round1": "0/40",
+ "rt_final": "0/40",
+ "rt_ablation": "8/10",
+ "lag_on": "0",
+ "lag_off": "15/15",
+ "n_eval": "30",
+ "acc_all": "93%",
+ "acc_author": "100%",
+ "acc_codex": "87%",
+ "acc_docs_only": "27%",
+ "acc_v1": "13%",
+ "route": "97%",
+ "recall5": "100%",
+ "clarify": "100%",
+ "kappa": "0.615",
+ "cal_n": "10"
+}

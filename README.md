@@ -1,7 +1,98 @@
-# Confidence catches SQL mistakes, not definition mistakes
+# analytics-agent v2: a permission-aware data and knowledge copilot for City of Chicago 311
 
 [![ci](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/TonyLee-99/analytics-agent/actions/workflows/ci.yml)
-![python](https://img.shields.io/badge/python-3.12-blue) ![license](https://img.shields.io/badge/license-MIT-green)
+![python](https://img.shields.io/badge/python-3.12-blue) ![postgres](https://img.shields.io/badge/postgres-16%20RLS-336791) ![license](https://img.shields.io/badge/license-MIT-green)
+
+**0/40 permission leaks in the first red-team round (half of the attacks written blind by another model), 0 vs 15/15 leaks inside a 300 s revocation-lag window with and without the query-time recheck, and 93% correct answers on 30 questions against 27% for docs-only RAG.**
+
+![demo](docs/img/demo.png)
+
+| | |
+|---|---|
+| **Business problem** | City department analysts ask Slack for "what does the city say about X" and "what are the numbers for Y". Documents and warehouse rows are restricted by department, people change teams all the time, and two departments define "time to close" differently. A copilot is only usable if nobody ever sees what they may not, and the numbers use the right definition. |
+| **What I built** | Ingest (4,033,015 real 311 requests into Postgres 16, 157 real City documents, polite fetcher) → index with ACLs (BM25 + local bge-small embeddings) → permission-aware retrieval (filter before ranking, live recheck) and SQL under each user's own Postgres role with row-level security → planner/router + v1's governed metric compiler with conflict detection → answer with span citations, re-authorised at delivery → Slack bot (Bolt; emulator for tests) + MCP + FastAPI → per-answer traces → eval gate in CI → static demo page. |
+| **Measured results** | Red team 0/40 leaks round 1 and final; with the defences switched off the same oracle finds 8/10 revocation scenarios leaking. Lag window: 0 leaks with recheck vs 15/15 without. Answers: 93% (100% author half, 87% codex-blind half) vs 27% docs-only RAG and 13% for the v1 SQL agent; router 97%, recall@5 100%, asks back on 100% of ambiguous metric questions. Judge vs second grader: kappa 0.615 on 10. |
+
+**Simulated vs real.** Real: the 311 service requests (City of Chicago Data Portal, via the read-only
+[chicago-311-warehouse](https://github.com/TonyLee-99/chicago-311-warehouse) build), the documents (chicago.gov and
+data-portal metadata, `corpus/`), every model output, every number. **Simulated**: the org chart
+(`config/org.yaml`), which documents are restricted to whom (`config/doc_acl.yaml`), metric-definition ownership,
+the discovery notes. The Slack path was run against a local emulator with the real Bolt app; the live Socket
+Mode path needs a Slack app (owner account).
+
+## Architecture
+```mermaid
+flowchart LR
+  S[Slack<br/>Bolt / Socket Mode] --> I{identity<br/>team+user → email → directory<br/>default deny}
+  A[FastAPI /v2/ask<br/>HMAC proxy identity] --> I
+  M[MCP tools<br/>fixed identity] --> I
+  I --> C[answer cache<br/>re-authorised on hit]
+  C --> P[planner / router<br/>Haiku 5.5]
+  P -->|docs| R[ACL filter → BM25 + dense over allowed set<br/>→ live recheck]
+  P -->|sql| G[governed metrics + conflict check<br/>→ v1 compiler → SQL guard]
+  G --> W[(Postgres 16<br/>SET LOCAL ROLE cu_user<br/>RLS: synced ∩ live departments)]
+  R --> X[answer + span citations<br/>bad citation → regenerate / refuse]
+  W --> X
+  X --> D[delivery-time re-authorisation<br/>channel audience check]
+  D --> T[trace JSONL · feedback 👍/👎]
+  DIR[(directory<br/>event log)] -. lagged sync .-> R
+  DIR -. lagged sync .-> W
+  DIR -- live --> D
+```
+Design and the independent review that changed it: [docs/DESIGN.md](docs/DESIGN.md). Decisions:
+[docs/decisions/](docs/decisions/). Incidents and a postmortem: [docs/INCIDENTS.md](docs/INCIDENTS.md).
+
+## Run it
+Offline (no model calls, replays recorded responses; Postgres tests need a local Postgres):
+```bash
+make init        # pinned deps + unpack committed replay caches
+make pg-start pg-load   # local Postgres 16 + the 311 window (needs a built chicago-311-warehouse; path in AA_311_SOURCE) + RLS
+make check       # lint, v1 + v2 tests (permission tests on real Postgres), eval gate
+```
+Live: `make eval-v2 N=15` (Claude Haiku 5.5 through the Claude Code CLI), `make redteam-v2`, `make lag-experiment`,
+`make site`. Slack: `SLACK_BOT_TOKEN=... SLACK_APP_TOKEN=... uv run python -m analytics_agent.copilot.slack_app`.
+
+## Results (`results/v2/`, details in [docs/EVAL.md](docs/EVAL.md))
+| | copilot | docs-only RAG | v1 SQL agent |
+|---|---|---|---|
+| correct, all 30 | **93%** | 27% | 13% |
+| author half (15) | 100% | 27% | 20% |
+| codex-blind half (15) | 87% | 27% | 7% |
+| router accuracy | 97% | — | — |
+
+| Permission test | Result |
+|---|---|
+| red team round 1 (20 author + 20 codex-blind) | 0/40 leaks |
+| same oracle, defences off, 10 revocation scenarios | 8/10 leak |
+| red team final round | 0/40 leaks |
+| revocation-lag window, recheck on / off | 0 / 15/15 leaks |
+| RLS vs policy-model oracle, 10 users x 5 probes, guard bypassed | exact match |
+| Postgres copy vs source, per department | 4,033,015 rows, 0 mismatches |
+
+**What did not work / limits.**
+- Small samples: 30 questions and 10 calibration answers (owner's time budget; `N=all` runs 120). CIs are wide (93%: 79–98%).
+- 1 of 8 explicit-definition controls was wrongly asked back (12.5%, above the 10% target) and 2 more
+  returned the right figure in the wrong shape.
+- 0 first-round leaks means no red-team-driven fix was needed; a post-fix holdout of fresh blind attacks was not run.
+- The v1 baseline is a historical reference (no permissions, no documents), not a fair rival.
+- Over-denial: after the recheck drops restricted chunks, some in-scope sub-questions get "no sources".
+
+## From demo to production
+Identity from the IdP (SCIM) instead of `org.yaml`; documents from the real change feed (Drive/SharePoint)
+with the same event model; managed Postgres with scram/TLS and the gateway credential in a secret store;
+sync-lag SLO and leak-oracle alerts (docs/RUNBOOK.md); phased rollout with kill switches (docs/ROLLOUT.md).
+Product and platform lessons: docs/FEEDBACK_TO_PRODUCT.md. PRD: docs/PRD.md.
+
+## How I used Claude Code, and how I checked it
+Claude Code wrote most of the code under a harness of written rules, a feature list whose states only a
+verification script may change, and tests written against the database layer with the SQL guard switched off.
+Its output was checked by things it does not control: a second model (ChatGPT via codex) reviewed the design
+before coding and wrote half of the questions and attacks blind; gold answers are executed SQL; the leak oracle
+is mechanical and was itself validated by switching the defences off.
+
+---
+
+# v1 (unchanged): confidence catches SQL mistakes, not definition mistakes
 
 | | |
 |---|---|
@@ -24,7 +115,7 @@ one question: **when can you trust its number?**
   69.5% of questions at 86.3% EX, against 76.5% when answering everything (gain +5.2 to +14.6 pp,
   95% bootstrap CI).
 
-![hero](docs/img/hero.png)
+![v1 hero](docs/img/hero.png)
 
 **What did not work** (pre-registered criteria, `docs/v1/ACCEPTANCE.md`):
 - The confidence score ranks right vs wrong with AUROC 0.69 (CI 0.61–0.77): *inconclusive* against
@@ -132,7 +223,7 @@ it switched off. Five holes were found and fixed:
 All 64/64 red-team attacks are now blocked, with 0/550 false positives on gold queries and 0 of the
 agent's previously correct recorded queries rejected.
 
-## Reproduce
+## Reproduce v1
 ```bash
 make setup               # Python 3.12, pinned deps (uv.lock)
 make unpack              # restore the recorded runs + LLM response cache (committed, compressed)
