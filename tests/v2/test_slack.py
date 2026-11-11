@@ -106,3 +106,36 @@ def test_web_api_fault_surfaces_without_posting_twice(bot):
     with pytest.raises(SlackApiError):
         core.handle_message(emu.team_id, dm("UMARIA", "potholes?"), "Ev7")
     assert not [m for m in emu.posted if m["kind"] == "message"]
+
+
+def test_audience_is_enumerated_across_pages(bot):
+    emu, core, app, _ = bot
+    emu.page_size = 1  # the unentitled member is only on the last page
+    emu.channels["C3"] = ["ULENA", "UMARIA", "UDEV"]
+    ev = {"type": "app_mention", "channel": "C3", "user": "ULENA", "text": "<@U0BOT> pothole crews target", "ts": "4.1"}
+    send(app, emu, ev, "Ev8")
+    assert core.log[-1]["delivery"] == "ephemeral" and None not in core.log[-1]["audience"]
+
+
+def test_audience_lookup_failure_fails_closed(bot):
+    emu, core, app, _ = bot
+    emu.channels["C4"] = ["ULENA", "UMARIA"]
+    emu.fail_next["conversations.members"] = "internal_error"
+    ev = {"type": "app_mention", "channel": "C4", "user": "UMARIA", "text": "<@U0BOT> pothole crews target", "ts": "5.1"}
+    send(app, emu, ev, "Ev9")
+    assert core.log[-1]["delivery"] == "ephemeral"
+
+
+def test_revocation_during_audience_lookup_discards(bot):
+    emu, core, app, _ = bot
+    emu.channels["C5"] = ["UMARIA"]
+    orig = core.channel_audience
+
+    def revoke_then_lookup(team, ch):
+        core.copilot.dep.directory.remove_member("dept-cdot", "maria")
+        return orig(team, ch)
+    core.channel_audience = revoke_then_lookup
+    ev = {"type": "app_mention", "channel": "C5", "user": "UMARIA", "text": "<@U0BOT> pothole crews target", "ts": "6.1"}
+    send(app, emu, ev, "Ev10")
+    assert core.log[-1]["delivery"] == "discarded"
+    assert all("crews" not in m["text"] for m in emu.posted)

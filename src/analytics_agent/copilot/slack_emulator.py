@@ -3,7 +3,7 @@
 The Bolt app talks to this server through the real `slack_sdk.WebClient` (only `base_url` differs), so
 the code path under test is the production one. Differences from real Slack (documented in
 docs/RUNBOOK.md): no OAuth or signing (Socket Mode needs neither), no rate-limit tiers beyond injected
-faults, `conversations.members` returns all members in one page, no Block Kit validation.
+faults, `conversations.members` paginates by a simple offset cursor, no Block Kit validation.
 
 Methods: auth.test, users.info, conversations.members, chat.postMessage, chat.postEphemeral, chat.update.
 Fault injection: `emu.fail_next["chat.postMessage"] = "ratelimited"` (HTTP 429 + Retry-After: 1) or any
@@ -30,6 +30,7 @@ class SlackEmulator:
         self.posted: list[dict[str, Any]] = []  # every message / ephemeral / update, in order
         self.calls: list[tuple[str, dict]] = []
         self.fail_next: dict[str, str] = {}
+        self.page_size = 200  # conversations.members page size (tests shrink it to exercise pagination)
         self._ts = itertools.count(1)
         self._server: ThreadingHTTPServer | None = None
 
@@ -59,7 +60,11 @@ class SlackEmulator:
             ch = args.get("channel", "")
             if ch not in self.channels:
                 return 200, {"ok": False, "error": "channel_not_found"}, {}
-            return 200, {"ok": True, "members": list(self.channels[ch]), "response_metadata": {"next_cursor": ""}}, {}
+            members = list(self.channels[ch])
+            start = int(args.get("cursor") or 0)
+            page = members[start:start + self.page_size]
+            nxt = str(start + self.page_size) if start + self.page_size < len(members) else ""
+            return 200, {"ok": True, "members": page, "response_metadata": {"next_cursor": nxt}}, {}
         if method in ("chat.postMessage", "chat.postEphemeral"):
             ts = f"{int(time.time())}.{next(self._ts):06d}"
             msg = {"kind": "ephemeral" if method == "chat.postEphemeral" else "message", "ts": ts,

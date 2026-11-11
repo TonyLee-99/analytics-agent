@@ -29,8 +29,7 @@ the live source is right.
   Its credentials are the crown jewel; it has no table privileges of its own.
 - Local dev cluster uses trust auth on localhost; production uses scram + TLS.
 - Secondary copies of document text: index (purged on delete), embedding cache (purged), answer cache
-  (evicted), LLM response cache (dependency-tracked purge, `purge_llm_on_delete`), traces (ids and spans
-  only, no text), SQL cassette and demo site (public documents only).
+  (evicted), LLM response cache (dependency-tracked purge, `purge_llm_on_delete`), traces (ids, spans and usage; no document or model text), SQL cassette and demo site (public documents only).
 
 ## Slack emulator vs real Slack
 Same Bolt app and WebClient; the emulator skips OAuth/signing, rate-limit tiers (faults are injected),

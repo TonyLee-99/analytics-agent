@@ -28,7 +28,9 @@ def get_copilot():
         if _copilot is None:
             from analytics_agent.copilot.copilot import Copilot, build_deployment
 
-            _copilot = Copilot(build_deployment())
+            dep = build_deployment()
+            dep.index.persist_purges = True
+            _copilot = Copilot(dep, purge_llm_on_delete=True)
         return _copilot
 
 

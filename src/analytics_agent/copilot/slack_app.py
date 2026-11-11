@@ -58,7 +58,16 @@ class SlackCopilot:
     def channel_audience(self, team_id: str, channel: str) -> list[str | None]:
         if channel.startswith("D"):  # a DM: the asker is the only reader
             return []
-        members = self.client.conversations_members(channel=channel).get("members", [])
+        members: list[str] = []
+        cursor = None
+        for _ in range(1000):  # every page; a partial member list must never count as "everyone"
+            r = self.client.conversations_members(channel=channel, cursor=cursor, limit=200)
+            members += r.get("members", [])
+            cursor = (r.get("response_metadata") or {}).get("next_cursor")
+            if not cursor:
+                break
+        else:
+            raise IdentityError("channel membership could not be enumerated")
         out: list[str | None] = []
         for m in members:
             if m == getattr(self, "bot_user_id", None):
@@ -102,10 +111,22 @@ class SlackCopilot:
         ans = self.copilot.ask(user_id, text, slack_user=slack_user)
         if ans.status == "clarify":
             self.pending_clarify[key] = text
-        audience = self.channel_audience(team_id, channel)
-        public = self.copilot.audience_ok(ans, audience) if audience else True
+        try:
+            audience = self.channel_audience(team_id, channel)
+            public = channel.startswith("D") or (bool(audience) and self.copilot.audience_ok(ans, audience))
+        except Exception:  # noqa: BLE001 - any failure enumerating the audience fails closed (private)
+            audience, public = [None], False
+        # re-authorise the asker right before sending: access may have changed during the lookups above
+        ok, why = self.copilot.authorised(user_id, ans.doc_deps, set(ans.dept_deps))
+        if not ok:
+            self.client.chat_postEphemeral(channel=channel, user=slack_user, thread_ts=thread,
+                                           text="Your access changed while this answer was being prepared, so it "
+                                                "was discarded. Please ask again.")
+            rec = {"delivery": "discarded", "reason": why, "user_id": user_id, "audience": audience}
+            self.log.append(rec)
+            return rec
         blocks = render_blocks(ans)
-        if channel.startswith("D") or public:
+        if public:
             r = self.client.chat_postMessage(channel=channel, thread_ts=thread, text=ans.text, blocks=blocks)
             delivery = "public" if not channel.startswith("D") else "dm"
             ts = r.get("ts")
@@ -211,7 +232,9 @@ def main() -> None:  # pragma: no cover - needs the owner's Slack app tokens
     bot_token, app_token = os.environ["SLACK_BOT_TOKEN"], os.environ["SLACK_APP_TOKEN"]
     client = WebClient(token=bot_token)
     team = client.auth_test()["team_id"]
-    core = SlackCopilot(Copilot(build_deployment()), client, team)
+    dep = build_deployment()
+    dep.index.persist_purges = True
+    core = SlackCopilot(Copilot(dep, purge_llm_on_delete=True), client, team)
     SocketModeHandler(build_app(core, bot_token, client), app_token).start()
 
 

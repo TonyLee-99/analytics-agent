@@ -100,41 +100,48 @@ def _nums(row: list) -> list[float]:
     return out
 
 
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}")
+
+
 def _labels(row: list) -> list[str]:
     out = []
     for v in row:
         if isinstance(v, str) and not re.fullmatch(r"-?\d+(\.\d+)?", v.strip()):
-            out.append(v.strip().lower()[:10])  # dates: compare the YYYY-MM-DD prefix
+            t = v.strip().lower()
+            out.append(t[:10] if DATE_RE.match(t) else t)  # dates: compare the YYYY-MM-DD part only
     return out
 
 
 def _close(a: float, b: float) -> bool:
-    for x in (b, b * 100, b / 100):
-        if math.isclose(a, x, rel_tol=0.01, abs_tol=1e-6):
+    if math.isclose(a, b, rel_tol=0.01, abs_tol=1e-6):
+        return True
+    # a fraction may be reported as a percentage, only when the gold value is a fraction
+    return 0 <= b <= 1 and math.isclose(a, b * 100, rel_tol=0.01, abs_tol=1e-4)
+
+
+def _assign(gold_nums: list[float], sys_nums: list[float]) -> bool:
+    """One-to-one: every gold number matched to a distinct system number (rows are small: backtracking)."""
+    def go(i: int, used: frozenset) -> bool:
+        if i == len(gold_nums):
             return True
-    return False
+        return any(j not in used and _close(sys_nums[j], gold_nums[i]) and go(i + 1, used | {j})
+                   for j in range(len(sys_nums)))
+    return go(0, frozenset())
 
 
 def rows_match(got: list[list], gold: list[list], key_only: bool = False) -> bool:
-    """key_only: compare only the last numeric value of each gold row (the asked-for figure), so answers
-    that omit requested helper columns (denominators, counts) are not failed for that alone."""
-    if gold is None:
+    """Same number of rows; each gold row matched to a distinct system row whose numbers cover the gold
+    numbers one-to-one (1% tolerance) and whose text labels include the gold labels.
+    key_only: compare only the last numeric value of each gold row (the asked-for figure)."""
+    if gold is None or len(got) != len(gold):
         return False
     if key_only:
         gold = [[v for v in g if not _nums([v])] + _nums(g)[-1:] for g in gold]
-    if len(got) != len(gold):
-        return False
     used: set[int] = set()
     for g in gold:
         gn, gl = _nums(g), _labels(g)
-        hit = None
-        for i, r in enumerate(got):
-            if i in used:
-                continue
-            rn, rl = _nums(r), _labels(r)
-            if all(any(_close(x, y) for x in rn) for y in gn) and all(any(lab == x for x in rl) for lab in gl):
-                hit = i
-                break
+        hit = next((i for i, r in enumerate(got) if i not in used and _assign(gn, _nums(r))
+                    and all(lab in _labels(r) for lab in gl)), None)
         if hit is None:
             return False
         used.add(hit)
@@ -246,7 +253,7 @@ def run(system: str, workers: int = 3, only: list[str] | None = None, sets: list
         wh.save()
     for dep in _DEPS:
         if dep.index.embedder.cache.dirty:
-            dep.index.embedder.cache.save()
+            dep.index.embedder.cache.save(additive=True)
         rr = dep.retriever.reranker
         if rr is not None and rr.dirty:
             rr.save()

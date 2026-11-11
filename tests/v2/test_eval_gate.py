@@ -33,9 +33,11 @@ def test_gate_fails_on_degraded_recording():
     bad = copy.deepcopy(committed())
     bad["systems"]["copilot"]["all"]["accuracy"] = 0.3
     bad["systems"]["copilot"]["citations_valid_rate"] = 0.9
-    leaky = {"summary": {"leaked": 1, "leaked_ids": ["x"]}}
-    fails = check(bad, leaky)
-    assert len(fails) == 3
+    leaky = {"summary": {"leaked": 1, "leaked_ids": ["x"], "complete": True, "scenarios": 40}}
+    assert len(check(bad, leaky)) == 3
+    assert check(committed(), None) == ["no final red-team round recorded"]
+    partial = {"summary": {"leaked": 0, "complete": False, "scenarios": 5, "expected": 40}}
+    assert any("incomplete" in f for f in check(committed(), partial))
 
 
 REPLAY_IDS = ["au-q01", "au-q21", "au-q53", "cx-q23"]

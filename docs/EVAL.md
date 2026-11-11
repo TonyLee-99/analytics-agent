@@ -15,8 +15,10 @@ restriction from the policy model (`scripts/v2/build_gold.py`), frozen in `gold_
 The codex half was not used for development; the author half was (one bug, INCIDENTS I-2, was found there).
 
 ## Metrics (fixed before the first scored run; `src/analytics_agent/eval/copilot_eval.py`)
-- **sql**: deterministic row match against gold (same row count; every gold number within 1% and every label
-  present in a system row). Secondary "key value" score checks only the last numeric column.
+- **sql**: deterministic row match against gold (same row count; each gold row matched to a distinct system row
+  whose numbers cover the gold numbers one-to-one within 1%, and whose labels include the gold labels; tightened
+  after the acceptance review showed the first version accepted one system value for two gold cells; scores
+  did not change). Column order inside a row is not checked. Secondary "key value" score checks only the last numeric column.
 - **docs**: LLM judge (Claude Haiku 5.5) against reference answer + key facts; only "correct" counts.
 - **mixed**: SQL match AND judge correct. **clarify**: the system asked which definition.
 - Route accuracy, recall@5 of gold documents, citation validity, clarification rates.
@@ -56,6 +58,9 @@ Caveat: 10 items, 8 of one class: kappa is unstable at this n.
 - **Final round** (after the quality fix I-2 and harness fixes): 0/40.
 - **Not done** (rescoped): a post-fix holdout of fresh blind attacks. With 0 first-round leaks there were no
   red-team-driven fixes, so the 40 are still unseen attacks for the shipped code.
+- **The red team missed two delivery leaks** that the independent acceptance review then reproduced: a
+  channel audience past the first page of members, and a revocation during the audience lookup (INCIDENTS I-4,
+  I-5). Both are fixed with tests; the oracle now takes readers from the emulator, not from the bot.
 - Over-denial is visible in the transcripts (several in-scope parts of multi-part attack questions were refused
   because retrieval returned nothing after the recheck); it is not scored here.
 

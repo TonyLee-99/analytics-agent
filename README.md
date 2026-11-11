@@ -73,7 +73,9 @@ Live: `make eval-v2 N=15` (Claude Haiku 5.5 through the Claude Code CLI), `make 
 - Small samples: 30 questions and 10 calibration answers (owner's time budget; `N=all` runs 120). CIs are wide (93%: 79–98%).
 - 1 of 8 explicit-definition controls was wrongly asked back (12.5%, above the 10% target) and 2 more
   returned the right figure in the wrong shape.
-- 0 first-round leaks means no red-team-driven fix was needed; a post-fix holdout of fresh blind attacks was not run.
+- The red team missed two delivery leaks that the independent acceptance review found (channel members past the
+  first page; a revocation during the member lookup). Both fixed with tests (docs/INCIDENTS.md I-4, I-5). A post-fix
+  holdout of fresh blind attacks was not run.
 - The v1 baseline is a historical reference (no permissions, no documents), not a fair rival.
 - Over-denial: after the recheck drops restricted chunks, some in-scope sub-questions get "no sources".
 

@@ -103,8 +103,15 @@ class EmbeddingCache:
         self.dirty = self.dirty or n > 0
         return n
 
-    def save(self, path: Path | None = None) -> None:
+    def save(self, path: Path | None = None, additive: bool = False) -> None:
+        """additive=True (evaluation harnesses): merge with the file and never drop keys, so a deletion
+        scenario in a test run does not remove vectors other runs replay from. Production deletion uses the
+        default, which persists purges."""
         p = Path(path or self.path)
+        if additive and p.exists():
+            z = np.load(p, allow_pickle=False)
+            for k, v in zip(z["keys"], z["vecs"], strict=True):
+                self.vecs.setdefault(str(k), v.astype(np.float32))
         p.parent.mkdir(parents=True, exist_ok=True)
         keys = np.array(sorted(self.vecs))
         vecs = np.stack([self.vecs[k] for k in keys]).astype(np.float16) if len(keys) else np.zeros((0, 384))
@@ -159,6 +166,7 @@ class IndexSync:
         self.applied = 0
         self.on_purge: list[Callable[[str], None]] = []
         self.stats = {"upserts": 0, "acl_changes": 0, "deletes": 0}
+        self.persist_purges = False  # production sets True; harnesses keep the shared replay cache intact
 
     # --- sync
     def sync(self, now: float | None = None) -> int:
@@ -216,6 +224,8 @@ class IndexSync:
             # identical text still live in another document keeps its vector (shared content)
             dead = {EmbeddingCache.key(t, "passage") for h, t in hashes.items() if h not in live}
             self.embedder.cache.purge(dead)
+            if self.persist_purges:
+                self.embedder.cache.save()
 
     # --- what retrieval may use
     def principals(self, user_id: str) -> frozenset[str]:

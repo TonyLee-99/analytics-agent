@@ -29,9 +29,34 @@ fix and prevention. v1's security findings are in `docs/v1/security.md`.
 - **Root cause.** Every deployment syncs the directory into the single `copilot` database; the harnesses
   assumed exclusive use.
 - **Impact.** The lag experiment only removes memberships, so the overlap could only cause over-denial in a
-  concurrent red-team scenario, never a leak. Round 1's 0 leaks is therefore not inflated by it.
+  concurrent red-team scenario. Over-denial can still *mask* a leak (a suppressed answer cannot leak), so
+  round 1 is treated as possibly contaminated; the final round was run alone.
 - **Fix / prevention.** The final red-team round was re-run alone; RUNBOOK notes that permission harnesses
   run sequentially (or each against its own database, as the unit tests do with `copilot_test`).
+
+## I-4. Channel answers could be posted publicly when the channel had more than one page of members (found by the acceptance review)
+- **Symptom.** The independent acceptance review (ChatGPT via codex) reproduced a public post of a restricted
+  answer in a channel whose unentitled member was on the second page of `conversations.members`.
+- **Root cause.** The audience check read only the first page (ignored `next_cursor`), and an empty or failed
+  member lookup was treated as "safe to post publicly".
+- **Fix.** All pages are enumerated; any lookup failure or incomplete enumeration fails closed (ephemeral). The
+  emulator now paginates, and the red-team oracle takes the readers from the emulator's own membership list,
+  not from the bot's lookup (the old oracle shared the bot's blind spot).
+- **Prevention.** `test_audience_is_enumerated_across_pages`, `test_audience_lookup_failure_fails_closed`.
+- **Why the red team missed it.** No scenario used a channel larger than one page; the leak was in delivery,
+  which the oracle trusted.
+
+## I-5. A revocation during the audience lookup still delivered the answer to the asker (found by the acceptance review)
+- **Root cause.** The delivery-time check ran inside `Copilot.ask`; the Slack layer then spent further calls
+  (members, users.info) before sending, without re-checking.
+- **Fix.** The Slack layer re-authorises the asker and every dependency immediately before sending, and
+  discards the answer otherwise. Test: `test_revocation_during_audience_lookup_discards`.
+
+## I-6. Deleted text survived in cached BM25 statistics; traces carried model output text (found by the acceptance review)
+- **Root cause.** The per-allowed-set BM25 cache was keyed by chunk ids, so a deletion or update could reuse
+  statistics computed with the old text; LLM spans in traces stored the full response.
+- **Fix.** The BM25 cache key includes each chunk's content hash; LLM spans keep usage only. Embedding purges
+  persist in production (`persist_purges`); harnesses save additively so shared replay caches stay intact.
 
 ## Postmortem: I-1 (multi-statement execution through the gateway)
 **Summary.** A design assumption about the database driver was false: the gateway would execute a string with

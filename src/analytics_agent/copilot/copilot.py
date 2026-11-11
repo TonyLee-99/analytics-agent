@@ -164,7 +164,7 @@ class Copilot:
     def _llm(self, trace: Trace, step: str, system: str, prompt: str):
         with trace.span(step) as s:
             r = self.llm.complete(system, prompt, tag=f"copilot:{step}")
-            s.attrs["llm"] = r.to_dict()
+            s.attrs["llm"] = {k: v for k, v in r.to_dict().items() if k != "text"}  # usage only, no text
         return r
 
     def resolve_conflicts(self, question: str, metrics: list[str]) -> tuple[list[str], str | None]:
@@ -407,6 +407,11 @@ class Copilot:
 
     def _finish(self, ans: Answer, trace: Trace, t0: float, store: bool = True) -> Answer:
         trace.attrs["status"] = ans.status
+        for k, v in (("route", ans.route or "n/a"), ("db_role", "n/a"), ("live_depts", []), ("cache", "n/a"),
+                     ("delivery_check", "n/a")):  # same schema on every return path
+            trace.attrs.setdefault(k, v)
+        trace.attrs["sql"] = ans.sql
+        trace.attrs["cached"] = ans.cached
         trace.attrs["citations"] = [{k: c[k] for k in ("doc_id", "chunk_id", "start", "end")} for c in ans.citations]
         trace.attrs["doc_deps"] = ans.doc_deps
         trace.attrs["dept_deps"] = ans.dept_deps

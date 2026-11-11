@@ -52,7 +52,8 @@ class _BM25Cache:
         self.data: OrderedDict[str, BM25Okapi] = OrderedDict()
 
     def get(self, ids: list[str], chunks: dict[str, Chunk]) -> BM25Okapi:
-        k = hashlib.sha256("\n".join(ids).encode()).hexdigest()
+        # key on content, not ids: an update or deletion changes the key, so stale statistics are never reused
+        k = hashlib.sha256("\n".join(f"{i}:{chunks[i].text_hash}" for i in ids).encode()).hexdigest()
         if k in self.data:
             self.data.move_to_end(k)
             return self.data[k]
