@@ -33,8 +33,7 @@ the live source is right.
 
 ## Slack emulator vs real Slack
 Same Bolt app and WebClient; the emulator skips OAuth/signing, rate-limit tiers (faults are injected),
-pagination and Block Kit validation. The live Socket Mode path has not been run (needs the owner's
-Slack app tokens).
+Block Kit validation (pagination is emulated). The live Socket Mode path runs in the owner's workspace since 2026-11-11 (`make slack-live`, `make slack-smoke`).
 
 ## Going live on Slack (owner steps)
 1. Create the app from `docs/slack_manifest.yaml` (api.slack.com/apps -> From a manifest). Scopes and why:

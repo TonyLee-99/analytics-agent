@@ -16,5 +16,5 @@
  "recall5": "100%",
  "clarify": "100%",
  "false_clarify": "0%",
- "kappa": "0.615"
+ "kappa": "0.5"
 }
